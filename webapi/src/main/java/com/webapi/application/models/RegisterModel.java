@@ -1,6 +1,5 @@
 package com.webapi.application.models;
 
-import com.google.gson.annotations.Expose;
 import com.webapi.application.abstractions.IValidatable;
 import com.webapi.application.abstractions.IValidation;
 import com.webapi.application.concretes.Validation;
@@ -8,19 +7,14 @@ import com.webapi.application.utils.StringUtils;
 
 public class RegisterModel implements IValidatable {
 	
-	@Expose
 	private String name;
 	
-	@Expose
 	private String phoneNumber;
 	
-	@Expose
 	private String email;
-	
-	@Expose
+		
 	private String password;
 	
-	@Expose
 	private String passwordVerification;
 	
 	public String getName() {

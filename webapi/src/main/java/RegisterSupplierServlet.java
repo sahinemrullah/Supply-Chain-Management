@@ -1,13 +1,12 @@
 
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapi.application.abstractions.IValidation;
 import com.webapi.application.models.RegisterModel;
+import com.webapi.application.utils.EncryptionUtils;
 import com.webapi.application.utils.HttpServletRequestUtils;
 import com.webapi.application.utils.HttpServletUtils;
 import com.webapi.domain.entities.Supplier;
@@ -23,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/supplier/register")
 public class RegisterSupplierServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	private static final Gson GSON = new GsonBuilder().create();
 	private ISupplierRepository supplierRepository;
 	
     public RegisterSupplierServlet() {
@@ -44,9 +43,7 @@ public class RegisterSupplierServlet extends HttpServlet {
 				 supplier.setEmail(model.getEmail());
 				 supplier.setName(model.getName());
 				 supplier.setPhoneNumber(model.getPhoneNumber());
-				 supplier.setPasswordHash(Hashing.sha256()
-									  .hashString(model.getPassword(), StandardCharsets.UTF_8)
-									  .toString());
+				 supplier.setPasswordHash(EncryptionUtils.HashString(model.getPassword()));
 				 if(supplierRepository.add(supplier))
 				 	response.setStatus(200);
 				 else
