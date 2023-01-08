@@ -74,4 +74,27 @@ public class SupplierRepository implements ISupplierRepository {
 		return false;
 	}
 
+	@Override
+	public Supplier getSupplier(String email) {
+		Connection con = DatabaseConnection.getConntection();
+		try {
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM SUPPLIER WHERE email = ?");
+			statement.setString(1, email);
+			if(statement.execute()) {
+				ResultSet result = statement.getResultSet();
+				if(result.next()) {
+					Supplier supplier = new Supplier();
+					supplier.setId(result.getInt("supplier_id"));
+					supplier.setEmail(result.getString("email"));
+					supplier.setName(result.getString("name"));
+					supplier.setPhoneNumber(result.getString("phone_number"));
+					supplier.setPasswordHash(result.getString("password_hash"));
+					return supplier;
+				}
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+		return null;
+	}
 }
