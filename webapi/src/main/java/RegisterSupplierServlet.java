@@ -43,7 +43,7 @@ public class RegisterSupplierServlet extends HttpServlet {
 				 supplier.setEmail(model.getEmail());
 				 supplier.setName(model.getName());
 				 supplier.setPhoneNumber(model.getPhoneNumber());
-				 supplier.setPasswordHash(EncryptionUtils.HashString(model.getPassword()));
+				 supplier.setPasswordHash(EncryptionUtils.hashString(model.getPassword()));
 				 if(supplierRepository.add(supplier))
 				 	response.setStatus(200);
 				 else
