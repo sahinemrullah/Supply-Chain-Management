@@ -22,7 +22,7 @@ public final class HttpRequestUtils {
 
     }
 
-    public static <T> String post(String link, T model) throws IOException {
+    public static <T> Response post(String link, T model) throws IOException {
         URL url = new URL(link);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
@@ -44,17 +44,21 @@ public final class HttpRequestUtils {
             is = con.getErrorStream();
         }
         
-        StringBuilder response = new StringBuilder();
+        StringBuilder responseMessage = new StringBuilder();
         if(is != null) {
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, "utf-8"))) {
                 String responseLine = null;
                 while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+                    responseMessage.append(responseLine.trim());
                 }
             }
         }
-
-        return response.toString();
+        
+        Response response = new Response();
+        response.setStatusCode(con.getResponseCode());
+        response.setResponseMessage(responseMessage.toString());
+        
+        return response;
     }
 }
