@@ -11,7 +11,6 @@ import com.webapp.utils.HttpRequestUtils;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -57,10 +56,8 @@ public class SupplierLoginServlet extends HttpServlet {
 
             request.getRequestDispatcher("/WEB-INF/supplier/login.jsp").forward(request, response);
         } else {
-            Cookie cookie = new Cookie("token",result);
-            cookie.setMaxAge(10*60);
-            response.addCookie(cookie);
-            request.getRequestDispatcher("/WEB-INF/supplier/register.jsp").forward(request, response);
+            request.getSession().setAttribute("token", result);
+            request.getRequestDispatcher("/WEB-INF/supplier/dashboard.jsp").forward(request, response);
         }
     }
 

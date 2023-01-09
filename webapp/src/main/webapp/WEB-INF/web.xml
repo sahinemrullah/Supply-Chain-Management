@@ -8,4 +8,12 @@
             30
         </session-timeout>
     </session-config>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.webapp.servlets.filters.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
