@@ -1,5 +1,5 @@
 package com.webapi.application.abstractions;
 
-public interface IValidatable {
+public interface IValidator {
 	public IValidation validate();
 }

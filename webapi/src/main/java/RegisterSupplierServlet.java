@@ -18,6 +18,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.webapi.application.abstractions.IValidator;
+import com.webapi.application.validators.RegisterModelValidator;
 
 @WebServlet("/supplier/register")
 public class RegisterSupplierServlet extends HttpServlet {
@@ -34,7 +36,9 @@ public class RegisterSupplierServlet extends HttpServlet {
 		 
 		 response.setContentType(HttpServletUtils.MEDIA_TYPE_JSON);
 		 
-		 IValidation validationResult = model.validate();
+		 IValidator validator = new RegisterModelValidator(model);
+                 
+		 IValidation validationResult = validator.validate();
 		 
 		 if(validationResult.isSucceeded()) {
 			 if(!supplierRepository.supplierExists(model.getEmail()))
