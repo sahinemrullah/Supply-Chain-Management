@@ -9,18 +9,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webapp.models.RegisterModel;
 import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.Response;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -62,11 +58,10 @@ public class SupplierRegisterServlet extends HttpServlet {
         model.setPassword(request.getParameter("password"));
         model.setPasswordVerification(request.getParameter("passwordVerification"));
 
-        String result = HttpRequestUtils.post("http://localhost:9080/supplier/register", model);
+        Response result = HttpRequestUtils.post("http://localhost:9080/supplier/register", model);
 
-        if (result.length() > 0) {
-            Type stringStringArrMap = new TypeToken<Map<String, String[]>>() {}.getType();
-            Map<String, String[]> map = GSON.fromJson(result, Map.class);
+        if (result.getStatusCode() == 400) {
+            Map<String, String[]> map = GSON.fromJson(result.getResponseMessage(), Map.class);
 
             for (Entry<String, String[]> entry : map.entrySet()) {
                 request.setAttribute(entry.getKey() + "Error", entry.getValue());

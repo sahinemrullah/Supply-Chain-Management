@@ -6,7 +6,6 @@ package com.webapp.servlets.filters;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -28,7 +27,11 @@ public class AuthFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             if (session == null || session.getAttribute("token") == null) {
-                httpResponse.sendRedirect(uri.substring(0, uri.lastIndexOf("/")) + "/giris");
+                if(uri.contains("urun")) {
+                    httpResponse.sendRedirect("/tedarikci/giris");
+                } else {
+                    httpResponse.sendRedirect(uri.substring(0, uri.lastIndexOf("/")) + "/giris");
+                }
             } else {
                 chain.doFilter(request, response);
             }

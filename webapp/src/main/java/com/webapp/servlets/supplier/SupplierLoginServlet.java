@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.LoginModel;
 import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.Response;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,9 +50,9 @@ public class SupplierLoginServlet extends HttpServlet {
         model.setEmail(request.getParameter("email"));
         model.setPassword(request.getParameter("password"));
 
-        String result = HttpRequestUtils.post("http://localhost:9080/supplier/login", model);
+        Response result = HttpRequestUtils.post("http://localhost:9080/supplier/login", model);
 
-        if (result.length() == 0) {
+        if (result.getStatusCode() == 400) {
             request.setAttribute("emailError", "Geçersiz kullanıcı bilgileri girdiniz.");
 
             request.getRequestDispatcher("/WEB-INF/supplier/login.jsp").forward(request, response);
