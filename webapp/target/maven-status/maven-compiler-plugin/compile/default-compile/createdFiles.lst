@@ -1,2 +1,7 @@
+com\webapp\servlets\supplier\SupplierLoginServlet.class
+com\webapp\utils\HttpRequestUtils.class
+com\webapp\models\LoginModel.class
 com\webapp\models\RegisterModel.class
+com\webapp\servlets\supplier\SupplierRegisterServlet$1.class
+com\webapp\servlets\supplier\SupplierLoginServlet$1.class
 com\webapp\servlets\supplier\SupplierRegisterServlet.class

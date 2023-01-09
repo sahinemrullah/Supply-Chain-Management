@@ -43,13 +43,15 @@ public final class HttpRequestUtils {
         } else {
             is = con.getErrorStream();
         }
-
+        
         StringBuilder response = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(is, "utf-8"))) {
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+        if(is != null) {
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(is, "utf-8"))) {
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
             }
         }
 
