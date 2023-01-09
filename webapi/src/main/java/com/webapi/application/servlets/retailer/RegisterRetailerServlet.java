@@ -1,3 +1,5 @@
+package com.webapi.application.servlets.retailer;
+
 
 
 import java.io.IOException;
@@ -20,6 +22,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.webapi.application.abstractions.IValidator;
 import com.webapi.application.validators.RegisterModelValidator;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/retailer/register")
 public class RegisterRetailerServlet extends HttpServlet {
@@ -48,10 +53,12 @@ public class RegisterRetailerServlet extends HttpServlet {
 				 retailer.setName(model.getName());
 				 retailer.setPhoneNumber(model.getPhoneNumber());
 				 retailer.setPasswordHash(EncryptionUtils.hashString(model.getPassword()));
-				 if(retailerRepository.add(retailer))
-				 	response.setStatus(200);
-				 else
-				 	response.setStatus(500);
+                             try {
+                                 if(retailerRepository.add(retailer))
+                                     response.setStatus(200);
+                             } catch (SQLException ex) {
+                                 response.setStatus(500);
+                             }
 			 } else {
 				 validationResult.addError("email", "Bu email adresi ile ilişkili bir tedarikçi bulunmaktadır.");
 			 }
