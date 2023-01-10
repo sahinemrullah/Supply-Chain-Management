@@ -5,7 +5,10 @@
 package com.webapi.persistence.abstractions;
 
 import com.webapi.domain.entities.Product;
+import java.sql.SQLException;
 
 public interface IProductRepository extends IRepository<Product> {
+
+    public Product findById(int id) throws SQLException ;
     
 }

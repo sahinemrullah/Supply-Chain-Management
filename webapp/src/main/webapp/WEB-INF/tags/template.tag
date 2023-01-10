@@ -38,7 +38,7 @@
   <link id="pagestyle" href="${pageContext.request.contextPath}/assets/css/material-kit.css?v=3.0.4" rel="stylesheet" />
 </head>
 
-<body class="sign-in-basic">
+<body>
   <!-- Navbar Transparent -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3  navbar-transparent ">
     <div class="container">
@@ -427,7 +427,7 @@
   <!-- End Navbar -->
   <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');" loading="lazy">
     <span class="mask bg-gradient-dark opacity-6"></span>
-    <div class="container my-auto">
+    <div class="container-fluid my-auto">
       <div class="row">
           <jsp:invoke fragment="content"></jsp:invoke>
       </div>

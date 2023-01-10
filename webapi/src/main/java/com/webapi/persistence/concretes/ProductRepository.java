@@ -66,4 +66,35 @@ public class ProductRepository implements IProductRepository {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public Product findById(int id) throws SQLException {
+        Connection con = DatabaseConnection.getConntection();
+        
+        PreparedStatement statement = con.prepareStatement("SELECT * FROM product AS p " +
+                                                            "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                                                            "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id " +
+                                                            "WHERE p.product_id = ?");
+        
+        statement.setInt(1, id);
+        
+        ResultSet result = statement.executeQuery();
+        
+        if(result.next()) {
+            Product product = new Product();
+            product.setId(id);
+            product.setName(result.getString("name"));
+            product.setDescription(result.getString("description"));
+            product.setStock(result.getInt("stock"));
+            product.setPrice(result.getDouble("price"));
+            product.setDiscount(0);
+            product.addImage(result.getString("path"));
+            while(result.next()) {
+                product.addImage(result.getString("path"));
+            }
+            return product;
+        } else {
+            return null;
+        }
+    }
+
 }

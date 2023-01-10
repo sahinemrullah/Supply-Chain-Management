@@ -1,22 +1,22 @@
-package com.webapi.domain.entities;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.webapp.models;
 
-import com.webapi.domain.abstractions.BaseEntity;
 import java.util.ArrayList;
 
-public class Product extends BaseEntity {
-
+public class ProductDetailsModel {
     private String name;
     private String description;
-    private int stock;
     private double price;
-    private double discount;
+    private int stock;
     private ArrayList<String> productImages;
-    private int retailerId;
-
-    public Product() {
+    
+    public ProductDetailsModel() {
         productImages = new ArrayList<String>();
     }
-    
+
     public String getName() {
         return name;
     }
@@ -33,14 +33,6 @@ public class Product extends BaseEntity {
         this.description = description;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -49,12 +41,12 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    public double getDiscount() {
-        return discount;
+    public int getStock() {
+        return stock;
     }
 
-    public void setDiscount(double discount) {
-        this.discount = discount;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public ArrayList<String> getProductImages() {
@@ -63,17 +55,5 @@ public class Product extends BaseEntity {
 
     public void setProductImages(ArrayList<String> productImages) {
         this.productImages = productImages;
-    }
-
-    public int getRetailerId() {
-        return retailerId;
-    }
-
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
-    }
-    
-    public void addImage(String path) {
-        this.productImages.add(path);
     }
 }
