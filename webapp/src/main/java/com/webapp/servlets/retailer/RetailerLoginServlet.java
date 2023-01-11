@@ -54,11 +54,12 @@ public class RetailerLoginServlet extends HttpServlet {
 
         if (result.getStatusCode() == 400) {
             request.setAttribute("emailError", "Geçersiz kullanıcı bilgileri girdiniz.");
+            request.setAttribute("email", model.getEmail());
 
             request.getRequestDispatcher("/WEB-INF/retailer/login.jsp").forward(request, response);
         } else {
-            request.getSession().setAttribute("token", result);
-            request.getRequestDispatcher("/WEB-INF/retailer/dashboard.jsp").forward(request, response);
+            request.getSession().setAttribute("token", result.getResponseMessage());
+            response.sendRedirect("/tedarikci/");
         }
     }
 

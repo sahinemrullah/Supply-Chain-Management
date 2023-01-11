@@ -13,6 +13,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
 
 import com.google.common.hash.Hashing;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class EncryptionUtils {
 
@@ -32,7 +34,7 @@ public final class EncryptionUtils {
 		return StringUtils.isEqual(hashString(password), hashToCompare);
 	}
 
-	public static String createJWT(String id, String issuer, String subject, long ttlMillis) {
+	public static String createJWT(String id, boolean isRetailer, String issuer, String subject, long ttlMillis) {
 		  
 	    //The JWT signature algorithm we will be using to sign the token
 	    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -44,11 +46,17 @@ public final class EncryptionUtils {
 	    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("userId", id);
+            claims.put("isRetailer", isRetailer);
+            
 	    //Let's set the JWT Claims
-	    JwtBuilder builder = Jwts.builder().setId(id)
+	    JwtBuilder builder = Jwts.builder()
+                    .setId(id)
 	            .setIssuedAt(now)
 	            .setSubject(subject)
 	            .setIssuer(issuer)
+                    .addClaims(claims)
 	            .signWith(signingKey, signatureAlgorithm);
 	  
 	    //if it has been specified, let's add the expiration

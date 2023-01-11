@@ -54,11 +54,12 @@ public class SupplierLoginServlet extends HttpServlet {
 
         if (result.getStatusCode() == 400) {
             request.setAttribute("emailError", "Geçersiz kullanıcı bilgileri girdiniz.");
-
+            request.setAttribute("email", model.getEmail());
+            
             request.getRequestDispatcher("/WEB-INF/supplier/login.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("token", result);
-            request.getRequestDispatcher("/WEB-INF/supplier/dashboard.jsp").forward(request, response);
+            response.sendRedirect("/satici/");
         }
     }
 
