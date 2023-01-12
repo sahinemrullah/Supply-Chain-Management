@@ -158,8 +158,8 @@ public class ProductRepository implements IProductRepository {
             product.setStock(result.getInt("stock"));
             product.setPrice(result.getDouble("price"));
             product.setDiscount(0);
-            product.setSupplierId(0);
-            product.setSupplierName("");
+            product.setRetailerId(result.getInt("retailer_id"));
+            product.setRetailerName(result.getString("retailer_name"));
             product.setImagePath(result.getString("path"));
 
             products.add(product);
