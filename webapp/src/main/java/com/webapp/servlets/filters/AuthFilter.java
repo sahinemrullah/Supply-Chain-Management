@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -26,11 +27,15 @@ public class AuthFilter implements Filter {
                 || uri.contains("giris")) {
             chain.doFilter(request, response);
         } else {
+            String requestedWith = httpRequest.getHeader("X-Requested-With");
+            boolean isAJAXRequest = requestedWith != null && requestedWith.equals("XMLHttpRequest");
+            httpRequest.setAttribute("isAJAXRequest", isAJAXRequest);
+            
             if (session == null || session.getAttribute("token") == null) {
-                if(uri.contains("urun")) {
-                    httpResponse.sendRedirect("/tedarikci/giris");
+                if (isAJAXRequest) {
+                    httpResponse.setStatus(401);
                 } else {
-                    httpResponse.sendRedirect(uri.substring(0, uri.lastIndexOf("/")) + "/giris");
+                    httpResponse.sendRedirect("/giris");
                 }
             } else {
                 chain.doFilter(request, response);

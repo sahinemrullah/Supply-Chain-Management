@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.LoginModel;
 import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.JWTUtils;
 import com.webapp.utils.Response;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "SupplierLoginServlet", urlPatterns = {"/satici/giris"})
 public class SupplierLoginServlet extends HttpServlet {
@@ -58,7 +60,9 @@ public class SupplierLoginServlet extends HttpServlet {
             
             request.getRequestDispatcher("/WEB-INF/supplier/login.jsp").forward(request, response);
         } else {
-            request.getSession().setAttribute("token", result);
+            HttpSession session = request.getSession();
+            session.setAttribute("token", result.getResponseMessage());
+            JWTUtils.parseToken(session);
             response.sendRedirect("/satici/");
         }
     }
