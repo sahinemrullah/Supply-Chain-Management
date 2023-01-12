@@ -7,11 +7,29 @@ package com.webapp.models;
 import java.util.ArrayList;
 
 public class ProductDetailsModel {
+    private int id;
     private String name;
     private String description;
     private double price;
     private int stock;
+    private int retailerName;
     private ArrayList<String> productImages;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public int getRetailerName() {
+        return retailerName;
+    }
+
+    public void setRetailerName(int retailerName) {
+        this.retailerName = retailerName;
+    }
     
     public ProductDetailsModel() {
         productImages = new ArrayList<String>();
