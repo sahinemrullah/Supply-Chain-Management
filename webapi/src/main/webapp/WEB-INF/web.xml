@@ -3,5 +3,13 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
+    <filter>
+        <filter-name>JWTAuthenticationFilter</filter-name>
+        <filter-class>com.webapi.application.servlets.filters.JWTAuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>JWTAuthenticationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
