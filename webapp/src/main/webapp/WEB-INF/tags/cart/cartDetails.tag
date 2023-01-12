@@ -1,7 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8" isELIgnored="false"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ tag import ="com.webapp.models.ProductDetailsModel" %>
+
 <div class="card">
     <div class="card-header text-center py-3">
         <h5 class="mb-0 text-center">
@@ -22,7 +22,7 @@
                 <tbody>
                     <c:forEach items="${cart.items}" var="product">
                         <tr>
-                            <td class="col-3"><img class="img-thumbnail" src="${pageContext.request.contextPath}/uploads/${product.productImages[0]}" /></td>
+                            <td class="col-3"><img class="img-thumbnail" src="${pageContext.request.contextPath}/uploads/${product.imagePath}" /></td>
                             <td class="col-3">${product.retailerName}</td>
                             <td class="col-3">${product.name}</td>
                             <td class="col-3">${product.price}₺</td>
@@ -30,7 +30,7 @@
                     </c:forEach>
                         <tr>
                             <td colspan="2"></td>
-                            <td colspan="2">Toplam Tutar: ${priceSum}₺</td>
+                            <td colspan="2"><form method="post" action="/order/confirm"><button class="btn btn-primary">Satın Al: ${priceSum}₺</button></form></td>
                         </tr>
                 </tbody>
             </table>

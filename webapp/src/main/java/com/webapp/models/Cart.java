@@ -2,18 +2,18 @@ package com.webapp.models;
 
 import java.util.ArrayList;
 
-public class Cart<T> {
-    private ArrayList<T> items;
+public class Cart {
+    private ArrayList<CartItem> items;
     
     public Cart() {
         items = new ArrayList<>();
     }
     
-    public ArrayList<T> getItems() {
+    public ArrayList<CartItem> getItems() {
         return items;
     }
 
-    public boolean addItem(T item) {
+    public boolean addItem(CartItem item) {
         return items.add(item);
     }
 }

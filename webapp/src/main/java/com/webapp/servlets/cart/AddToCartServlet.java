@@ -7,6 +7,7 @@ package com.webapp.servlets.cart;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.Cart;
+import com.webapp.models.CartItem;
 import com.webapp.models.ProductDetailsModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
@@ -42,41 +43,38 @@ public class AddToCartServlet extends HttpServlet {
         
         String token = (String)request.getSession().getAttribute("token");
         
-        HashMap<String, String> parameters = new HashMap<String, String>();
+        HashMap<String, String> parameters = new HashMap<>();
         
         parameters.put("id", idStr);
         
         Response result = HttpRequestUtils.get("http://localhost:9080/product/get", parameters, token);
         
         if(result.getStatusCode() == 200) {
-            ProductDetailsModel item = GSON.fromJson(result.getResponseMessage(), ProductDetailsModel.class);
+            CartItem item = GSON.fromJson(result.getResponseMessage(), CartItem.class);
             
             HttpSession session = request.getSession();
             
-            Cart<ProductDetailsModel> cart = (Cart<ProductDetailsModel>) session.getAttribute("cart");
+            Cart cart = (Cart) session.getAttribute("cart");
             
             if(cart == null)
             {
-                cart = new Cart<>(); 
+                cart = new Cart(); 
                 session.setAttribute("cart", cart);
             }
                 
             
-            ProductDetailsModel existingItem = cart.getItems()
-                                                    .stream()
-                                                    .filter(itm -> itm.getId() == Integer.parseInt(idStr))
-                                                    .findFirst()
-                                                    .orElse(null);
+            CartItem existingItem = cart.getItems()
+                                        .stream()
+                                        .filter(itm -> itm.getId() == Integer.parseInt(idStr))
+                                        .findFirst()
+                                        .orElse(null);
             
             if(existingItem == null)
             {
+                item.setQuantity(1);
                 cart.addItem(item);
-                response.sendRedirect("/cart");
             }
-            else {
-                response.setStatus(400);
-                response.getWriter().write("Bu ürün sepetinizde bulunmaktadır.");
-            }
+            response.sendRedirect("/sepet");
         }
     }
 

@@ -7,6 +7,7 @@ package com.webapp.servlets.cart;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.Cart;
+import com.webapp.models.CartItem;
 import com.webapp.models.ProductDetailsModel;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -16,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "ViewCartServlet", urlPatterns = {"/cart"})
+@WebServlet(name = "ViewCartServlet", urlPatterns = {"/sepet"})
 public class ViewCartServlet extends HttpServlet {
     
     private static final Gson GSON = new GsonBuilder().create();
@@ -27,10 +28,13 @@ public class ViewCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         boolean isRetailer = (boolean) session.getAttribute("isRetailer");
         if(!isRetailer) {
-            Cart<ProductDetailsModel> cart = (Cart<ProductDetailsModel>)session.getAttribute("cart");
+            Cart cart = (Cart)session.getAttribute("cart");
+            if(cart == null) {
+                cart = new Cart();
+            }
             request.setAttribute("cart", cart);
             double priceSum = 0.0d;
-            for(ProductDetailsModel item : cart.getItems()) {
+            for(CartItem item : cart.getItems()) {
                 priceSum += item.getPrice();
             }
             request.setAttribute("priceSum", priceSum);
