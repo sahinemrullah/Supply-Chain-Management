@@ -17,15 +17,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-
 public class JWTAuthenticationFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        
+
         String uri = httpRequest.getRequestURI();
-        if(!uri.contains("register") && !uri.contains("login")) {
+        if (!uri.contains("register") && !uri.contains("login")) {
             String header = httpRequest.getHeader(HttpServletUtils.AUTH_HEADER);
             if (header == null || !header.startsWith(HttpServletUtils.AUTH_PREFIX)) {
                 httpResponse.setStatus(401);
@@ -34,13 +34,9 @@ public class JWTAuthenticationFilter implements Filter {
 
                 Claims claims = EncryptionUtils.decodeJWT(authToken);
 
-                Date now = new Date(System.currentTimeMillis());
-
-                if(claims.getExpiration().compareTo(now) < 0) {
-                    httpResponse.setStatus(401);
-                } else {
-                    chain.doFilter(request, response);
-                }
+                httpRequest.setAttribute("userId", (String) claims.get("userId"));
+                httpRequest.setAttribute("isRetailer", (boolean) claims.get("isRetailer"));
+                chain.doFilter(request, response);
             }
         } else {
             chain.doFilter(request, response);

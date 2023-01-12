@@ -22,8 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet("/product/create")
 public class CreateProductServlet extends HttpServlet {
@@ -53,13 +51,14 @@ public class CreateProductServlet extends HttpServlet {
                 product.setPrice(model.getPrice());
                 product.setStock(model.getStock());
                 product.setProductImages(model.getImagePaths());
-                
+                product.setRetailerId(Integer.parseInt((String) request.getAttribute("userId")));
                 if (productRepository.add(product)) {
                     response.setStatus(200);
                 } else {
                     response.setStatus(500);
                 }
             } catch (SQLException ex) {
+                response.getWriter().write(request.getParameter("userId"));
                 response.setStatus(500);
             }
         } else {

@@ -23,10 +23,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author LütfullahŞAHİN
- */
 @WebServlet(name = "CreateProductServlet", urlPatterns = {"/urunler/yeni"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 10,
@@ -89,19 +85,20 @@ public class CreateProductServlet extends HttpServlet {
             int firstIndexOf = fileName.indexOf('.');
             int lastIndexOf = fileName.lastIndexOf('.');
             
-            if(firstIndexOf == lastIndexOf)
-            {
-                String newFileName = UUID.randomUUID() + fileName.substring(lastIndexOf); 
+            if (firstIndexOf == lastIndexOf) {
+                String newFileName = UUID.randomUUID() + fileName.substring(lastIndexOf);
                 fileNames.add(newFileName);
                 fileNameMap.put(fileName, newFileName);
-            }
-            else
+            } else
                 fileParts.remove(filePart);
         }
         
         if(validFileSize) {
             model.setImagePaths(fileNames);
-            Response result = HttpRequestUtils.post("http://localhost:9080/product/create", model);
+
+            String token = (String) request.getSession().getAttribute("token");
+            
+            Response result = HttpRequestUtils.post("http://localhost:9080/product/create", model, token);
 
             if (result.getStatusCode() == 200) {
                 String path = getServletContext().getRealPath("/uploads/");

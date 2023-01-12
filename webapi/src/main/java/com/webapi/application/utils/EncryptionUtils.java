@@ -57,14 +57,7 @@ public final class EncryptionUtils {
 	            .setSubject(subject)
 	            .setIssuer(issuer)
                     .addClaims(claims)
-	            .signWith(signingKey, signatureAlgorithm);
-	  
-	    //if it has been specified, let's add the expiration
-	    if (ttlMillis > 0) {
-	        long expMillis = nowMillis + ttlMillis;
-	        Date exp = new Date(expMillis);
-	        builder.setExpiration(exp);
-	    }  
+	            .signWith(signingKey, signatureAlgorithm); 
 	  
 	    //Builds the JWT and serializes it to a compact, URL-safe string
 	    return builder.compact();
