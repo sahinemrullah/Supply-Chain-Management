@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapi.application.abstractions.IValidation;
 import com.webapi.application.abstractions.IValidator;
-import com.webapi.application.models.CreateProductModel;
+import com.webapi.application.models.product.CreateProductModel;
 import com.webapi.application.utils.HttpServletRequestUtils;
 import com.webapi.application.utils.HttpServletUtils;
 import com.webapi.application.validators.CreateProductModelValidator;
