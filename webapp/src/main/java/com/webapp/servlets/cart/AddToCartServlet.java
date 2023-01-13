@@ -6,9 +6,8 @@ package com.webapp.servlets.cart;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webapp.models.Cart;
-import com.webapp.models.CartItem;
-import com.webapp.models.ProductDetailsModel;
+import com.webapp.models.cart.Cart;
+import com.webapp.models.cart.CartItem;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
 import com.webapp.utils.Response;

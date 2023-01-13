@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.webapp.servlets.product;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webapp.models.ProductDetailsModel;
+import com.webapp.models.product.ProductDetailsModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
 import com.webapp.utils.Response;
@@ -42,20 +38,10 @@ public class ProductDetailsServlet extends HttpServlet {
         if(result.getStatusCode() == 200) {
             ProductDetailsModel model = GSON.fromJson(result.getResponseMessage(), ProductDetailsModel.class);
             request.setAttribute("product", model);
+            
             request.getRequestDispatcher("/WEB-INF/product/productDetails.jsp").forward(request, response);
         } else {
             response.getWriter().write(result.getResponseMessage());
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

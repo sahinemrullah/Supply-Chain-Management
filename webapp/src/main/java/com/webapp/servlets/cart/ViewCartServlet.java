@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.webapp.servlets.cart;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webapp.models.Cart;
-import com.webapp.models.CartItem;
-import com.webapp.models.ProductDetailsModel;
+import com.webapp.models.cart.Cart;
+import com.webapp.models.cart.CartItem;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -41,15 +36,4 @@ public class ViewCartServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/cart/cartDetails.jsp").forward(request, response);
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

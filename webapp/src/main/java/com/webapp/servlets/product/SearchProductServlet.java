@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.webapp.models.PaginatedListModel;
-import com.webapp.models.ProductSearchModel;
+import com.webapp.models.product.ProductSearchModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.Response;
 import java.io.IOException;
@@ -46,15 +46,4 @@ public class SearchProductServlet extends HttpServlet {
             response.setStatus(result.getStatusCode());
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

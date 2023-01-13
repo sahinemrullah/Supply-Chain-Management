@@ -7,7 +7,7 @@ package com.webapi.application.validators;
 import com.webapi.application.abstractions.IValidation;
 import com.webapi.application.concretes.Validation;
 import com.webapi.application.concretes.ValidatorBase;
-import com.webapi.application.models.CreateProductModel;
+import com.webapi.application.models.product.CreateProductModel;
 import com.webapi.application.utils.StringUtils;
 
 public class CreateProductModelValidator extends ValidatorBase<CreateProductModel> {

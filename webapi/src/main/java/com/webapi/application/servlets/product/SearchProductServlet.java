@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.webapi.application.servlets.product;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapi.application.models.PaginatedListModel;
-import com.webapi.application.models.ProductSearchModel;
+import com.webapi.application.models.product.ProductSearchModel;
 import com.webapi.application.utils.HttpServletUtils;
-import com.webapi.domain.entities.Product;
 import com.webapi.persistence.abstractions.IProductRepository;
 import com.webapi.persistence.concretes.ProductRepository;
 import jakarta.servlet.ServletException;
@@ -19,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 @WebServlet("/product/search")
 public class SearchProductServlet extends HttpServlet {

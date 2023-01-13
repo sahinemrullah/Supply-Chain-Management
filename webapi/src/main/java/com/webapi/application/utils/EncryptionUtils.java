@@ -34,7 +34,7 @@ public final class EncryptionUtils {
 		return StringUtils.isEqual(hashString(password), hashToCompare);
 	}
 
-	public static String createJWT(String id, boolean isRetailer, String issuer, String subject, long ttlMillis) {
+	public static String createJWT(String id, boolean isRetailer, String issuer, String subject) {
 		  
 	    //The JWT signature algorithm we will be using to sign the token
 	    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

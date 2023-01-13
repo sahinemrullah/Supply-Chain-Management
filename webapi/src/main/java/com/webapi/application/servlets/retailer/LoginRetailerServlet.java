@@ -38,7 +38,7 @@ public class LoginRetailerServlet extends HttpServlet {
 		 Retailer retailer = retailerRepository.getRetailer(model.getEmail());
 		 
 		 if(retailer != null && EncryptionUtils.checkHash(model.getPassword(), retailer.getPasswordHash())) {
-			 String jwt = EncryptionUtils.createJWT(String.valueOf(retailer.getId()), true, "localhost:8080", "localhost:8080", 10 * 60 * 1000);
+			 String jwt = EncryptionUtils.createJWT(String.valueOf(retailer.getId()), true, "localhost:8080", "localhost:8080");
 
 			 response.setStatus(200);
 			 response.getWriter().write(jwt);
