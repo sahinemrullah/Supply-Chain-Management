@@ -2,7 +2,7 @@ package com.webapi.application.servlets.order;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webapi.application.models.order.ConfirmOrderModel;
+import com.webapi.application.models.order.CreateOrderModel;
 import com.webapi.application.utils.HttpServletRequestUtils;
 import com.webapi.application.utils.HttpServletUtils;
 import com.webapi.domain.entities.Product;
@@ -20,15 +20,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@WebServlet("/order/confirm")
-public class ConfirmOrderServlet extends HttpServlet {
+@WebServlet("/order/create")
+public class CreateOrderServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static final Gson GSON = new GsonBuilder().create();
     private IProductRepository productRepository;
     private IOrderRepository orderRepository;
 
-    public ConfirmOrderServlet() {
+    public CreateOrderServlet() {
         productRepository = new ProductRepository();
         orderRepository = new OrderRepository();
     }
@@ -37,7 +37,7 @@ public class ConfirmOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         try {
-            ConfirmOrderModel model = GSON.fromJson(HttpServletRequestUtils.getBody(request), ConfirmOrderModel.class);
+            CreateOrderModel model = GSON.fromJson(HttpServletRequestUtils.getBody(request), CreateOrderModel.class);
 
             response.setContentType(HttpServletUtils.MEDIA_TYPE_PLAIN_TEXT);
             List<Product> products = productRepository.getAll(model.getProducts().keySet().toArray(new Integer[0]));

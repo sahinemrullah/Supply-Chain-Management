@@ -5,14 +5,14 @@ import com.webapp.models.cart.Cart;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConfirmOrderModel {
+public class CreateOrderModel {
     private Map<Integer, Integer> products;
     
-    public ConfirmOrderModel() {
+    public CreateOrderModel() {
         
     }
     
-    public ConfirmOrderModel(Cart cart) {
+    public CreateOrderModel(Cart cart) {
         products = cart.getItems().stream().collect(Collectors.toMap(CartItem::getId, CartItem::getQuantity));
     }
     

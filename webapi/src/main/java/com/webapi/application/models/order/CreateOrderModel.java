@@ -2,7 +2,7 @@ package com.webapi.application.models.order;
 
 import java.util.Map;
 
-public class ConfirmOrderModel {
+public class CreateOrderModel {
     private Map<Integer, Integer> products;
 
     public Map<Integer, Integer> getProducts() {
