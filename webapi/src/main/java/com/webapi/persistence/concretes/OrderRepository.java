@@ -1,5 +1,9 @@
 package com.webapi.persistence.concretes;
 
+import com.webapi.application.models.PaginatedListModel;
+import com.webapi.application.models.order.ViewOrderListModel;
+import com.webapi.application.models.order.ViewOrderModel;
+import com.webapi.application.models.order.PendingOrderModel;
 import com.webapi.persistence.abstractions.IOrderRepository;
 import com.webapi.domain.entities.Order;
 import com.webapi.domain.entities.Product;
@@ -9,10 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class OrderRepository implements IOrderRepository {
 
@@ -37,10 +43,7 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
-    public int createOrder(int supplierId, List<Product> products, Map<Integer, Integer> quantities) throws SQLException {
-        Map<Integer, List<Product>> productsByRetailer = products.stream()
-                                                                 .collect(Collectors.groupingBy(p -> p.getRetailerId()));
-        
+    public int createOrder(int supplierId, Map<Integer, List<Product>> productsByRetailer, Map<Integer, Integer> quantities) throws SQLException {
         Connection con = DatabaseConnection.getConntection();
         con.setAutoCommit(false);
         
@@ -95,5 +98,136 @@ public class OrderRepository implements IOrderRepository {
         }
         
         statement.executeBatch();
+    }
+
+    @Override
+    public PaginatedListModel<PendingOrderModel> getPendingOrders(int retailerId, int pageNumber, int pageSize) throws SQLException {
+        Connection con = DatabaseConnection.getConntection();
+        
+        PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, s.name, om.created_date, odd.order_m_d_id " +
+                                                            "FROM order_m_d AS od " +
+                                                            "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
+                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                            "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
+                                                            "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                            "WHERE od.retailer_id = ? " +
+                                                            "GROUP BY odd.order_m_d_id " +
+                                                            "LIMIT ? OFFSET ?");
+        
+        PreparedStatement numberOfRecordsStatement = con.prepareStatement("SELECT FOUND_ROWS()");
+        
+        statement.setInt(1, retailerId);
+        statement.setInt(2, pageSize);
+        statement.setInt(3, (pageNumber - 1) * pageSize);
+        
+        ResultSet result = statement.executeQuery();
+        
+        ArrayList<PendingOrderModel> orders = new ArrayList<>();
+        
+        while(result.next()) {
+            PendingOrderModel order = new PendingOrderModel();
+            order.setOrderId(result.getInt("order_m_id"));
+            order.setSupplierName(result.getString("name"));
+            order.setPrice(result.getDouble("price"));
+            Timestamp ts1 = result.getTimestamp("created_date");
+            order.setCreatedDate(new Date(ts1.getTime()));
+            orders.add(order);
+        }
+        
+        result.close();
+
+        result = numberOfRecordsStatement.executeQuery();
+
+        int numberOfRecords = 0;
+
+        if (result.next()) {
+            numberOfRecords = result.getInt(1);
+        }
+
+        int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / pageSize);
+        
+        PaginatedListModel<PendingOrderModel> model = new PaginatedListModel<>();
+        model.setItems(orders);
+        model.setPageNumber(pageNumber);
+        model.setPageSize(pageSize);
+        model.setNumberOfRecords(numberOfRecords);
+        model.setNumberOfPages(numberOfPages);
+        
+        return model;
+    }
+
+    @Override
+    public ViewOrderModel findById(int id, int userId, boolean isRetailer) throws SQLException {
+        Connection con = DatabaseConnection.getConntection();
+        
+        PreparedStatement statement = null;
+        
+        if(isRetailer)
+            statement = findByIdRetailer(con, id, userId);
+        else
+            statement = findByIdSupplier(con, id, userId);
+        
+        ResultSet result = statement.executeQuery();
+        
+        if(result.next()) {
+            ViewOrderModel model = new ViewOrderModel();
+            
+            Timestamp ts1 = result.getTimestamp("created_date");
+            model.setCreatedDate(new Date(ts1.getTime()));
+            
+            model.addProduct(getViewOrderProduct(result));
+            
+            while(result.next()) {
+                model.addProduct(getViewOrderProduct(result));
+            }
+            
+            return model;
+        }
+        
+        return null;
+    }
+    
+    private ViewOrderListModel getViewOrderProduct(ResultSet result) throws SQLException {
+        ViewOrderListModel product = new ViewOrderListModel();
+        
+        product.setId(result.getInt("product_id"));
+        product.setName(result.getString("name"));
+        product.setStock(result.getInt("stock"));
+        product.setQuantity(result.getInt("quantity"));
+        product.setPrice(result.getDouble("price"));
+        product.setDiscount(result.getDouble("discount"));
+        product.setUserName(result.getString("userName"));
+        
+        return product;
+    }
+    
+    private static PreparedStatement findByIdRetailer(Connection con, int id, int retailerId) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("SELECT odd.quantity, p.product_id, p.name, p.stock, p.price, s.name AS userName, odd.discount, om.created_date " + 
+                                                            "FROM order_m_d AS od " +
+                                                            "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
+                                                            "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
+                                                            "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                            "WHERE om.order_m_id = ? AND od.retailer_id = ?");
+        
+        statement.setInt(1, id);
+        statement.setInt(2, retailerId);
+        
+        return statement;
+    }
+    
+    private static PreparedStatement findByIdSupplier(Connection con, int id, int supplierId) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("SELECT odd.quantity, p.product_id, p.name, p.stock, p.price, r.name AS userName, odd.discount, om.created_date " + 
+                                                            "FROM order_m_d AS od " +
+                                                            "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
+                                                            "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
+                                                            "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                            "JOIN retailer AS r ON r.retailer_id = od.retailer_id " +
+                                                            "WHERE om.order_m_id = ? AND om.supplier_id = ?");
+        
+        statement.setInt(1, id);
+        statement.setInt(2, supplierId);
+        
+        return statement;
     }
 }
