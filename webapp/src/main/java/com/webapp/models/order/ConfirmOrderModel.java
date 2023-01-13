@@ -1,5 +1,7 @@
-package com.webapp.models;
+package com.webapp.models.order;
 
+import com.webapp.models.cart.CartItem;
+import com.webapp.models.cart.Cart;
 import java.util.Map;
 import java.util.stream.Collectors;
 

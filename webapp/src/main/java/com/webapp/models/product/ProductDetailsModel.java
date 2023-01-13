@@ -2,19 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.webapp.models;
+package com.webapp.models.product;
 
 import java.util.ArrayList;
 
-public class CreateProductModel {
+public class ProductDetailsModel {
+    private int id;
     private String name;
     private String description;
     private double price;
     private int stock;
-    private ArrayList<String> imagePaths;
+    private int retailerName;
+    private ArrayList<String> productImages;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
-    public CreateProductModel() {
-        imagePaths = new ArrayList<String>();
+    public int getRetailerName() {
+        return retailerName;
+    }
+
+    public void setRetailerName(int retailerName) {
+        this.retailerName = retailerName;
+    }
+    
+    public ProductDetailsModel() {
+        productImages = new ArrayList<String>();
     }
 
     public String getName() {
@@ -49,11 +67,11 @@ public class CreateProductModel {
         this.stock = stock;
     }
 
-    public ArrayList<String> getImagePaths() {
-        return imagePaths;
+    public ArrayList<String> getProductImages() {
+        return productImages;
     }
 
-    public void setImagePaths(ArrayList<String> imagePaths) {
-        this.imagePaths = imagePaths;
+    public void setProductImages(ArrayList<String> productImages) {
+        this.productImages = productImages;
     }
 }

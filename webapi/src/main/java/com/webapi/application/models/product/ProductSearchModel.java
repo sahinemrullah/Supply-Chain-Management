@@ -1,4 +1,8 @@
-package com.webapp.models;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.webapi.application.models.product;
 
 public class ProductSearchModel {
     private int id;
@@ -7,7 +11,8 @@ public class ProductSearchModel {
     private int stock;
     private double price;
     private double discount;
-    private String supplierName;
+    private String retailerName;
+    private int retailerId;
     private String imagePath;
 
     public String getImagePath() {
@@ -66,20 +71,19 @@ public class ProductSearchModel {
         this.discount = discount;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getRetailerName() {
+        return retailerName;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setRetailerName(String retailerName) {
+        this.retailerName = retailerName;
     }
 
-    public int getSupplierId() {
-        return supplierId;
+    public int getRetailerId() {
+        return retailerId;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
     }
-    private int supplierId;
 }

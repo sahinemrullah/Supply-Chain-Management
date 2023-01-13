@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.webapi.application.servlets.product;
+package com.webapi.application.servlets.order;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webapi.application.models.ConfirmOrderModel;
+import com.webapi.application.models.order.ConfirmOrderModel;
 import com.webapi.application.utils.HttpServletRequestUtils;
 import com.webapi.application.utils.HttpServletUtils;
 import com.webapi.domain.entities.Product;
@@ -20,10 +16,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet("/order/confirm")
 public class ConfirmOrderServlet extends HttpServlet {
@@ -47,7 +42,9 @@ public class ConfirmOrderServlet extends HttpServlet {
             response.setContentType(HttpServletUtils.MEDIA_TYPE_PLAIN_TEXT);
             List<Product> products = productRepository.getAll(model.getProducts().keySet().toArray(new Integer[0]));
             if(products.size() == model.getProducts().keySet().size()) {
-                orderRepository.createOrder(Integer.parseInt((String) request.getAttribute("userId")), products, model.getProducts());
+                Map<Integer, List<Product>> productsByRetailer = products.stream()
+                                                                 .collect(Collectors.groupingBy(p -> p.getRetailerId()));
+                orderRepository.createOrder(Integer.parseInt((String) request.getAttribute("userId")), productsByRetailer, model.getProducts());
             } else {
                 response.setStatus(400);
             }

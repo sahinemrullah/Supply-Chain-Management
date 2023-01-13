@@ -1,4 +1,4 @@
-package com.webapp.models;
+package com.webapp.models.cart;
 
 public class CartItem {
     private int id;

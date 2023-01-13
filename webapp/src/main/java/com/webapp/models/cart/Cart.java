@@ -1,4 +1,4 @@
-package com.webapp.models;
+package com.webapp.models.cart;
 
 import java.util.ArrayList;
 
