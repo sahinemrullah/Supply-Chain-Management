@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductRepository implements IProductRepository {
+public class ProductRepository extends RepositoryBase<Product> implements IProductRepository {
 
     @Override
     public boolean add(Product entity) throws SQLException {
@@ -50,7 +50,6 @@ public class ProductRepository implements IProductRepository {
             con.commit();
         }
         return true;
-
     }
 
     @Override
@@ -145,66 +144,43 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public PaginatedListModel<ProductSearchModel> paginatedSearch(String query, int pageNumber, int pageSize) throws SQLException {
-        PaginatedListModel<ProductSearchModel> model;
-        try (Connection con = DatabaseConnection.getConntection();
-                PreparedStatement statement = 
+        Connection con = DatabaseConnection.getConntection();
+        ArrayList<ProductSearchModel> products;
+        try (PreparedStatement statement = 
                         con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.retailer_id, MIN(pi.path) AS path, r.name AS retailer_name FROM product AS p " +
                                             "JOIN productimage AS pi ON pi.product_id = p.product_id " +
                                             "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id " +
                                             "WHERE MATCH(p.name) AGAINST(?) " +
                                             "GROUP BY pi.product_id " +
-                                            "LIMIT ? OFFSET ?"); 
-                PreparedStatement numberOfRecordsStatement = con.prepareStatement("SELECT FOUND_ROWS()")) {
+                                            "LIMIT ? OFFSET ?")) {
             
             statement.setString(1, query);
             statement.setInt(2, pageSize);
             statement.setInt(3, (pageNumber - 1) * pageSize);
             
-            ResultSet result = statement.executeQuery();
-            
-            ArrayList<ProductSearchModel> products = new ArrayList<>();
-            
-            while (result.next()) {
+            try (ResultSet result = statement.executeQuery()) {
+                products = new ArrayList<>();
                 
-                ProductSearchModel product = new ProductSearchModel();
-                
-                product.setId(result.getInt("product_id"));
-                product.setName(result.getString("name"));
-                product.setDescription(result.getString("description"));
-                product.setStock(result.getInt("stock"));
-                product.setPrice(result.getDouble("price"));
-                product.setDiscount(0);
-                product.setRetailerId(result.getInt("retailer_id"));
-                product.setRetailerName(result.getString("retailer_name"));
-                product.setImagePath(result.getString("path"));
-                
-                products.add(product);
+                while (result.next()) {
+                    
+                    ProductSearchModel product = new ProductSearchModel();
+                    
+                    product.setId(result.getInt("product_id"));
+                    product.setName(result.getString("name"));
+                    product.setDescription(result.getString("description"));
+                    product.setStock(result.getInt("stock"));
+                    product.setPrice(result.getDouble("price"));
+                    product.setDiscount(0);
+                    product.setRetailerId(result.getInt("retailer_id"));
+                    product.setRetailerName(result.getString("retailer_name"));
+                    product.setImagePath(result.getString("path"));
+                    
+                    products.add(product);
+                }
             }
-            
-            result.close();
-            
-            result = numberOfRecordsStatement.executeQuery();
-            
-            int numberOfRecords = 0;
-            
-            if (result.next()) {
-                numberOfRecords = result.getInt(1);
-            }   
-            
-            int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / pageSize);
-            
-            model = new PaginatedListModel<>();
-            
-            model.setItems(products);
-            model.setPageNumber(pageNumber);
-            model.setPageSize(pageSize);
-            model.setNumberOfRecords(numberOfRecords);
-            model.setNumberOfPages(numberOfPages);
-            
-            result.close();
         }
 
-        return model;
+        return paginatedQueryEnd(con, pageNumber, pageSize, products);
     }
 
     @Override
@@ -223,68 +199,74 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public PaginatedListModel<ProductListModel> getProductsInStockFor(int retailerId, int pageNumber, int pageSize) throws SQLException {
-        PaginatedListModel<ProductListModel> model;
-        try (Connection con = DatabaseConnection.getConntection();
-                PreparedStatement statement = 
-                        con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
-                                            "FROM product AS p " +
-                                            "JOIN productimage AS pi ON pi.product_id = p.product_id " +
-                                            "WHERE p.retailer_id = ? AND NOT p.stock = 0 " +
-                                            "GROUP BY pi.product_id " +
-                                            "LIMIT ? OFFSET ?"); 
-                PreparedStatement numberOfRecordsStatement = con.prepareStatement("SELECT FOUND_ROWS()")) {
-            
+        
+        Connection con = DatabaseConnection.getConntection();
+        
+        ArrayList<ProductListModel> products;
+        try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
+                "FROM product AS p " +
+                "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                "WHERE p.retailer_id = ? AND NOT p.stock = 0 " +
+                "GROUP BY pi.product_id " +
+                "LIMIT ? OFFSET ?")) {
             statement.setInt(1, retailerId);
             statement.setInt(2, pageSize);
             statement.setInt(3, (pageNumber - 1) * pageSize);
-            
-            ResultSet result = statement.executeQuery();
-            
-            ArrayList<ProductListModel> products = new ArrayList<>();
-            
-            while (result.next()) {
-                
-                ProductListModel product = new ProductListModel();
-                
-                product.setId(result.getInt("product_id"));
-                product.setName(result.getString("name"));
-                product.setStock(result.getInt("stock"));
-                product.setPrice(result.getDouble("price"));
-                product.setDiscount(result.getDouble("discount"));
-                product.setImagePath(result.getString("path"));
-                
-                products.add(product);
+            try (ResultSet result = statement.executeQuery()) {
+                products = new ArrayList<>();
+                while (result.next()) {
+                    
+                    ProductListModel product = new ProductListModel();
+                    
+                    product.setId(result.getInt("product_id"));
+                    product.setName(result.getString("name"));
+                    product.setStock(result.getInt("stock"));
+                    product.setPrice(result.getDouble("price"));
+                    product.setDiscount(result.getDouble("discount"));
+                    product.setImagePath(result.getString("path"));
+                    
+                    products.add(product);
+                }
             }
-            
-            result.close();
-            
-            result = numberOfRecordsStatement.executeQuery();
-            
-            int numberOfRecords = 0;
-            
-            if (result.next()) {
-                numberOfRecords = result.getInt(1);
-            }   
-            
-            int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / pageSize);
-            
-            model = new PaginatedListModel<>();
-            
-            model.setItems(products);
-            model.setPageNumber(pageNumber);
-            model.setPageSize(pageSize);
-            model.setNumberOfRecords(numberOfRecords);
-            model.setNumberOfPages(numberOfPages);
-            
-            result.close();
         }
 
-        return model;
+        return paginatedQueryEnd(con, pageNumber, pageSize, products);
     }
 
     @Override
     public PaginatedListModel<ProductListModel> getProductsOutOfStockFor(int retailerId, int pageNumber, int pageSize) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        Connection con = DatabaseConnection.getConntection();
+        
+        ArrayList<ProductListModel> products;
+        try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
+                "FROM product AS p " +
+                "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                "WHERE p.retailer_id = ? AND p.stock = 0 " +
+                "GROUP BY pi.product_id " +
+                "LIMIT ? OFFSET ?")) {
+            statement.setInt(1, retailerId);
+            statement.setInt(2, pageSize);
+            statement.setInt(3, (pageNumber - 1) * pageSize);
+            try (ResultSet result = statement.executeQuery()) {
+                products = new ArrayList<>();
+                while (result.next()) {
+                    
+                    ProductListModel product = new ProductListModel();
+                    
+                    product.setId(result.getInt("product_id"));
+                    product.setName(result.getString("name"));
+                    product.setStock(result.getInt("stock"));
+                    product.setPrice(result.getDouble("price"));
+                    product.setDiscount(result.getDouble("discount"));
+                    product.setImagePath(result.getString("path"));
+                    
+                    products.add(product);
+                }
+            }
+        }
+
+        return paginatedQueryEnd(con, pageNumber, pageSize, products);
     }
 
     @Override

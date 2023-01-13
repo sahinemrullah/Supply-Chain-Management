@@ -4,6 +4,7 @@ import com.webapi.application.models.PaginatedListModel;
 import com.webapi.application.models.order.ViewOrderListModel;
 import com.webapi.application.models.order.ViewOrderModel;
 import com.webapi.application.models.order.PendingOrderModel;
+import com.webapi.application.models.supplier.OrderHistoryModel;
 import com.webapi.persistence.abstractions.IOrderRepository;
 import com.webapi.domain.entities.Order;
 import com.webapi.domain.entities.Product;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class OrderRepository implements IOrderRepository {
+public class OrderRepository extends RepositoryBase<Order> implements IOrderRepository {
 
     @Override
     public boolean add(Order entity) throws SQLException {
@@ -104,56 +105,34 @@ public class OrderRepository implements IOrderRepository {
     public PaginatedListModel<PendingOrderModel> getPendingOrders(int retailerId, int pageNumber, int pageSize) throws SQLException {
         Connection con = DatabaseConnection.getConntection();
         
-        PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, s.name, om.created_date, odd.order_m_d_id " +
-                                                            "FROM order_m_d AS od " +
-                                                            "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
-                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
-                                                            "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
-                                                            "JOIN product AS p ON odd.product_id = p.product_id " +
-                                                            "WHERE od.retailer_id = ? " +
-                                                            "GROUP BY odd.order_m_d_id " +
-                                                            "LIMIT ? OFFSET ?");
-        
-        PreparedStatement numberOfRecordsStatement = con.prepareStatement("SELECT FOUND_ROWS()");
-        
-        statement.setInt(1, retailerId);
-        statement.setInt(2, pageSize);
-        statement.setInt(3, (pageNumber - 1) * pageSize);
-        
-        ResultSet result = statement.executeQuery();
-        
-        ArrayList<PendingOrderModel> orders = new ArrayList<>();
-        
-        while(result.next()) {
-            PendingOrderModel order = new PendingOrderModel();
-            order.setOrderId(result.getInt("order_m_id"));
-            order.setSupplierName(result.getString("name"));
-            order.setPrice(result.getDouble("price"));
-            Timestamp ts1 = result.getTimestamp("created_date");
-            order.setCreatedDate(new Date(ts1.getTime()));
-            orders.add(order);
+        ArrayList<PendingOrderModel> orders;
+        try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, s.name, om.created_date, odd.order_m_d_id " +
+                                                                "FROM order_m_d AS od " +
+                                                                "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
+                                                                "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                                "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
+                                                                "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                                "WHERE od.retailer_id = ? " +
+                                                                "GROUP BY odd.order_m_d_id " +
+                                                                "LIMIT ? OFFSET ?")) {
+            statement.setInt(1, retailerId);
+            statement.setInt(2, pageSize);
+            statement.setInt(3, (pageNumber - 1) * pageSize);
+            try (ResultSet result = statement.executeQuery()) {
+                orders = new ArrayList<>();
+                while(result.next()) {
+                    PendingOrderModel order = new PendingOrderModel();
+                    order.setOrderId(result.getInt("order_m_id"));
+                    order.setSupplierName(result.getString("name"));
+                    order.setPrice(result.getDouble("price"));
+                    Timestamp ts1 = result.getTimestamp("created_date");
+                    order.setCreatedDate(new Date(ts1.getTime()));
+                    orders.add(order);
+                }
+            }
         }
         
-        result.close();
-
-        result = numberOfRecordsStatement.executeQuery();
-
-        int numberOfRecords = 0;
-
-        if (result.next()) {
-            numberOfRecords = result.getInt(1);
-        }
-
-        int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / pageSize);
-        
-        PaginatedListModel<PendingOrderModel> model = new PaginatedListModel<>();
-        model.setItems(orders);
-        model.setPageNumber(pageNumber);
-        model.setPageSize(pageSize);
-        model.setNumberOfRecords(numberOfRecords);
-        model.setNumberOfPages(numberOfPages);
-        
-        return model;
+        return paginatedQueryEnd(con, pageNumber, pageSize, orders);
     }
 
     @Override
@@ -229,5 +208,41 @@ public class OrderRepository implements IOrderRepository {
         statement.setInt(2, supplierId);
         
         return statement;
+    }
+
+    @Override
+    public PaginatedListModel<OrderHistoryModel> getOrderHistory(int supplierId, int pageNumber, int pageSize) throws SQLException {
+        Connection con = DatabaseConnection.getConntection();
+        
+        PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, om.created_date " +
+                                                            "FROM order_m_d AS od " +
+                                                            "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
+                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                            "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
+                                                            "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                            "WHERE om.supplier_id = ? " +
+                                                            "GROUP BY odd.order_m_d_id " +
+                                                            "LIMIT ? OFFSET ?");
+        
+        statement.setInt(1, supplierId);
+        statement.setInt(2, pageSize);
+        statement.setInt(3, (pageNumber - 1) * pageSize);
+        
+        ResultSet result = statement.executeQuery();
+        
+        ArrayList<OrderHistoryModel> orders = new ArrayList<>();
+        
+        while(result.next()) {
+            OrderHistoryModel order = new OrderHistoryModel();
+            order.setId(result.getInt("order_m_id"));
+            order.setTotal(result.getDouble("price"));
+            Timestamp ts1 = result.getTimestamp("created_date");
+            order.setCreatedDate(new Date(ts1.getTime()));
+            orders.add(order);
+        }
+        
+        result.close();
+
+        return paginatedQueryEnd(con, pageNumber, pageSize, orders);
     }
 }

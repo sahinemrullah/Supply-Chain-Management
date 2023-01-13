@@ -3,6 +3,7 @@ package com.webapi.persistence.abstractions;
 import com.webapi.application.models.PaginatedListModel;
 import com.webapi.application.models.order.ViewOrderModel;
 import com.webapi.application.models.order.PendingOrderModel;
+import com.webapi.application.models.supplier.OrderHistoryModel;
 import com.webapi.domain.entities.Order;
 import com.webapi.domain.entities.Product;
 import java.sql.SQLException;
@@ -16,5 +17,7 @@ public interface IOrderRepository extends IRepository<Order> {
     public PaginatedListModel<PendingOrderModel> getPendingOrders(int retailerId, int pageNumber, int pageSize) throws SQLException ;
 
     public ViewOrderModel findById(int id, int userId, boolean isRetailer) throws SQLException ;
+
+    public PaginatedListModel<OrderHistoryModel> getOrderHistory(int supplierId, int pageNumber, int i) throws SQLException ;
     
 }
