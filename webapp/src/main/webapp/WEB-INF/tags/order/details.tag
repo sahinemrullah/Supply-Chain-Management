@@ -58,6 +58,18 @@
                             </c:if>
                         </tr>
                     </c:forEach>
+                    <c:if test="${isRetailer}">
+                        <tr>
+                            <td colspan="6">
+                    <form action="/order/confirm" method="post">
+                        <input type="hidden" name="orderId" value="${id}" />
+                        <button type="submit" class="btn btn-primary">
+                            Siparişi Onayla
+                        </button>
+                    </form>
+                        </td>
+                        </tr>
+                    </c:if>
                 </tbody>
             </table>
         </div>

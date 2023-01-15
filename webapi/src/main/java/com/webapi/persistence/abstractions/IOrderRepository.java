@@ -12,12 +12,13 @@ import java.util.Map;
 
 public interface IOrderRepository extends IRepository<Order> {
 
-    int createOrder(int supplierId, Map<Integer, List<Product>> productsByRetailer, Map<Integer, Integer> quantities) throws SQLException ;
+    public int createOrder(int supplierId, Map<Integer, List<Product>> productsByRetailer, Map<Integer, Integer> quantities) throws SQLException ;
 
     public PaginatedListModel<PendingOrderModel> getPendingOrders(int retailerId, int pageNumber, int pageSize) throws SQLException ;
 
     public ViewOrderModel findById(int id, int userId, boolean isRetailer) throws SQLException ;
 
     public PaginatedListModel<OrderHistoryModel> getOrderHistory(int supplierId, int pageNumber, int i) throws SQLException ;
-    
+
+    public String confirmOrder(int orderId, int retailerId) throws SQLException ;
 }

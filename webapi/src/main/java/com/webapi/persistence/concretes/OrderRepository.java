@@ -9,12 +9,14 @@ import com.webapi.persistence.abstractions.IOrderRepository;
 import com.webapi.domain.entities.Order;
 import com.webapi.domain.entities.Product;
 import com.webapi.persistence.DatabaseConnection;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -112,7 +114,8 @@ public class OrderRepository extends RepositoryBase<Order> implements IOrderRepo
                                                                 "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
                                                                 "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                                 "JOIN product AS p ON odd.product_id = p.product_id " +
-                                                                "WHERE od.retailer_id = ? " +
+                                                                "LEFT JOIN invoiceitem AS it ON it.order_m_d_d_id = odd.order_m_d_d_id " +
+                                                                "WHERE od.retailer_id = ? AND it.invoice_item_id IS NULL " +
                                                                 "GROUP BY odd.order_m_d_id " +
                                                                 "LIMIT ? OFFSET ?")) {
             statement.setInt(1, retailerId);
@@ -244,5 +247,28 @@ public class OrderRepository extends RepositoryBase<Order> implements IOrderRepo
         result.close();
 
         return paginatedQueryEnd(con, pageNumber, pageSize, orders);
+    }
+
+    @Override
+    public String confirmOrder(int orderId, int retailerId) throws SQLException {
+        Connection con = DatabaseConnection.getConntection();
+        
+        CallableStatement statement = con.prepareCall("{CALL sp_create_invoice(?, ?, ?, ?)}");
+        
+        statement.setInt(1, retailerId);
+        statement.setInt(2, orderId);
+        statement.registerOutParameter(3, Types.BOOLEAN);
+        statement.registerOutParameter(4, Types.NVARCHAR);
+        
+        statement.execute();
+        
+        boolean isSuccess = (boolean)statement.getObject(3);
+        
+        if(!isSuccess) {
+            String errorMessage = statement.getString(4);
+            return errorMessage;
+        }
+        
+        return null;
     }
 }

@@ -46,6 +46,7 @@ public class ViewOrderServlet extends HttpServlet {
             
             boolean isRetailer = (boolean) session.getAttribute("isRetailer");
             request.setAttribute("isRetailer", isRetailer);
+            request.setAttribute("id", idStr);
             
             request.getRequestDispatcher("/WEB-INF/order/details.jsp").forward(request, response);
         } else {
