@@ -94,12 +94,7 @@
 
                     <!-- Brand -->
                     <a class="navbar-brand" href="#">
-                        <img
-                            src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-                            height="25"
-                            alt=""
-                            loading="lazy"
-                            />
+                        
                     </a>
                     <!-- Search form -->
                     <form id="searchForm" class="d-none d-md-flex input-group w-auto my-auto">

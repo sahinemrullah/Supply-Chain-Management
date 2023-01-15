@@ -31,7 +31,7 @@ public class CreateOrderServlet extends HttpServlet {
                 String token = (String) session.getAttribute("token");
                 Response result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
                 if(result.getStatusCode() == 200) {
-                    response.sendRedirect("/satici/siparislerim");
+                    response.sendRedirect("/satici/");
                 } else {
                     response.getWriter().write(result.getResponseMessage());
                 }
