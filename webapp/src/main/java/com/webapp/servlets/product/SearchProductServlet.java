@@ -33,7 +33,7 @@ public class SearchProductServlet extends HttpServlet {
         
         parameters.put("query", query);
         parameters.put("pageNumber", pageNumberStr);
-        parameters.put("pageSize", "3");
+        parameters.put("pageSize", "9");
         
         Response result = HttpRequestUtils.get("http://localhost:9080/product/search", parameters, token);
         

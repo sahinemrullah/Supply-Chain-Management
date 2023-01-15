@@ -11,6 +11,7 @@ import com.webapi.application.utils.StringUtils;
 import com.webapi.domain.entities.Supplier;
 import com.webapi.persistence.DatabaseConnection;
 import com.webapi.persistence.abstractions.ISupplierRepository;
+import java.util.List;
 
 public class SupplierRepository implements ISupplierRepository {
 
@@ -44,7 +45,7 @@ public class SupplierRepository implements ISupplierRepository {
     }
 
     @Override
-    public ArrayList<Supplier> getAll() {
+    public List<Supplier> getAll(Integer[] ids) throws SQLException {
 
         return null;
     }

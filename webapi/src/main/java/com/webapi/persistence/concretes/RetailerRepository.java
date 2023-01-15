@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import com.webapi.application.utils.StringUtils;
 import com.webapi.domain.entities.Retailer;
 import com.webapi.persistence.DatabaseConnection;
 import com.webapi.persistence.abstractions.IRetailerRepository;
+import java.util.List;
 
 public class RetailerRepository implements IRetailerRepository {
 
@@ -45,7 +45,7 @@ public class RetailerRepository implements IRetailerRepository {
     }
 
     @Override
-    public ArrayList<Retailer> getAll() {
+    public List<Retailer> getAll(Integer[] ids) throws SQLException {
 
         return null;
     }

@@ -27,12 +27,14 @@ public class CreateOrderServlet extends HttpServlet {
             Cart cart = (Cart)session.getAttribute("cart");
             if(cart == null || cart.getItems().isEmpty())
                 response.sendRedirect("/sepet");
-            String token = (String) session.getAttribute("token");
-            Response result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
-            if(result.getStatusCode() == 200) {
-                response.sendRedirect("/satici/siparislerim");
-            } else {
-                response.getWriter().write(result.getResponseMessage());
+            else {
+                String token = (String) session.getAttribute("token");
+                Response result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
+                if(result.getStatusCode() == 200) {
+                    response.sendRedirect("/satici/siparislerim");
+                } else {
+                    response.getWriter().write(result.getResponseMessage());
+                }
             }
         } else {
             response.setStatus(403);
