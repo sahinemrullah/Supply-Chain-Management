@@ -217,14 +217,15 @@ public class OrderRepository extends RepositoryBase<Order> implements IOrderRepo
     public PaginatedListModel<OrderHistoryModel> getOrderHistory(int supplierId, int pageNumber, int pageSize) throws SQLException {
         Connection con = DatabaseConnection.getConntection();
         
-        PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, om.created_date " +
+        PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS od.order_m_id, r.name, SUM(p.price) AS price, om.created_date, i.invoice_id IS NULL AS is_pending " +
                                                             "FROM order_m_d AS od " +
                                                             "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
-                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                            "JOIN retailer AS r ON r.retailer_id = od.retailer_id " +
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
+                                                            "LEFT JOIN invoiceitem as i ON i.order_m_d_d_id = odd.order_m_d_d_id " +
                                                             "WHERE om.supplier_id = ? " +
-                                                            "GROUP BY odd.order_m_d_id " +
+                                                            "GROUP BY odd.order_m_d_id, i.invoice_id " +
                                                             "LIMIT ? OFFSET ?");
         
         statement.setInt(1, supplierId);
@@ -239,8 +240,10 @@ public class OrderRepository extends RepositoryBase<Order> implements IOrderRepo
             OrderHistoryModel order = new OrderHistoryModel();
             order.setId(result.getInt("order_m_id"));
             order.setTotal(result.getDouble("price"));
+            order.setRetailerName(result.getString("name"));
             Timestamp ts1 = result.getTimestamp("created_date");
             order.setCreatedDate(new Date(ts1.getTime()));
+            order.setIsPending(result.getBoolean("is_pending"));
             orders.add(order);
         }
         
