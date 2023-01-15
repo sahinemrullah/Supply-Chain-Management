@@ -49,23 +49,36 @@
                                 </a>
                             </td>
                             <td class="col-1">
-                                   <a class="btn btn-secondary" 
+                                <a class="btn btn-secondary" 
                                    data-id="${product.id}"  
                                    onclick="editDiscountPress(this)" 
                                    data-mdb-toggle="modal" 
                                    data-mdb-target="#discountEditModal">
-                                       <c:choose>
-                                           <c:when test="${product.discount > 0}">
-                                               İndirim Ayarla
-                                           </c:when>
-                                           <c:otherwise>
-                                               İndirim Yap
-                                           </c:otherwise>
-                                       </c:choose>
+                                    <c:choose>
+                                        <c:when test="${product.discount > 0}">
+                                            İndirim Ayarla
+                                        </c:when>
+                                        <c:otherwise>
+                                            İndirim Yap
+                                        </c:otherwise>
+                                    </c:choose>
                                 </a>
                             </td>
                         </tr>
                     </c:forEach>
+                    <tr>
+                        <td colspan="6"></td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <c:if test="${model.pageNumber > 1}">
+                                    <a class="btn btn-outline-primary" onclick="addValue(this)" data-value="-1">&laquo;</a>
+                                </c:if>
+                                <c:if test="${model.pageNumber < model.numberOfPages}">
+                                    <a class="btn btn-outline-primary" onclick="addValue(this)" data-value="1">&raquo;</a>
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

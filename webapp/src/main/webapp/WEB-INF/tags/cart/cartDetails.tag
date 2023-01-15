@@ -30,7 +30,13 @@
                     </c:forEach>
                         <tr>
                             <td colspan="2"></td>
-                            <td colspan="2"><form method="post" action="/order/create"><button class="btn btn-primary">Satın Al: ${priceSum}₺</button></form></td>
+                            <td colspan="2">
+                                <c:if test="${!cart.items.isEmpty()}">
+                                    <form method="post" action="/order/create">
+                                        <button class="btn btn-primary">Satın Al: ${priceSum}₺</button>
+                                    </form>
+                                </c:if>
+                            </td>
                         </tr>
                 </tbody>
             </table>

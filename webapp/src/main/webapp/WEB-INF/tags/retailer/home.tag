@@ -28,9 +28,23 @@
                             <td class="col-3">${order.supplierName}</td>
                             <td class="col-3">${order.createdDate}</td>
                             <td class="col-2">${order.price}₺</td>
-                            <td class="col-2"><a href="/siparis/goruntule?id=${order.orderId}" class="btn btn-primary"></a></td>
+                            <td class="col-2"><a href="/siparis/goruntule?id=${order.orderId}" class="btn btn-primary">Görüntüle</a></td>
                         </tr>
                     </c:forEach>
+                        
+                    <tr>
+                        <td colspan="4"></td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <c:if test="${model.pageNumber > 1}">
+                                    <a class="btn btn-outline-primary" onclick="addValue(this)" data-value="-1">&laquo;</a>
+                                </c:if>
+                                <c:if test="${model.pageNumber < model.numberOfPages}">
+                                    <a class="btn btn-outline-primary" onclick="addValue(this)" data-value="1">&raquo;</a>
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

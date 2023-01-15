@@ -173,7 +173,20 @@
                     var addValue = $(el).data("value");
                     var pageNumber = parseInt($('#pageNumber').val()) + parseInt(addValue);
                     $('#pageNumber').val(pageNumber);
-                    $('#searchForm').submit();
+                    $.ajax({
+                        url: updateURLParameter(window.location.href, "pageNumber", pageNumber),
+                        success: function (responseText) {
+                            $('#content').html(responseText);
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            if(xhr.status === 401)
+                                window.location.href = "/giris";
+                        }
+                    });
+                    
+                    var urlParams = new URLSearchParams(data).toString();
+                    window.history.pushState({href: href, data: data}, '', href + "?" + urlParams);
+                    
                     return false;
                 }
                 function getProduct(el) {
@@ -215,6 +228,25 @@
                     if (e.state)
                         ajaxChangeHistory(e.state.href, e.state.data, false);
                 });
+                function updateURLParameter(url, param, paramVal){
+                    var newAdditionalURL = "";
+                    var tempArray = url.split("?");
+                    var baseURL = tempArray[0];
+                    var additionalURL = tempArray[1];
+                    var temp = "";
+                    if (additionalURL) {
+                        tempArray = additionalURL.split("&");
+                        for (var i=0; i<tempArray.length; i++){
+                            if(tempArray[i].split('=')[0] != param){
+                                newAdditionalURL += temp + tempArray[i];
+                                temp = "&";
+                            }
+                        }
+                    }
+
+                    var rows_txt = temp + "" + param + "=" + paramVal;
+                    return baseURL + "?" + newAdditionalURL + rows_txt;
+                }
         </script>
     </body>
 
