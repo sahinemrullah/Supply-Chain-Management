@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/product/editDiscount")
+@WebServlet(name = "EditDiscountServlet", urlPatterns = {"/product/editDiscount"})
 public class EditDiscountServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

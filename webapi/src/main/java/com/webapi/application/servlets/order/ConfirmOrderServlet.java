@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/order/confirm")
+@WebServlet(name = "ConfirmOrderServlet", urlPatterns = {"/order/confirm"})
 public class ConfirmOrderServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

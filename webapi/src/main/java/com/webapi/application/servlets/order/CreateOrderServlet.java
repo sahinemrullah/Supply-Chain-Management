@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@WebServlet("/order/create")
+@WebServlet(name = "CreateOrderServlet", urlPatterns = {"/order/create"})
 public class CreateOrderServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

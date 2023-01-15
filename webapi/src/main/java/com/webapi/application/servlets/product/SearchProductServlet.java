@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/product/search")
+@WebServlet(name = "SearchProductServlet", urlPatterns = {"/product/search"})
 public class SearchProductServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

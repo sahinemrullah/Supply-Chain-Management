@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.webapi.application.servlets.product;
 
 import com.google.gson.Gson;
@@ -23,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/product/create")
+@WebServlet(name = "CreateProductServlet", urlPatterns = {"/product/create"})
 public class CreateProductServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
