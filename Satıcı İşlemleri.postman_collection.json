@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "af7ef097-6cc8-4f84-8bbf-d2336426f4ef",
+		"name": "Satıcı İşlemleri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Satıcı Kayıt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sahin@satici.com\",\r\n    \"password\": \"Sahin123\",\r\n    \"passwordVerification\": \"Sahin123\",\r\n    \"name\": \"Sahin\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/supplier/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"supplier",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Satıcı Giriş",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sahin@satici.com\",\r\n    \"password\": \"Sahin123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/supplier/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"supplier",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Arama",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/product/search?query=Lenovo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Lenovo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Detayı",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/product/get?id=21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Oluşturma",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\" : {\r\n        \"21\": \"2\",\r\n        \"7\": \"3\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Siparişler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/supplier/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"supplier",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Detay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/order/details?id=8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"order",
+						"details"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2IiwiaWF0IjoxNjczODA5ODQ2LCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo4MDgwIiwiaXNSZXRhaWxlciI6ZmFsc2UsInVzZXJJZCI6IjYifQ.cmUIK5vq91IO2VypD0mwa10qoxggkAvBDth8j9zxbXc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

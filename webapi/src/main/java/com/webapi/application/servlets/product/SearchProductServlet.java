@@ -32,8 +32,14 @@ public class SearchProductServlet extends HttpServlet {
         String pageNumberStr = request.getParameter("pageNumber");
         String pageSizeStr = request.getParameter("pageSize");
         
-        if(query == null || pageNumberStr == null || pageSizeStr == null)
+        if(query == null)
             response.setStatus(400);
+        
+        if(pageSizeStr == null)
+            pageSizeStr = "10";
+        
+        if(pageNumberStr == null)
+            pageNumberStr = "1";
         
         int pageNumber = Integer.parseInt(pageNumberStr);
         int pageSize = Integer.parseInt(pageSizeStr);

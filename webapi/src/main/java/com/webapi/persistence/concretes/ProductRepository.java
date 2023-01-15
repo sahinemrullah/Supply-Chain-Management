@@ -106,7 +106,7 @@ public class ProductRepository extends RepositoryBase<Product> implements IProdu
         Connection con = DatabaseConnection.getConntection();
         
         PreparedStatement statement = con.prepareStatement("SELECT * FROM product AS p " +
-                                                            "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                                                            "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
                                                             "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id " +
                                                             "WHERE p.product_id = ?");
         
@@ -148,10 +148,10 @@ public class ProductRepository extends RepositoryBase<Product> implements IProdu
         ArrayList<ProductSearchModel> products;
         try (PreparedStatement statement = 
                         con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.retailer_id, MIN(pi.path) AS path, r.name AS retailer_name FROM product AS p " +
-                                            "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                                            "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
                                             "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id " +
                                             "WHERE MATCH(p.name) AGAINST(?) " +
-                                            "GROUP BY pi.product_id " +
+                                            "GROUP BY pi.product_id, p.product_id " +
                                             "LIMIT ? OFFSET ?")) {
             
             statement.setString(1, query);
@@ -205,9 +205,9 @@ public class ProductRepository extends RepositoryBase<Product> implements IProdu
         ArrayList<ProductListModel> products;
         try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
                 "FROM product AS p " +
-                "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
                 "WHERE p.retailer_id = ? AND NOT p.stock = 0 " +
-                "GROUP BY pi.product_id " +
+                "GROUP BY pi.product_id, p.product_id " +
                 "LIMIT ? OFFSET ?")) {
             statement.setInt(1, retailerId);
             statement.setInt(2, pageSize);
@@ -241,9 +241,9 @@ public class ProductRepository extends RepositoryBase<Product> implements IProdu
         ArrayList<ProductListModel> products;
         try (PreparedStatement statement = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
                 "FROM product AS p " +
-                "JOIN productimage AS pi ON pi.product_id = p.product_id " +
+                "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
                 "WHERE p.retailer_id = ? AND p.stock = 0 " +
-                "GROUP BY pi.product_id " +
+                "GROUP BY pi.product_id, p.product_id " +
                 "LIMIT ? OFFSET ?")) {
             statement.setInt(1, retailerId);
             statement.setInt(2, pageSize);

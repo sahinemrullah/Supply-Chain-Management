@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "ba0c8c6b-b22e-4629-99d2-8dc2d96a4e6f",
+		"name": "Tedarikçi İşlemleri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tedarikçi Kayıt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"lenovo@tedarikci.com\",\r\n    \"password\": \"Lenovo123\",\r\n    \"passwordVerification\": \"Lenovo123\",\r\n    \"name\": \"Lenovo\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/retailer/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"retailer",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tedarikçi Giriş",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"lenovo@tedarikci.com\",\r\n    \"password\": \"Lenovo123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/retailer/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"retailer",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Ekleme",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Lenovo Ideapad Gaming 3 Dizüstü Bilgisayar\",\r\n    \"description\": \"IdeaPad Gaming 3 dizüstü bilgisayar, hızlı refleksleri barındıran bir ekranla zaferi sunar. 15,6 FHD ekran, görselleri net ve yırtılmadan tutar, böylece birden fazla oyun içi hedefi edinebilir.\",\r\n    \"price\": 1000,\r\n    \"stock\": 3,\r\n    \"imagePaths\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/product/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün İndirim Ayarlama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1\",\r\n    \"discount\": \"99\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/product/editDiscount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"editDiscount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Stok Ayarlama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1\",\r\n    \"stock\": \"99\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/product/editStock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"editStock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Detayı",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/product/get?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"product",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stokta Tükenen Ürünler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/retailer/outOfStockProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"retailer",
+						"outOfStockProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stokta Bulunan Ürünler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/retailer/myProducts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"retailer",
+						"myProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Siparişler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/retailer/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"retailer",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Detay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/order/details?id=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"order",
+						"details"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Onaylama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/order/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"order",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzIiwiaWF0IjoxNjczODA4MDI3LCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo4MDgwIiwiaXNSZXRhaWxlciI6dHJ1ZSwidXNlcklkIjoiMyJ9.AQDDPUK976BqNvRHy7ODwPYXomShLqCXcBt0-4tzXpY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
