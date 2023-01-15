@@ -37,6 +37,8 @@
     </head>
 
     <body>
+        
+            
         <header>
             <!-- Sidebar -->
             <nav
@@ -124,12 +126,28 @@
 
         <!--Main layout-->
         <main style="margin-top: 58px">
+            <div id="intro" class="bg-image shadow-2-strong">
+                <div class="mask d-flex align-items-center" style="background-color: rgba(0, 0, 0, 0.8);">
             <div class="container pt-4">
+                <style>
+                #intro {
+                    background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+                    height: 100vh;
+                }
+
+                .navbar .nav-link {
+                    color: #fff !important;
+                }
+            </style> 
+            <!-- Background image -->
                 <section class="mb-4" id="content">
                     <jsp:invoke fragment="content"></jsp:invoke>
                 </section>
             </div>
+                </div>
+            </div>
         </main>
+                
         <!-- MDB -->
         <script
             type="text/javascript"

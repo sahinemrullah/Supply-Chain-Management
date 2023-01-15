@@ -17,7 +17,7 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">Ürün Adı</th>
-                        <th scope="col">Tutar</th>
+                        <th scope="col">Fiyat</th>
                         <th scope="col">Stok</th>
                         <th scope="col">İndirim</th>
                         <th scope="col"></th>
@@ -25,6 +25,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td colspan="6"></td>
+                        <td>
+                            <a href="/urunler/yeni" class="btn btn-primary">Yeni Ürün</a>
+                        </td>
+                    </tr>
                     <c:forEach items="${model.items}" var="product">
                         <tr>
                             <td class="col-3"><img class="img-thumbnail" src="${pageContext.request.contextPath}/uploads/${product.imagePath}" /></td>

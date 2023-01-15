@@ -5,6 +5,22 @@
     class="list-group-item list-group-item-action py-2 ripple"
     aria-current="true"
     >
-    <i class="fas fa-tachometer-alt fa-fw me-3"></i
-    ><span>Ürünler</span>
+    <i class="fas fa-archive fa-fw me-3"></i>
+    <span>Ürünler</span>
+</a>
+<a
+    href="/tedarikci/stokta-olmayan-urunler"
+    class="list-group-item list-group-item-action py-2 ripple"
+    aria-current="true"
+    >
+    <i class="fas fa-minus-square fa-fw me-3"></i>
+    <span>Stokta Olmayan Ürünler</span>
+</a>
+<a
+    href="/tedarikci/faturalar"
+    class="list-group-item list-group-item-action py-2 ripple"
+    aria-current="true"
+    >
+    <i class="fas fa-receipt fa-fw me-3"></i>
+    <span>Faturalar</span>
 </a>

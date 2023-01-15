@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-@WebServlet(name = "OutOfStockProductListServlet", urlPatterns = {"/tedarikci/tukenen-urunlerim"})
+@WebServlet(name = "OutOfStockProductListServlet", urlPatterns = {"/tedarikci/stokta-olmayan-urunler"})
 public class OutOfStockProductListServlet extends HttpServlet {
     
     private static final Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();

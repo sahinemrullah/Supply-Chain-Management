@@ -15,7 +15,7 @@
     </c:when>
 
     <c:otherwise>
-        <t:template title="Detay">
+        <t:template title="Ürünlerim">
             <jsp:attribute name="content">
                 <r:myProducts>
 

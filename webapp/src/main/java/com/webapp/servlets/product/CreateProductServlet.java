@@ -82,6 +82,8 @@ public class CreateProductServlet extends HttpServlet {
                 for(Part filePart : fileParts) {
                     filePart.write(path + fileNameMap.get(filePart.getSubmittedFileName()));
                 }
+                String referer = request.getHeader("Referer");
+                response.sendRedirect(referer);
             } else {
                 response.setStatus(result.getStatusCode());
             }

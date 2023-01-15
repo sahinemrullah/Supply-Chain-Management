@@ -50,14 +50,14 @@
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <input type="email" id="emailInput" class="form-control <c:if test="${emailError != null}">is-invalid</c:if>" name="email" value="${email}" required />
-                  <label class="form-label" for="emailInput">Email address</label>
+                  <label class="form-label" for="emailInput">Email adresi</label>
                   <div class="invalid-feedback">${emailError == null ? "Geçerli bir email giriniz." : emailError}</div>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                   <input type="password" id="passwordInput" class="form-control" name="password" required />
-                  <label class="form-label" for="passwordInput">Password</label>
+                  <label class="form-label" for="passwordInput">Şifre</label>
                   <div class="invalid-feedback">Şifre boş olamaz.</div>
                 </div>
 
