@@ -30,7 +30,7 @@ public final class StringUtils {
 		return isNull(str) || str.isEmpty();
 	}
 	
-	public static boolean isEmptyOrWhiteSpace(String str) {
+	public static boolean isBlank(String str) {
 		return isNull(str) || str.isBlank();
 	}
 	
