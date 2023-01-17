@@ -1,20 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.webapi.application.models.product;
+package com.webapi.application.requests.createproduct;
 
+import com.webapi.application.abstractions.IRequest;
 import java.util.ArrayList;
 
-public class CreateProductModel {
+public class CreateProductRequest implements IRequest {
     private String name;
     private String description;
     private double price;
     private int stock;
-    private ArrayList<String> imagePaths;
+    private ArrayList<String> productImages;
+    private int retailerId;
+
+    public int getRetailerId() {
+        return retailerId;
+    }
+
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
+    }
     
-    public CreateProductModel() {
-        imagePaths = new ArrayList<String>();
+    public CreateProductRequest() {
+        productImages = new ArrayList<>();
     }
 
     public String getName() {
@@ -49,11 +55,11 @@ public class CreateProductModel {
         this.stock = stock;
     }
 
-    public ArrayList<String> getImagePaths() {
-        return imagePaths;
+    public ArrayList<String> getProductImages() {
+        return productImages;
     }
 
-    public void setImagePaths(ArrayList<String> imagePaths) {
-        this.imagePaths = imagePaths;
+    public void setProductImages(ArrayList<String> productImages) {
+        this.productImages = productImages;
     }    
 }
