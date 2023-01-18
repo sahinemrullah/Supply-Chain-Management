@@ -1,6 +1,7 @@
 package com.webapi.application.concretes;
 
 import com.webapi.application.abstractions.IResult;
+import com.webapi.application.exceptions.ModelValidationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,12 @@ public class Result<T> implements IResult<T> {
     @Override
     public void setItem(T item) {
         this.item = item;
+    }
+
+    @Override
+    public void throwIfNotSucceeded() {
+        if(!isSucceeded())
+            throw new ModelValidationException(errors);
     }
 
 }

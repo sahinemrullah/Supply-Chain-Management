@@ -23,6 +23,8 @@ public class SupplierLoginRequestHandler implements IRequestHandler<SupplierLogi
         AccessToken accessToken = factory.build();
         if (accessToken == null) {
             result.addError(EMAIL_KEY, INVALID_CREDENTIALS_ERROR);
+        } else {
+            result.setItem(accessToken);
         }
 
         return result;

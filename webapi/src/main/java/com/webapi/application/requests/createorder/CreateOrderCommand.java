@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
-public class CreateOrderCommand implements ISQLOperation<CreateOrderModel, Integer> {
+public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Integer> {
     private Map<Integer, List<CreateOrderProductModel>> productsByRetailer;
 
     public CreateOrderCommand(Map<Integer, List<CreateOrderProductModel>> productsByRetailer) {
@@ -19,7 +19,7 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderModel, Integ
     }
     
     @Override
-    public Integer execute(CreateOrderModel params) throws SQLException {
+    public Integer execute(CreateOrderRequest params) throws SQLException {
         try (Connection con = DatabaseConnection.getConntection()) {
             con.setAutoCommit(false);
             

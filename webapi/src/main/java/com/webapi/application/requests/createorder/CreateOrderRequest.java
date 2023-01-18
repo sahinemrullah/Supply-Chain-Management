@@ -3,7 +3,7 @@ package com.webapi.application.requests.createorder;
 import com.webapi.application.abstractions.IRequest;
 import java.util.Map;
 
-public class CreateOrderModel implements IRequest {
+public class CreateOrderRequest implements IRequest {
     private int supplierId;
     private Map<Integer, Integer> products;
 

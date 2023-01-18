@@ -14,4 +14,6 @@ public interface IResult<T extends Object> {
     public boolean isSucceeded();
 
     public void setItem(T success);
+    
+    public void throwIfNotSucceeded();
 }

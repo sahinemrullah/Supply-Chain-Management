@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CreateOrderRequestHandler implements IRequestHandler<CreateOrderModel, Void> {
+public class CreateOrderRequestHandler implements IRequestHandler<CreateOrderRequest, Void> {
 
     @Override
-    public IResult<Void> handle(CreateOrderModel request) throws SQLException {
+    public IResult<Void> handle(CreateOrderRequest request) throws SQLException {
         IResult<Void> result = new Result<>();
         
         ISQLOperation<Set<Integer>, List<CreateOrderProductModel>> getProductsByProductIdsQuery = new GetProductsByProductIdsQuery();
@@ -27,7 +27,7 @@ public class CreateOrderRequestHandler implements IRequestHandler<CreateOrderMod
             Map<Integer, List<CreateOrderProductModel>> productsByRetailer = products.stream()
                                                                             .collect(Collectors.groupingBy(CreateOrderProductModel::getRetailerId));
             
-            ISQLOperation<CreateOrderModel, Integer> createOrderCommand = new CreateOrderCommand(productsByRetailer);
+            ISQLOperation<CreateOrderRequest, Integer> createOrderCommand = new CreateOrderCommand(productsByRetailer);
             
             createOrderCommand.execute(request);
         } else {
