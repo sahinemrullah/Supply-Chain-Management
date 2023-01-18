@@ -1,4 +1,4 @@
-package com.webapi.application.models.supplier;
+package com.webapi.application.requests.orderhistory;
 
 import java.util.Date;
 
