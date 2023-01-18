@@ -9,6 +9,7 @@ import com.webapi.application.abstractions.IJsonParser;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.GsonJsonParser;
 import com.webapi.application.exceptions.ModelValidationException;
+import com.webapi.application.exceptions.NotFoundException;
 import com.webapi.application.utils.HttpServletUtils;
 import java.io.IOException;
 
@@ -39,6 +40,9 @@ public abstract class BaseServlet<T extends IRequest, U extends Object> extends 
             httpResponse.getWriter().write(mx.getMessage());
         } catch (IOException ex) {
             throw ex;
+        } catch (NotFoundException ex) {
+            httpResponse.setStatus(404);
+            httpResponse.getWriter().write(ex.getMessage());
         } catch (Exception ex) {
             httpResponse.setStatus(500);
         }
@@ -48,7 +52,7 @@ public abstract class BaseServlet<T extends IRequest, U extends Object> extends 
         return new GsonJsonParser();
     }
     
-    private Integer tryParseInt(String str) {
+    protected Integer tryParseInt(String str) {
         try {
             return Integer.valueOf(str);
         } catch (NumberFormatException nfe) {
@@ -58,5 +62,9 @@ public abstract class BaseServlet<T extends IRequest, U extends Object> extends 
     
     protected Integer getUserId(HttpServletRequest httpRequest) {
         return tryParseInt((String) httpRequest.getAttribute("userId"));
+    } 
+    
+    protected boolean getIsRetailer(HttpServletRequest httpRequest) {
+        return (boolean) httpRequest.getAttribute("isRetailer");
     }
 }

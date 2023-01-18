@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.webapi.application.models.product;
+package com.webapi.application.requests.productsearch;
 
 public class ProductSearchModel {
     private int id;
@@ -11,8 +7,8 @@ public class ProductSearchModel {
     private int stock;
     private double price;
     private double discount;
-    private String retailerName;
     private int retailerId;
+    private String retailerName;
     private String imagePath;
 
     public String getImagePath() {
