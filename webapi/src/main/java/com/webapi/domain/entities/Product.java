@@ -2,6 +2,7 @@ package com.webapi.domain.entities;
 
 import com.webapi.domain.abstractions.BaseEntity;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Product extends BaseEntity {
 
@@ -10,11 +11,11 @@ public class Product extends BaseEntity {
     private int stock;
     private double price;
     private double discount;
-    private ArrayList<String> productImages;
+    private List<String> productImages;
     private int retailerId;
 
     public Product() {
-        productImages = new ArrayList<String>();
+        productImages = new ArrayList<>();
     }
     
     public String getName() {
@@ -57,7 +58,7 @@ public class Product extends BaseEntity {
         this.discount = discount;
     }
 
-    public ArrayList<String> getProductImages() {
+    public List<String> getProductImages() {
         return productImages;
     }
 

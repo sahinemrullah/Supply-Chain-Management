@@ -9,18 +9,13 @@ import com.webapi.application.abstractions.ISQLOperation;
 public class CreateProductRequestHandler implements IRequestHandler<CreateProductRequest, Void> {
 
     @Override
-    public IResult<Void> handle(CreateProductRequest request) {
+    public IResult<Void> handle(CreateProductRequest request) throws SQLException {
         IResult<Void> result = new Result<>();
 
         ISQLOperation<CreateProductRequest, Boolean> command = new CreateProductCommand();
 
-        try {
-            if (!command.execute(request)) {
-                result.addError("", "Bilinmeyen bir hatadan dolayı ürün oluşturulamadı.");
-            }
-        } catch (SQLException ex) {
-            result.addError("exception", ex.getMessage());
-            return result;
+        if (!command.execute(request)) {
+            result.addError("", "Bilinmeyen bir hatadan dolayı ürün oluşturulamadı.");
         }
 
         return result;

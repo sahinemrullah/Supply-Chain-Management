@@ -24,7 +24,7 @@ public class RetailerRegisterRequestHandler implements IRequestHandler<RetailerR
     private static final String EMAIL_KEY = "email";
 
     @Override
-    public IResult<Void> handle(RetailerRegisterRequest request) {
+    public IResult<Void> handle(RetailerRegisterRequest request) throws SQLException {
         IResult<Void> result = new Result<>();
 
         List<IValidator> validators = new ArrayList<>();
@@ -41,19 +41,15 @@ public class RetailerRegisterRequestHandler implements IRequestHandler<RetailerR
 
         if (result.isSucceeded()) {
             ISQLOperation<String, Boolean> retailerExistsQuery = new RetailerExistsQuery();
-            try {
-                if (!retailerExistsQuery.execute(request.getEmail())) {
-                    ISQLOperation<RetailerRegisterRequest, Boolean> registerRetailercommand = new RetailerRegisterCommand();
 
-                    if (!registerRetailercommand.execute(request)) {
-                        result.addError("", "Bilinmeyen bir hatadan dolayı kullanıcı oluşturulamadı.");
-                    }
-                } else {
-                    result.addError(EMAIL_KEY, "Bu email adresi ile ilişkili bir tedarikçi bulunmaktadır.");
+            if (!retailerExistsQuery.execute(request.getEmail())) {
+                ISQLOperation<RetailerRegisterRequest, Boolean> registerRetailercommand = new RetailerRegisterCommand();
+
+                if (!registerRetailercommand.execute(request)) {
+                    result.addError("", "Bilinmeyen bir hatadan dolayı kullanıcı oluşturulamadı.");
                 }
-            } catch (SQLException ex) {
-                result.addError("exception", ex.getMessage());
-                return result;
+            } else {
+                result.addError(EMAIL_KEY, "Bu email adresi ile ilişkili bir tedarikçi bulunmaktadır.");
             }
         }
 

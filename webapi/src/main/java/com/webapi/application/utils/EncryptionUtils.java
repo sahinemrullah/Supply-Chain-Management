@@ -34,7 +34,7 @@ public final class EncryptionUtils {
 		return StringUtils.isEqual(hashString(password), hashToCompare);
 	}
 
-	public static String createJWT(String id, boolean isRetailer, String issuer, String subject) {
+	public static String createJWT(int id, boolean isRetailer, String issuer, String subject) {
 		  
 	    //The JWT signature algorithm we will be using to sign the token
 	    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -52,7 +52,7 @@ public final class EncryptionUtils {
             
 	    //Let's set the JWT Claims
 	    JwtBuilder builder = Jwts.builder()
-                    .setId(id)
+                    .setId(String.valueOf(id))
 	            .setIssuedAt(now)
 	            .setSubject(subject)
 	            .setIssuer(issuer)

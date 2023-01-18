@@ -9,23 +9,19 @@ import com.webapi.application.abstractions.ISQLOperation;
 public class ConfirmOrderRequestHandler implements IRequestHandler<ConfirmOrderRequest, Void> {
 
     @Override
-    public IResult<Void> handle(ConfirmOrderRequest request) {
+    public IResult<Void> handle(ConfirmOrderRequest request) throws SQLException {
         IResult<Void> result = new Result<>();
-        
+
         ISQLOperation<ConfirmOrderRequest, String> command = new ConfirmOrderRequestCommand();
-        
+
         String errorMessage;
-        
-        try {
-            errorMessage = command.execute(request);
-        } catch (SQLException ex) {
-            result.addError("exception", ex.getMessage());
-            return result;
-        }
-        
-        if(errorMessage != null)
+
+        errorMessage = command.execute(request);
+
+        if (errorMessage != null) {
             result.addError("product", errorMessage);
-        
+        }
+
         return result;
     }
 
