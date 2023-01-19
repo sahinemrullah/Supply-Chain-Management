@@ -50,31 +50,42 @@
                                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Kayıt Ol</h4>
 
 
-                                <form role="form" class="bg-white rounded-5 shadow-5-strong p-5 needs-validation" method="post" action="${requestScope['jakarta.servlet.forward.request_uri']}">
-                                    <div class="form-outline mb-4 ${name == null ? "" : "is-filled"} ">
-                                        <input type="text" class="form-control" name="name" value="${name}">
-                                        <label class="form-label">Ad</label>
+                                <form role="form" class="bg-white rounded-5 shadow-5-strong p-4 needs-validation" method="post" action="${requestScope['jakarta.servlet.forward.request_uri']}">
+                                    
+                                    <div class="mb-1">
                                         <small class="text-danger">${nameError}</small>
                                     </div>
-                                    <div class="form-outline mb-4 ${phoneNumber == null ? "" : "is-filled"}">
-                                        <input type="text" pattern="[1-9]{1}[0-9]{9}" class="form-control" name="phoneNumber" value="${phoneNumber}">
-                                        <label class="form-label">Telefon Numarası</label>
+                                    <div class="form-outline mb-3 ${name == null ? "" : "is-filled"} ">
+                                        <input type="text" class="form-control" name="name" value="${name}">
+                                        <label class="form-label">Ad</label>
+                                    </div>
+                                    <div class="mb-1">
                                         <small class="text-danger">${phoneNumberError}</small>
                                     </div>
-                                    <div class="form-outline mb-4 ${email == null ? "" : "is-filled"}">
-                                        <input type="email" class="form-control" name="email" value="${email}">
-                                        <label class="form-label">Email</label>
+                                    <div class="form-outline mb-3 ${phoneNumber == null ? "" : "is-filled"}">
+                                        <input type="text" pattern="[1-9]{1}[0-9]{9}" class="form-control" name="phoneNumber" value="${phoneNumber}">
+                                        <label class="form-label">Telefon Numarası</label>
+                                    </div>
+                                    <div class="mb-1">
                                         <small class="text-danger">${emailError}</small>
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <input type="password" class="form-control" name="password">
-                                        <label class="form-label">Şifre</label>
+                                    <div class="form-outline mb-3 ${email == null ? "" : "is-filled"}">
+                                        <input type="email" class="form-control" name="email" value="${email}">
+                                        <label class="form-label">Email</label>
+                                    </div>
+                                    <div class="mb-1">
                                         <small class="text-danger">${passwordError}</small>
                                     </div>
-                                    <div class="form-outline mb-4">
+                                    <div class="form-outline mb-3">
+                                        <input type="password" class="form-control" name="password">
+                                        <label class="form-label">Şifre</label>
+                                    </div>
+                                    <div class="mb-1">
+                                        <small class="text-danger">${passwordVerificationError}</small>
+                                    </div>
+                                    <div class="form-outline mb-3">
                                         <input type="password" class="form-control" name="passwordVerification">
                                         <label class="form-label">Şifre Onay</label>
-                                        <small class="text-danger">${passwordVerificationError}</small>
                                     </div>
                                     <%@ attribute name="extra_fields" %>
                                     <div class="text-center">

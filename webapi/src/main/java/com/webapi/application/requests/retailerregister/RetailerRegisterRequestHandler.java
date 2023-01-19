@@ -29,6 +29,7 @@ public class RetailerRegisterRequestHandler implements IRequestHandler<RetailerR
                 .withValidator(new PhoneNumberValidator(request.getPhoneNumber()))
                 .withValidator(new NotEmptyStringValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), PASSWORD_VERIFICATION_EMPTY_MESSAGE))
                 .withValidator(new StringsMustBeEqualValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), request.getPassword(), PASSWORDS_NOT_EQUAL_MESSAGE))
+                .validate()
                 .check(request.getEmail(), new RetailerExistsQuery())
                     .withException(new ModelValidationException(EMAIL_KEY, "Bu email adresi ile ilişkili bir tedarikçi bulunmaktadır."))
                 .check(new RetailerRegisterCommand())

@@ -1,28 +1,28 @@
 package com.webapp.servlets.retailer;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webapp.models.RegisterModel;
+import com.webapp.servlets.BaseServlet;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Map;
-import java.util.Map.Entry;
 
 @WebServlet(name = "RetailerSignUpServlet", urlPatterns = {"/tedarikci/kayitol"})
-public class RetailerRegisterServlet extends HttpServlet {
+public class RetailerRegisterServlet extends BaseServlet {
+    
 
-    private static final Gson GSON = new GsonBuilder().create();
+    @Override
+    protected String getJSPPage() {
+        return "/WEB-INF/retailer/register.jsp";
+    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/retailer/register.jsp").forward(request, response);
+        request.getRequestDispatcher(getJSPPage()).forward(request, response);
     }
 
     @Override
@@ -36,23 +36,14 @@ public class RetailerRegisterServlet extends HttpServlet {
         model.setPassword(request.getParameter("password"));
         model.setPasswordVerification(request.getParameter("passwordVerification"));
 
-        Response result = HttpRequestUtils.post("/retailer/register", model);
-
-        if (result.getStatusCode() == 400) {
-            Map<String, String[]> map = GSON.fromJson(result.getResponseMessage(), Map.class);
-
-            for (Entry<String, String[]> entry : map.entrySet()) {
-                request.setAttribute(entry.getKey() + "Error", entry.getValue());
-            }
-
-            request.setAttribute("name", model.getName());
-            request.setAttribute("phoneNumber", model.getPhoneNumber());
-            request.setAttribute("email", model.getEmail());
-
-            request.getRequestDispatcher("/WEB-INF/retailer/register.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/WEB-INF/retailer/login.jsp").forward(request, response);
-        }
+        Result result = HttpRequestUtils.post("retailers/register", model);
+        
+        processResult(result, request, response);
     }
 
+    @Override
+    protected void onSuccessfullResponse(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        response.sendRedirect("/tedarikci/giris");
+    }
+    
 }
