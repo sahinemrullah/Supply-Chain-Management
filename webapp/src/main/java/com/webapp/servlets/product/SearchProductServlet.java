@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.webapp.models.PaginatedListModel;
 import com.webapp.models.product.ProductSearchModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +35,7 @@ public class SearchProductServlet extends HttpServlet {
         parameters.put("pageNumber", pageNumberStr);
         parameters.put("pageSize", "9");
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/product/search", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/product/search", parameters, token);
         
         if(result.getStatusCode() == 200) {
             Type type = TypeToken.getParameterized(PaginatedListModel.class, ProductSearchModel.class).getType();

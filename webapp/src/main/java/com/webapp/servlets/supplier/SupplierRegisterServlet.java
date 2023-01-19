@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.RegisterModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,7 +36,7 @@ public class SupplierRegisterServlet extends HttpServlet {
         model.setPassword(request.getParameter("password"));
         model.setPasswordVerification(request.getParameter("passwordVerification"));
 
-        Response result = HttpRequestUtils.post("http://localhost:9080/supplier/register", model);
+        Result result = HttpRequestUtils.post("http://localhost:9080/supplier/register", model);
 
         if (result.getStatusCode() == 400) {
             Map<String, String[]> map = GSON.fromJson(result.getResponseMessage(), Map.class);

@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.webapp.models.PaginatedListModel;
 import com.webapp.models.order.PendingOrderModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +35,7 @@ public class PendingOrdersServlet extends HttpServlet {
         
         parameters.put("pageNumber", pageNumberStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/retailer/orders", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/retailer/orders", parameters, token);
         if(result.getStatusCode() == 200) {
             Type type = TypeToken.getParameterized(PaginatedListModel.class, PendingOrderModel.class).getType();
             PaginatedListModel<PendingOrderModel> model = GSON.fromJson(result.getResponseMessage(), type);

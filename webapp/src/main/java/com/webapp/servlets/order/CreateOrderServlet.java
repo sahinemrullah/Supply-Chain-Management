@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.webapp.models.cart.Cart;
 import com.webapp.models.order.CreateOrderModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,7 +29,7 @@ public class CreateOrderServlet extends HttpServlet {
                 response.sendRedirect("/sepet");
             else {
                 String token = (String) session.getAttribute("token");
-                Response result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
+                Result result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
                 if(result.getStatusCode() == 200) {
                     response.sendRedirect("/satici/");
                 } else {

@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.webapp.models.order.ViewOrderModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ public class ViewOrderServlet extends HttpServlet {
         
         parameters.put("id", idStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/order/details", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/order/details", parameters, token);
 
         if (result.getStatusCode() == 200) {
             

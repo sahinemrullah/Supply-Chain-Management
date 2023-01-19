@@ -7,7 +7,7 @@ import com.webapp.models.PaginatedListModel;
 import com.webapp.models.order.PendingOrderModel;
 import com.webapp.models.supplier.OrderHistoryModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ public class SupplierHomeServlet extends HttpServlet {
         
         parameters.put("pageNumber", pageNumberStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/supplier/orders", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/supplier/orders", parameters, token);
         if(result.getStatusCode() == 200) {
             Type type = TypeToken.getParameterized(PaginatedListModel.class, OrderHistoryModel.class).getType();
             PaginatedListModel<OrderHistoryModel> model = GSON.fromJson(result.getResponseMessage(), type);

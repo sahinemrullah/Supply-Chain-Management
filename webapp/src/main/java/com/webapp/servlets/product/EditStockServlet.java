@@ -3,7 +3,7 @@ package com.webapp.servlets.product;
 import com.webapp.models.product.EditStockModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,7 +28,7 @@ public class EditStockServlet extends HttpServlet {
             model.setStock(Integer.parseInt(stock));
             String token = (String) request.getSession().getAttribute("token");
             
-            Response result = HttpRequestUtils.post("http://localhost:9080/product/editStock", model, token);
+            Result result = HttpRequestUtils.post("http://localhost:9080/product/editStock", model, token);
             
             if(result.getStatusCode() == 200) {
                 String referer = request.getHeader("Referer");

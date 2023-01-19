@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.webapp.models.PaginatedListModel;
 import com.webapp.models.retailer.ProductListModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +35,7 @@ public class OutOfStockProductListServlet extends HttpServlet {
         
         parameters.put("pageNumber", pageNumberStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/retailer/outOfStockProducts", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/retailer/outOfStockProducts", parameters, token);
         if(result.getStatusCode() == 200) {
             Type type = TypeToken.getParameterized(PaginatedListModel.class, ProductListModel.class).getType();
             PaginatedListModel<ProductListModel> model = GSON.fromJson(result.getResponseMessage(), type);

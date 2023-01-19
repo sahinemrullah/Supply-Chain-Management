@@ -33,12 +33,12 @@ public final class HttpRequestUtils {
 
     }
 
-    public static <T> Response post(String link, T model) throws IOException {
+    public static <T> Result post(String link, T model) throws IOException {
         return post(link, model, null);
     }
     
-    public static <T> Response post(String link, T model, String token) throws IOException {
-        URL url = new URL(String.format("%s%s", BASE_URL, link));
+    public static <T> Result post(String link, T model, String token) throws IOException {
+        URL url = new URL(String.format("%s/%s", BASE_URL, link));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(METHOD_POST);
         con.setRequestProperty(CONTENT_TYPE_HEADER, MEDIA_TYPE_JSON);
@@ -57,11 +57,11 @@ public final class HttpRequestUtils {
         return parseRequest(con);
     }
 
-    public static Response get(String link, Map<String, String> params) throws IOException {
+    public static Result get(String link, Map<String, String> params) throws IOException {
         return get(link, params, null);
     }
     
-    public static Response get(String link, Map<String, String> params, String token) throws IOException {
+    public static Result get(String link, Map<String, String> params, String token) throws IOException {
         URL url = new URL(String.format("%s%s?%s", BASE_URL,link, getParamsString(params)));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(METHOD_GET);
@@ -75,7 +75,7 @@ public final class HttpRequestUtils {
         return parseRequest(con);
     }
     
-    private static Response parseRequest(HttpURLConnection con) throws IOException {
+    private static Result parseRequest(HttpURLConnection con) throws IOException {
 
         int statusCode = con.getResponseCode();
         
@@ -98,7 +98,7 @@ public final class HttpRequestUtils {
             }
         }
         
-        Response response = new Response();
+        Result response = new Result();
         response.setStatusCode(con.getResponseCode());
         response.setResponseMessage(responseMessage.toString());
           

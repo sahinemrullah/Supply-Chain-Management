@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.product.CreateProductModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -75,7 +75,7 @@ public class CreateProductServlet extends HttpServlet {
 
             String token = (String) request.getSession().getAttribute("token");
             
-            Response result = HttpRequestUtils.post("http://localhost:9080/product/create", model, token);
+            Result result = HttpRequestUtils.post("http://localhost:9080/product/create", model, token);
 
             if (result.getStatusCode() == 200) {
                 String path = getServletContext().getRealPath("/uploads/");

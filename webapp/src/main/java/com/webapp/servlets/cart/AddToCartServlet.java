@@ -10,7 +10,7 @@ import com.webapp.models.cart.Cart;
 import com.webapp.models.cart.CartItem;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -46,7 +46,7 @@ public class AddToCartServlet extends HttpServlet {
         
         parameters.put("id", idStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/product/get", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/product/get", parameters, token);
         
         if(result.getStatusCode() == 200) {
             CartItem item = GSON.fromJson(result.getResponseMessage(), CartItem.class);

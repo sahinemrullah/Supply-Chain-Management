@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webapp.models.order.ConfirmOrderModel;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,7 +29,7 @@ public class ConfirmOrderServlet extends HttpServlet {
             String token = (String) session.getAttribute("token");
             ConfirmOrderModel model = new ConfirmOrderModel();
             model.setId(orderId);
-            Response result = HttpRequestUtils.post("http://localhost:9080/order/confirm", model, token);
+            Result result = HttpRequestUtils.post("http://localhost:9080/order/confirm", model, token);
             if(result.getStatusCode() == 200) {
                 response.sendRedirect("/tedarikci/");
             } else {

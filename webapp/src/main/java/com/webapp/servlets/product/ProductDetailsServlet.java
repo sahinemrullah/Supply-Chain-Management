@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.webapp.models.product.ProductDetailsModel;
 import com.webapp.utils.HttpRequestUtils;
 import com.webapp.utils.IntegerUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,7 +33,7 @@ public class ProductDetailsServlet extends HttpServlet {
         
         parameters.put("id", idStr);
         
-        Response result = HttpRequestUtils.get("http://localhost:9080/product/get", parameters, token);
+        Result result = HttpRequestUtils.get("http://localhost:9080/product/get", parameters, token);
         
         if(result.getStatusCode() == 200) {
             ProductDetailsModel model = GSON.fromJson(result.getResponseMessage(), ProductDetailsModel.class);
