@@ -38,7 +38,7 @@ public class SupplierService {
     }
     
     @Path("/login")
-    @PATCH
+    @POST
     public AccessToken login(SupplierLoginRequest request) throws SQLException {
         IRequestHandler<SupplierLoginRequest, AccessToken> retailerLoginRequestHandler = new SupplierLoginRequestHandler();
         

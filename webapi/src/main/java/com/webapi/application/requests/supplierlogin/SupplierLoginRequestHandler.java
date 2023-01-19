@@ -4,6 +4,7 @@ import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.abstractions.ISQLOperation;
 import com.webapi.application.concretes.ResultBuilder;
+import com.webapi.application.exceptions.ModelValidationException;
 import com.webapi.application.models.AccessToken;
 import com.webapi.application.models.AccessTokenFactory;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class SupplierLoginRequestHandler implements IRequestHandler<SupplierLogi
         return ResultBuilder
                 .create(request, AccessToken.class)
                 .check(accessToken != null)
-                    .withError(EMAIL_KEY, INVALID_CREDENTIALS_ERROR)
+                    .withException(new ModelValidationException(EMAIL_KEY, INVALID_CREDENTIALS_ERROR))
                 .withItem(accessToken)
                 .build();
     }
