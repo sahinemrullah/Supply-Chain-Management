@@ -24,7 +24,7 @@ public class RetailerLoginRequestHandler implements IRequestHandler<RetailerLogi
         
         return ResultBuilder
                 .create(request, AccessToken.class)
-                .check(accessToken == null)
+                .check(accessToken != null)
                     .withError(EMAIL_KEY, INVALID_CREDENTIALS_ERROR)
                 .withItem(accessToken)
                 .build();

@@ -48,7 +48,7 @@ public final class EncryptionUtils {
 
             Map<String, Object> claims = new HashMap<>();
             claims.put("userId", id);
-            claims.put("isRetailer", isRetailer);
+            claims.put("role", isRetailer ? "retailer" : "supplier");
             
 	    //Let's set the JWT Claims
 	    JwtBuilder builder = Jwts.builder()
