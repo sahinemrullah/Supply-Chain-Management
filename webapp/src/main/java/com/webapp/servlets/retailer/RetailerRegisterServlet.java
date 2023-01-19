@@ -36,7 +36,7 @@ public class RetailerRegisterServlet extends HttpServlet {
         model.setPassword(request.getParameter("password"));
         model.setPasswordVerification(request.getParameter("passwordVerification"));
 
-        Response result = HttpRequestUtils.post("http://localhost:9080/retailer/register", model);
+        Response result = HttpRequestUtils.post("/retailer/register", model);
 
         if (result.getStatusCode() == 400) {
             Map<String, String[]> map = GSON.fromJson(result.getResponseMessage(), Map.class);

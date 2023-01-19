@@ -10,7 +10,7 @@ import com.webapi.application.abstractions.ISQLOperation;
 
 public class ConfirmOrderRequestCommand implements ISQLOperation<ConfirmOrderRequest, String> {
     private final String query = "{CALL sp_create_invoice(?, ?, ?, ?)}";
-    private final int retailerIdIndex = 1;
+    private final int supplierIdIndex = 1;
     private final int orderIdIndex = 2;
     private final int isSuccessIndex = 3;
     private final int errorMessageIndex = 4;
@@ -20,7 +20,7 @@ public class ConfirmOrderRequestCommand implements ISQLOperation<ConfirmOrderReq
         
         CallableStatement statement = con.prepareCall(query);
         
-        statement.setInt(retailerIdIndex, params.getUserId());
+        statement.setInt(supplierIdIndex, params.getUserId());
         statement.setInt(orderIdIndex, params.getId());
         statement.registerOutParameter(isSuccessIndex, Types.BOOLEAN);
         statement.registerOutParameter(errorMessageIndex, Types.NVARCHAR);

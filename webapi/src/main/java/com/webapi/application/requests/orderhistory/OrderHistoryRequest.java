@@ -4,13 +4,13 @@ package com.webapi.application.requests.orderhistory;
 import com.webapi.application.concretes.PaginatedRequest;
 
 public class OrderHistoryRequest extends PaginatedRequest {
-    private int supplierId;
+    private int retailerId;
 
-    public int getSupplierId() {
-        return supplierId;
+    public int getRetailerId() {
+        return retailerId;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
     }
 }

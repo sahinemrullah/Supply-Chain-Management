@@ -12,7 +12,7 @@ public class ProductSearchRequestHandler implements IRequestHandler<ProductSearc
     public IResult<PaginatedListModel<ProductSearchModel>> handle(ProductSearchRequest request) throws SQLException {
         return ResultBuilder
                 .createPaginated(request, ProductSearchModel.class)
-                .withItem(new ProductSearchQuery())
+                .withQuery(new ProductSearchQuery())
                 .build();
     }
 

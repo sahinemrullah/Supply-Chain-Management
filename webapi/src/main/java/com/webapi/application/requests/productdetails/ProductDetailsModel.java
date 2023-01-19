@@ -12,7 +12,7 @@ public class ProductDetailsModel {
     private double price;
     private double discount;
     private List<String> productImages;
-    private int retailerId;
+    private int supplierId;
 
     public ProductDetailsModel() {
         productImages = new ArrayList<>();
@@ -78,11 +78,11 @@ public class ProductDetailsModel {
         this.productImages = productImages;
     }
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }

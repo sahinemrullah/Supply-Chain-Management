@@ -12,7 +12,7 @@ public class ProductDetailsRequestHandler implements IRequestHandler<ProductDeta
     public IResult<ProductDetailsModel> handle(ProductDetailsRequest request) throws SQLException {
         return ResultBuilder
                 .create(request, ProductDetailsModel.class)
-                .withItem(new ProductDetailsQuery())
+                .withQuery(new ProductDetailsQuery())
                 .build();
     }
 

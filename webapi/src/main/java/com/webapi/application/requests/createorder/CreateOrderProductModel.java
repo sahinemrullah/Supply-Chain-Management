@@ -3,7 +3,7 @@ package com.webapi.application.requests.createorder;
 
 public class CreateOrderProductModel {
     private int id;
-    private int retailerId;
+    private int supplierId;
     private double discount;
 
     public int getId() {
@@ -14,12 +14,12 @@ public class CreateOrderProductModel {
         this.id = id;
     }
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 
     public double getDiscount() {

@@ -6,7 +6,7 @@ public class PendingOrderListModel {
     private int orderId;
     private double price;
     private double discount;
-    private String supplierName;
+    private String retailerName;
     private Date createdDate;
 
     public int getOrderId() {
@@ -33,12 +33,12 @@ public class PendingOrderListModel {
         this.discount = discount;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getRetailerName() {
+        return retailerName;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setRetailerName(String retailerName) {
+        this.retailerName = retailerName;
     }
 
     public Date getCreatedDate() {

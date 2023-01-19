@@ -28,7 +28,7 @@ public class ResultBuilder<T extends IRequest, U extends Object> {
         return new ResultBuilder<>(request);
     }
 
-    public ResultBuilder withItem(ISQLOperation<T, U> operation) throws SQLException {
+    public ResultBuilder withQuery(ISQLOperation<T, U> operation) throws SQLException {
         U item = operation.execute(request);
         if (item != null) {
             result.setItem(item);

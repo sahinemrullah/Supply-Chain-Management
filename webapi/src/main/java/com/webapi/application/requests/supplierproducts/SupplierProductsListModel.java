@@ -1,6 +1,6 @@
-package com.webapi.application.requests.retailerproducts;
+package com.webapi.application.requests.supplierproducts;
 
-public class RetailerProductsListModel {
+public class SupplierProductsListModel {
     private int id;
     private int stock;
     private double price;

@@ -13,7 +13,7 @@ public class PendingOrderRequestHandler implements IRequestHandler<PendingOrderR
     public IResult<PaginatedListModel<PendingOrderListModel>> handle(PendingOrderRequest request) throws SQLException {
         return ResultBuilder
                 .createPaginated(request, PendingOrderListModel.class)
-                .withItem(new GetPendingOrdersQuery())
+                .withQuery(new GetPendingOrdersQuery())
                 .build();
     }
 

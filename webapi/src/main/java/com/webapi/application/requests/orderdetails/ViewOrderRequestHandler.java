@@ -12,7 +12,7 @@ public class ViewOrderRequestHandler implements IRequestHandler<ViewOrderRequest
     public IResult<ViewOrderModel> handle(ViewOrderRequest request) throws SQLException {
         return ResultBuilder
                 .create(request, ViewOrderModel.class)
-                .withItem(new ViewOrderQuery())
+                .withQuery(new ViewOrderQuery())
                 .build();
     }
 

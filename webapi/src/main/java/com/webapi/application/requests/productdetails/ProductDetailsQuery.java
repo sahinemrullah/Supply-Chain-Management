@@ -12,7 +12,7 @@ public class ProductDetailsQuery implements ISQLOperation<ProductDetailsRequest,
 
     private static final String QUERY = "SELECT * FROM product AS p "
                                         + "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id "
-                                        + "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id "
+                                        + "LEFT JOIN supplier as s ON s.supplier_id = p.supplier_id "
                                         + "WHERE p.product_id = ?";
     private static final String NOT_FOUND_ERROR_KEY = "product";
 

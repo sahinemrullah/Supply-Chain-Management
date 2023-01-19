@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProductSearchQuery extends PaginatedSQLQuery<ProductSearchRequest, ProductSearchModel> {
-    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.retailer_id, MIN(pi.path) AS path, r.name AS retailer_name FROM product AS p " +
+    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.supplier_id, MIN(pi.path) AS path, r.name AS supplier_name FROM product AS p " +
                                             "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
-                                            "LEFT JOIN retailer as r ON r.retailer_id = p.retailer_id " +
+                                            "LEFT JOIN supplier as r ON r.supplier_id = p.supplier_id " +
                                             "WHERE MATCH(p.name) AGAINST(?) " +
                                             "GROUP BY pi.product_id, p.product_id " +
                                             "LIMIT ? OFFSET ?";
@@ -40,8 +40,8 @@ public class ProductSearchQuery extends PaginatedSQLQuery<ProductSearchRequest, 
                     product.setStock(result.getInt("stock"));
                     product.setPrice(result.getDouble("price"));
                     product.setDiscount(result.getDouble("discount"));
-                    product.setRetailerId(result.getInt("retailer_id"));
-                    product.setRetailerName(result.getString("retailer_name"));
+                    product.setSupplierId(result.getInt("supplier_id"));
+                    product.setSupplierName(result.getString("supplier_name"));
                     product.setImagePath(result.getString("path"));
                     
                     products.add(product);

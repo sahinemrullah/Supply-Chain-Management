@@ -48,7 +48,7 @@ public class CreateOrderRequestHandler implements IRequestHandler<CreateOrderReq
 
     private static boolean createOrder(List<CreateOrderProductModel> products, CreateOrderRequest request) throws SQLException {
         Map<Integer, List<CreateOrderProductModel>> productsByRetailer = products.stream()
-                .collect(Collectors.groupingBy(CreateOrderProductModel::getRetailerId));
+                .collect(Collectors.groupingBy(CreateOrderProductModel::getSupplierId));
 
         ISQLOperation<CreateOrderRequest, Integer> createOrderCommand = new CreateOrderCommand(productsByRetailer);
 

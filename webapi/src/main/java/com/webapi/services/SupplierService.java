@@ -54,7 +54,7 @@ public class SupplierService {
                                                                 @DefaultValue("10") @QueryParam("pageSize") int pageSize,
                                                                 @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
         OrderHistoryRequest request = new OrderHistoryRequest();
-        request.setSupplierId(supplierId);
+        request.setRetailerId(supplierId);
         request.setPageNumber(pageNumber);
         request.setPageSize(pageSize);
         

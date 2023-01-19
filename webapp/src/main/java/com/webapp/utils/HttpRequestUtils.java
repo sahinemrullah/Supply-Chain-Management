@@ -28,6 +28,7 @@ public final class HttpRequestUtils {
     private static final String AUTH_PREFIX = "Bearer";
     private static final String MEDIA_TYPE_JSON = "application/json";
     private static final String CHARSET = "utf-8";
+    private static final String BASE_URL = "http://localhost:9080/api";
     private HttpRequestUtils() {
 
     }
@@ -37,7 +38,7 @@ public final class HttpRequestUtils {
     }
     
     public static <T> Response post(String link, T model, String token) throws IOException {
-        URL url = new URL(link);
+        URL url = new URL(String.format("%s%s", BASE_URL, link));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(METHOD_POST);
         con.setRequestProperty(CONTENT_TYPE_HEADER, MEDIA_TYPE_JSON);
@@ -61,7 +62,7 @@ public final class HttpRequestUtils {
     }
     
     public static Response get(String link, Map<String, String> params, String token) throws IOException {
-        URL url = new URL(String.format("%s?%s", link, getParamsString(params)));
+        URL url = new URL(String.format("%s%s?%s", BASE_URL,link, getParamsString(params)));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(METHOD_GET);
         con.setConnectTimeout(5000);

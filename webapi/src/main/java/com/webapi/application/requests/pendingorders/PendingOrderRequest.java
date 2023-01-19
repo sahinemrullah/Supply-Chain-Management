@@ -4,13 +4,13 @@ package com.webapi.application.requests.pendingorders;
 import com.webapi.application.concretes.PaginatedRequest;
 
 public class PendingOrderRequest extends PaginatedRequest {
-    private int retailerId;
+    private int supplierId;
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }

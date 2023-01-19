@@ -6,7 +6,7 @@ public class EditDiscountRequest implements IRequest {
     private int id;
     private int discount;
     private int userId;
-    private boolean isRetailer;
+    private String role;
 
     public int getId() {
         return id;
@@ -24,12 +24,12 @@ public class EditDiscountRequest implements IRequest {
         this.userId = userId;
     }
 
-    public boolean getIsRetailer() {
-        return isRetailer;
+    public String getRole() {
+        return role;
     }
 
-    public void setIsRetailer(boolean isRetailer) {
-        this.isRetailer = isRetailer;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public int getDiscount() {

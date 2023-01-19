@@ -7,8 +7,8 @@ public class ProductSearchModel {
     private int stock;
     private double price;
     private double discount;
-    private int retailerId;
-    private String retailerName;
+    private int supplierId;
+    private String supplierName;
     private String imagePath;
 
     public String getImagePath() {
@@ -67,19 +67,19 @@ public class ProductSearchModel {
         this.discount = discount;
     }
 
-    public String getRetailerName() {
-        return retailerName;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setRetailerName(String retailerName) {
-        this.retailerName = retailerName;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }

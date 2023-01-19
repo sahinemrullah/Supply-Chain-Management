@@ -1,9 +1,9 @@
 
-package com.webapi.application.requests.outofstockproducts;
+package com.webapi.application.requests.supplierproducts;
 
 import com.webapi.application.concretes.PaginatedRequest;
 
-public class OutOfProductsRequest extends PaginatedRequest {
+public class SupplierProductsRequest extends PaginatedRequest {
     private int supplierId;
 
     public int getSupplierId() {

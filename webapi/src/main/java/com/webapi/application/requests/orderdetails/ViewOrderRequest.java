@@ -6,7 +6,7 @@ import com.webapi.application.abstractions.IRequest;
 public class ViewOrderRequest implements IRequest {
     private int id;
     private int userId;
-    private boolean isRetailer;
+    private String role;
 
     public int getId() {
         return id;
@@ -24,11 +24,11 @@ public class ViewOrderRequest implements IRequest {
         this.userId = userId;
     }
 
-    public boolean getIsRetailer() {
-        return isRetailer;
+    public String getRole() {
+        return role;
     }
 
-    public void setIsRetailer(boolean isRetailer) {
-        this.isRetailer = isRetailer;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

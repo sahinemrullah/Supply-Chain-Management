@@ -13,7 +13,7 @@ public class OrderHistoryRequestHandler implements IRequestHandler<OrderHistoryR
 
         return ResultBuilder
                 .createPaginated(request, OrderHistoryModel.class)
-                .withItem(new OrderHistoryQuery())
+                .withQuery(new OrderHistoryQuery())
                 .build();
     }
 

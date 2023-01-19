@@ -9,14 +9,14 @@ public class CreateProductRequest implements IRequest {
     private double price;
     private int stock;
     private ArrayList<String> productImages;
-    private int retailerId;
+    private int supplierId;
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
     
     public CreateProductRequest() {

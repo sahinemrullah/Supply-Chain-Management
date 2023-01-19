@@ -44,7 +44,7 @@ public class GetProductsByProductIdsQuery implements ISQLOperation<Set<Integer>,
                     CreateOrderProductModel product = new CreateOrderProductModel();
                     
                     product.setId(result.getInt("product_id"));
-                    product.setRetailerId(result.getInt("retailer_id"));
+                    product.setSupplierId(result.getInt("retailer_id"));
                     product.setDiscount(result.getDouble("discount"));
                     products.add(product);
                 }

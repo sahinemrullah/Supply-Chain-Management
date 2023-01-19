@@ -4,15 +4,15 @@ import com.webapi.application.abstractions.IRequest;
 import java.util.Map;
 
 public class CreateOrderRequest implements IRequest {
-    private int supplierId;
+    private int retailerId;
     private Map<Integer, Integer> products;
 
-    public int getSupplierId() {
-        return supplierId;
+    public int getRetailerId() {
+        return retailerId;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setRetailerId(int retailerId) {
+        this.retailerId = retailerId;
     }
 
     public Map<Integer, Integer> getProducts() {

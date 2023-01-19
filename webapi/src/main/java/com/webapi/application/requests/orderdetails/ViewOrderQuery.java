@@ -17,7 +17,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
         ViewOrderModel model;
         try (Connection con = DatabaseConnection.getConntection()) {
             PreparedStatement statement;
-            if(params.getIsRetailer())
+            if(params.getRole().equalsIgnoreCase("retailer"))
                 statement = findByIdRetailer(con, params.getId(), params.getUserId());
             else
                 statement = findByIdSupplier(con, params.getId(), params.getUserId());
@@ -62,7 +62,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
                                                             "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
-                                                            "WHERE om.order_m_id = ? AND od.retailer_id = ?");
+                                                            "WHERE om.order_m_id = ? AND om.retailer_id = ?");
         
         statement.setInt(1, id);
         statement.setInt(2, retailerId);
@@ -77,7 +77,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
                                                             "JOIN retailer AS r ON r.retailer_id = od.retailer_id " +
-                                                            "WHERE om.order_m_id = ? AND om.supplier_id = ?");
+                                                            "WHERE om.order_m_id = ? AND od.supplier_id = ?");
         
         statement.setInt(1, id);
         statement.setInt(2, supplierId);

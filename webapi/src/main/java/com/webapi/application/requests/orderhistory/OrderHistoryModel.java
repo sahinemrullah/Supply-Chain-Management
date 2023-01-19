@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class OrderHistoryModel {
     private int id;
-    private String retailerName;
+    private String supplierName;
     private Date createdDate;
     private double total;
     private boolean isPending;
@@ -17,12 +17,12 @@ public class OrderHistoryModel {
         this.id = id;
     }
 
-    public String getRetailerName() {
-        return retailerName;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setRetailerName(String retailerName) {
-        this.retailerName = retailerName;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public Date getCreatedDate() {

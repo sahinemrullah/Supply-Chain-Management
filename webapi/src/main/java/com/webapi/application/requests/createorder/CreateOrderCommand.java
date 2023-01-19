@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Integer> {
-    private Map<Integer, List<CreateOrderProductModel>> productsByRetailer;
+    private Map<Integer, List<CreateOrderProductModel>> productsBySupplier;
 
     public CreateOrderCommand(Map<Integer, List<CreateOrderProductModel>> productsByRetailer) {
-        this.productsByRetailer = productsByRetailer;
+        this.productsBySupplier = productsByRetailer;
     }
     
     @Override
@@ -24,7 +24,7 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
             con.setAutoCommit(false);
             
             PreparedStatement statement = con.prepareStatement("INSERT INTO order_m(supplier_id, created_date) VALUES(?,CURRENT_TIMESTAMP)", Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, params.getSupplierId());
+            statement.setInt(1, params.getRetailerId());
             int rowCount = statement.executeUpdate();
             
             if(rowCount == 1) {
@@ -32,8 +32,8 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
                 
                 if(result.next()) {
                     int orderId = result.getInt(1);
-                    for(Map.Entry<Integer, List<CreateOrderProductModel>> retailer : productsByRetailer.entrySet()) {
-                        insertOrderMasterDetail(orderId, con, retailer, params.getProducts());
+                    for(Map.Entry<Integer, List<CreateOrderProductModel>> supplier : productsBySupplier.entrySet()) {
+                        insertOrderMasterDetail(orderId, con, supplier, params.getProducts());
                     }
                     con.commit();
                     con.close();
@@ -44,11 +44,11 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
         return Statement.EXECUTE_FAILED;
     }
     
-    private static void insertOrderMasterDetail(int id, Connection con, Map.Entry<Integer, List<CreateOrderProductModel>> retailer, Map<Integer, Integer> quantities) throws SQLException {
-        PreparedStatement statement = con.prepareStatement("INSERT INTO order_m_d(order_m_id, retailer_id) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
+    private static void insertOrderMasterDetail(int id, Connection con, Map.Entry<Integer, List<CreateOrderProductModel>> supplier, Map<Integer, Integer> quantities) throws SQLException {
+        PreparedStatement statement = con.prepareStatement("INSERT INTO order_m_d(order_m_id, supplier_id) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
         
         statement.setInt(1, id);
-        statement.setInt(2, retailer.getKey());
+        statement.setInt(2, supplier.getKey());
         
         int rowCount = statement.executeUpdate();
         
@@ -57,7 +57,7 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
             
             if(result.next()) {
                 int orderMasterDetailId = result.getInt(1);
-                insertOrderMasterDetailDetail(con, orderMasterDetailId, retailer.getValue(), quantities);
+                insertOrderMasterDetailDetail(con, orderMasterDetailId, supplier.getValue(), quantities);
             }
         }
     }
