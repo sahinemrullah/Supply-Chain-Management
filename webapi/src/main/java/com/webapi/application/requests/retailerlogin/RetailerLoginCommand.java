@@ -11,21 +11,20 @@ import java.sql.ResultSet;
 public class RetailerLoginCommand implements ISQLOperation<RetailerLoginRequest, AccessTokenFactory> {
     @Override
     public AccessTokenFactory execute(RetailerLoginRequest params) throws SQLException {
+        AccessTokenFactory accessTokenFactory = new AccessTokenFactory();
         try (Connection con = DatabaseConnection.getConntection()) {
             PreparedStatement statement = con.prepareStatement("SELECT retailer_id, password_hash FROM RETAILER WHERE email = ?");
             statement.setString(1, params.getEmail());
             if (statement.execute()) {
                 ResultSet result = statement.getResultSet();
                 if (result.next()) {
-                    AccessTokenFactory accessTokenFactory = new AccessTokenFactory();
-                    accessTokenFactory.setIsRetailer(true);
+                    accessTokenFactory.setRole("retailer");
                     accessTokenFactory.setUserId(result.getInt("retailer_id"));
                     accessTokenFactory.setPasswordHash(result.getString("password_hash"));
                     accessTokenFactory.setPassword(params.getPassword());
-                    return accessTokenFactory;
                 }
             }
         }
-        return null;
+        return accessTokenFactory;
     }
 }

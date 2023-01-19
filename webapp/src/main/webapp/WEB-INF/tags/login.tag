@@ -46,7 +46,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8">
-              <form class="bg-white rounded-5 shadow-5-strong p-5 needs-validation" method="post" action="${requestScope['jakarta.servlet.forward.request_uri']}" novalidate>
+              <form class="bg-white rounded-5 shadow-5-strong p-4 needs-validation" method="post" action="${requestScope['jakarta.servlet.forward.request_uri']}" novalidate>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <input type="email" id="emailInput" class="form-control <c:if test="${emailError != null}">is-invalid</c:if>" name="email" value="${email}" required />

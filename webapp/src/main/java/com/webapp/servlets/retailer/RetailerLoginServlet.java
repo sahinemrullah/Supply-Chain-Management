@@ -1,28 +1,27 @@
 package com.webapp.servlets.retailer;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webapp.models.LoginModel;
+import com.webapp.servlets.BaseServlet;
 import com.webapp.utils.HttpRequestUtils;
-import com.webapp.utils.JWTUtils;
-import com.webapp.utils.Response;
+import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "RetailerLoginServlet", urlPatterns = {"/tedarikci/giris"})
-public class RetailerLoginServlet extends HttpServlet {
-    
-    private static final Gson GSON = new GsonBuilder().create();
-    
+public class RetailerLoginServlet extends BaseServlet {
+
+    @Override
+    protected String getJSPPage() {
+        return "/WEB-INF/retailer/login.jsp";
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/retailer/login.jsp").forward(request, response);
+        request.getRequestDispatcher(getJSPPage()).forward(request, response);
     }
 
     @Override
@@ -32,18 +31,16 @@ public class RetailerLoginServlet extends HttpServlet {
         model.setEmail(request.getParameter("email"));
         model.setPassword(request.getParameter("password"));
 
-        Response result = HttpRequestUtils.post("http://localhost:9080/retailer/login", model);
+        Result result = HttpRequestUtils.post("retailers/login", model);
 
-        if (result.getStatusCode() == 400) {
-            request.setAttribute("emailError", "Geçersiz kullanıcı bilgileri girdiniz.");
-            request.setAttribute("email", model.getEmail());
+        processResult(result, request, response);
+    }
 
-            request.getRequestDispatcher("/WEB-INF/retailer/login.jsp").forward(request, response);
-        } else {
-            HttpSession session = request.getSession();
-            session.setAttribute("token", result.getResponseMessage());
-            JWTUtils.parseToken(session);
+    @Override
+    protected void onSuccessfullResponse(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if(parseAccessToken(request, result))
             response.sendRedirect("/tedarikci/");
-        }
+        else
+            request.getRequestDispatcher(PAGE_500).forward(request, response);
     }
 }

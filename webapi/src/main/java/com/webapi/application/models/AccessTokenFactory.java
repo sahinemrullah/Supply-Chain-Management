@@ -7,15 +7,15 @@ public class AccessTokenFactory {
     private int userId;
     private String passwordHash;
     private String password;
-    private boolean isRetailer;
+    private String role;
 
     public AccessToken build() {
         if(EncryptionUtils.checkHash(password, passwordHash)) {
             AccessToken accessToken = new AccessToken();
         
-            accessToken.setIsRetailer(isRetailer);
+            accessToken.setRole(role);
             accessToken.setUserId(userId);
-            accessToken.setToken(EncryptionUtils.createJWT(userId, isRetailer, "localhost:8080", "localhost:8080"));
+            accessToken.setToken(EncryptionUtils.createJWT(userId, role, "localhost:9080", "localhost:8080"));
 
             return accessToken;
         }
@@ -46,11 +46,11 @@ public class AccessTokenFactory {
         this.passwordHash = passwordHash;
     }
 
-    public boolean isIsRetailer() {
-        return isRetailer;
+    public String getRole() {
+        return role;
     }
 
-    public void setIsRetailer(boolean isRetailer) {
-        this.isRetailer = isRetailer;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

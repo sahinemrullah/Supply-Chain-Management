@@ -31,10 +31,13 @@ public final class EncryptionUtils {
 	}
 	
 	public static boolean checkHash(String password, String hashToCompare) {
-		return StringUtils.isEqual(hashString(password), hashToCompare);
+            if(password == null || hashToCompare == null)
+                return false;
+            
+            return StringUtils.isEqual(hashString(password), hashToCompare);
 	}
 
-	public static String createJWT(int id, boolean isRetailer, String issuer, String subject) {
+	public static String createJWT(int id, String role, String issuer, String subject) {
 		  
 	    //The JWT signature algorithm we will be using to sign the token
 	    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -48,7 +51,7 @@ public final class EncryptionUtils {
 
             Map<String, Object> claims = new HashMap<>();
             claims.put("userId", id);
-            claims.put("role", isRetailer ? "retailer" : "supplier");
+            claims.put("role", role);
             
 	    //Let's set the JWT Claims
 	    JwtBuilder builder = Jwts.builder()

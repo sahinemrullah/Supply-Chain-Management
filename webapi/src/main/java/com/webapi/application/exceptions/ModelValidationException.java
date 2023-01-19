@@ -9,6 +9,10 @@ import java.util.Map;
 public class ModelValidationException extends RuntimeException {
     private Map<String, List<String>> errors;
 
+    public ModelValidationException() {
+        
+    }
+    
     public ModelValidationException(String message) {
         this("", message);
     }

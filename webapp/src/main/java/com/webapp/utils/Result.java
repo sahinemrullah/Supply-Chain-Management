@@ -4,7 +4,7 @@
  */
 package com.webapp.utils;
 
-public class Response {
+public class Result {
     private int statusCode;
     private String responseMessage;
 

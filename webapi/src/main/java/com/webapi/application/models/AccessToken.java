@@ -4,8 +4,12 @@ package com.webapi.application.models;
 public class AccessToken {
     private int userId;
     private String token;
-    private boolean isRetailer;
+    private String role;
 
+    public AccessToken() {
+        
+    }
+    
     public int getUserId() {
         return userId;
     }
@@ -22,11 +26,11 @@ public class AccessToken {
         this.token = token;
     }
 
-    public boolean isIsRetailer() {
-        return isRetailer;
+    public String getRole() {
+        return role;
     }
 
-    public void setIsRetailer(boolean isRetailer) {
-        this.isRetailer = isRetailer;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

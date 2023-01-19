@@ -4,9 +4,9 @@ import com.webapi.application.abstractions.IRequest;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.abstractions.ISQLOperation;
 import com.webapi.application.abstractions.IValidator;
-import com.webapi.application.models.AccessToken;
 import com.webapi.application.models.PaginatedListModel;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -14,10 +14,12 @@ public class ResultBuilder<T extends IRequest, U extends Object> {
 
     private final IResult<U> result;
     private final T request;
+    private List<IValidator> validators;
 
     private ResultBuilder(T request) {
         result = new Result<>();
         this.request = request;
+        validators = new ArrayList<>();
     }
 
     public static <T extends IRequest, U extends Object> ResultBuilder<T, U> create(T request, Class<U> classOfU) {
@@ -67,16 +69,18 @@ public class ResultBuilder<T extends IRequest, U extends Object> {
         result.addError(key, message);
     }
 
-    public ResultBuilder validate(List<IValidator> validators) {
+    public ResultBuilder validate() {
         for (IValidator validator : validators) {
             validator.validate(result);
         }
+        
+        result.throwIfNotSucceeded();
         
         return this;
     }
     
     public ResultBuilder withValidator(IValidator validator) {
-        validator.validate(result);
+        validators.add(validator);
         
         return this;
     }

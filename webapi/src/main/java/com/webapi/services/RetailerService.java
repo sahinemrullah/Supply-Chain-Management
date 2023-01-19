@@ -1,18 +1,19 @@
 package com.webapi.services;
 
-import com.webapi.application.requests.retailerproducts.RetailerProductsRequest;
-import com.webapi.application.requests.retailerproducts.RetailerProductsRequestHandler;
+import com.webapi.application.requests.supplierproducts.SupplierProductsRequest;
+import com.webapi.application.requests.supplierproducts.SupplierProductsRequestHandler;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.models.AccessToken;
 import com.webapi.application.models.PaginatedListModel;
 import com.webapi.application.requests.retailerlogin.RetailerLoginRequest;
 import com.webapi.application.requests.retailerlogin.RetailerLoginRequestHandler;
-import com.webapi.application.requests.retailerproducts.RetailerProductsListModel;
+import com.webapi.application.requests.supplierproducts.SupplierProductsListModel;
 import com.webapi.application.requests.retailerregister.RetailerRegisterRequest;
 import com.webapi.application.requests.retailerregister.RetailerRegisterRequestHandler;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -20,6 +21,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import java.sql.SQLException;
+import com.webapi.application.filters.AuthorizeJWTToken;
+import com.webapi.application.filters.Role;
 
 @Path("/retailers")
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,18 +50,22 @@ public class RetailerService {
         
         return result.getItem();
     }
-    @Path("/{retailerId}/products")
-    public PaginatedListModel<RetailerProductsListModel> getProducts(@PathParam("retailerId") int retailerId,
+    
+    @AuthorizeJWTToken
+    @Role(role = "retailer")
+    @Path("/{userId}/products")
+    @GET
+    public PaginatedListModel<SupplierProductsListModel> getProducts(@PathParam("userId") int userId,
                                                                 @DefaultValue("10") @QueryParam("pageSize") int pageSize,
                                                                 @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
-        RetailerProductsRequest request = new RetailerProductsRequest();
-        request.setRetailerId(retailerId);
+        SupplierProductsRequest request = new SupplierProductsRequest();
+        request.setSupplierId(userId);
         request.setPageNumber(pageNumber);
         request.setPageSize(pageSize);
         
-        IRequestHandler<RetailerProductsRequest, PaginatedListModel<RetailerProductsListModel>> retailerProductsRequestHandler = new RetailerProductsRequestHandler();
+        IRequestHandler<SupplierProductsRequest, PaginatedListModel<SupplierProductsListModel>> retailerProductsRequestHandler = new SupplierProductsRequestHandler();
         
-        IResult<PaginatedListModel<RetailerProductsListModel>> result = retailerProductsRequestHandler.handle(request);
+        IResult<PaginatedListModel<SupplierProductsListModel>> result = retailerProductsRequestHandler.handle(request);
         
         return result.getItem();
     }
