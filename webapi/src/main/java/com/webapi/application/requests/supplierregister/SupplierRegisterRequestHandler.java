@@ -2,17 +2,14 @@ package com.webapi.application.requests.supplierregister;
 
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
-import com.webapi.application.concretes.Result;
 import java.sql.SQLException;
-import com.webapi.application.abstractions.ISQLOperation;
-import com.webapi.application.abstractions.IValidator;
+import com.webapi.application.concretes.ResultBuilder;
+import com.webapi.application.exceptions.ModelValidationException;
 import com.webapi.application.validators.EmailValidator;
 import com.webapi.application.validators.NotEmptyStringValidator;
 import com.webapi.application.validators.PasswordValidator;
 import com.webapi.application.validators.PhoneNumberValidator;
 import com.webapi.application.validators.StringsMustBeEqualValidator;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SupplierRegisterRequestHandler implements IRequestHandler<SupplierRegisterRequest, Void> {
 
@@ -25,35 +22,18 @@ public class SupplierRegisterRequestHandler implements IRequestHandler<SupplierR
 
     @Override
     public IResult<Void> handle(SupplierRegisterRequest request) throws SQLException {
-        IResult<Void> result = new Result<>();
-
-        List<IValidator> validators = new ArrayList<>();
-        validators.add(new EmailValidator(request.getEmail()));
-        validators.add(new PasswordValidator(request.getPassword()));
-        validators.add(new NotEmptyStringValidator(NAME_KEY, request.getName(), NAME_EMPTY_MESSAGE));
-        validators.add(new PhoneNumberValidator(request.getPhoneNumber()));
-        validators.add(new NotEmptyStringValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), PASSWORD_VERIFICATION_EMPTY_MESSAGE));
-        validators.add(new StringsMustBeEqualValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), request.getPassword(), PASSWORDS_NOT_EQUAL_MESSAGE));
-
-        for (IValidator validator : validators) {
-            validator.validate(result);
-        }
-
-        if (result.isSucceeded()) {
-            ISQLOperation<String, Boolean> supplierExistsQuery = new SupplierExistsQuery();
-
-            if (!supplierExistsQuery.execute(request.getEmail())) {
-                ISQLOperation<SupplierRegisterRequest, Boolean> registerSuppliercommand = new SupplierRegisterCommand();
-
-                if (!registerSuppliercommand.execute(request)) {
-                    result.addError("unknown", "Bilinmeyen bir hatadan dolayı kullanıcı oluşturulamadı.");
-                }
-            } else {
-                result.addError(EMAIL_KEY, "Bu email adresi ile ilişkili bir satıcı bulunmaktadır.");
-            }
-        }
-
-        return result;
+        return ResultBuilder.create(request, Void.class)
+                .withValidator(new EmailValidator(request.getEmail()))
+                .withValidator(new PasswordValidator(request.getPassword()))
+                .withValidator(new NotEmptyStringValidator(NAME_KEY, request.getName(), NAME_EMPTY_MESSAGE))
+                .withValidator(new PhoneNumberValidator(request.getPhoneNumber()))
+                .withValidator(new NotEmptyStringValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), PASSWORD_VERIFICATION_EMPTY_MESSAGE))
+                .withValidator(new StringsMustBeEqualValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), request.getPassword(), PASSWORDS_NOT_EQUAL_MESSAGE))
+                .check(request.getEmail(), new SupplierExistsQuery())
+                    .withException(new ModelValidationException(EMAIL_KEY, "Bu email adresi ile ilişkili bir satıcı bulunmaktadır."))
+                .check(new SupplierRegisterCommand())
+                    .withError("",  "Bilinmeyen bir hatadan dolayı kullanıcı oluşturulamadı.")
+                .build();
     }
 
 }

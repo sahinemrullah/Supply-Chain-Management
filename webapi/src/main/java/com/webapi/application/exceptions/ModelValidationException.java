@@ -10,10 +10,14 @@ public class ModelValidationException extends RuntimeException {
     private Map<String, List<String>> errors;
 
     public ModelValidationException(String message) {
+        this("", message);
+    }
+
+    public ModelValidationException(String key, String message) {
         errors = new HashMap<>();
         List<String> list = new ArrayList<>();
         list.add(message);
-        errors.put("", list);
+        errors.put(key, list);
     }
     
     public ModelValidationException(Map<String, List<String>> errors) {
