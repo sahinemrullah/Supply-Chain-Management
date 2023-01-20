@@ -3,7 +3,7 @@ package com.webapi.application.requests.outofstockproducts;
 
 import com.webapi.application.concretes.PaginatedRequest;
 
-public class OutOfProductsRequest extends PaginatedRequest {
+public class OutOfStockProductsRequest extends PaginatedRequest {
     private int supplierId;
 
     public int getSupplierId() {

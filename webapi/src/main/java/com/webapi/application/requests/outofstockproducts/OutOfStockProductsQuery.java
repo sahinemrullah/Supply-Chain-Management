@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OutOfStockProductsQuery extends PaginatedSQLQuery<OutOfProductsRequest, SupplierProductsListModel> {
+public class OutOfStockProductsQuery extends PaginatedSQLQuery<OutOfStockProductsRequest, SupplierProductsListModel> {
 
     private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, p.discount, MIN(pi.path) AS path " + 
                                         "FROM product AS p " +
@@ -21,7 +21,7 @@ public class OutOfStockProductsQuery extends PaginatedSQLQuery<OutOfProductsRequ
                                         "LIMIT ? OFFSET ?";
     
     @Override
-    public PaginatedListModel<SupplierProductsListModel> execute(OutOfProductsRequest params) throws SQLException {
+    public PaginatedListModel<SupplierProductsListModel> execute(OutOfStockProductsRequest params) throws SQLException {
         Connection con = DatabaseConnection.getConntection();
         
         ArrayList<SupplierProductsListModel> products;
