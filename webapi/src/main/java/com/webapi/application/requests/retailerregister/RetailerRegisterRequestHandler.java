@@ -2,6 +2,7 @@ package com.webapi.application.requests.retailerregister;
 
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
+import com.webapi.application.abstractions.ISQLOperation;
 import java.sql.SQLException;
 import com.webapi.application.concretes.ResultBuilder;
 import com.webapi.application.exceptions.ModelValidationException;
@@ -22,6 +23,7 @@ public class RetailerRegisterRequestHandler implements IRequestHandler<RetailerR
 
     @Override
     public IResult<Void> handle(RetailerRegisterRequest request) throws SQLException {
+        ISQLOperation<String, Boolean> retailerExistsQuery = new RetailerExistsQuery();
         return ResultBuilder.create(request, Void.class)
                 .withValidator(new EmailValidator(request.getEmail()))
                 .withValidator(new PasswordValidator(request.getPassword()))
@@ -30,7 +32,7 @@ public class RetailerRegisterRequestHandler implements IRequestHandler<RetailerR
                 .withValidator(new NotEmptyStringValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), PASSWORD_VERIFICATION_EMPTY_MESSAGE))
                 .withValidator(new StringsMustBeEqualValidator(PASSWORD_VERIFICATION_KEY, request.getPasswordVerification(), request.getPassword(), PASSWORDS_NOT_EQUAL_MESSAGE))
                 .validate()
-                .check(request.getEmail(), new RetailerExistsQuery())
+                .check(!retailerExistsQuery.execute(request.getEmail()))
                     .withException(new ModelValidationException(EMAIL_KEY, "Bu email adresi ile ilişkili bir tedarikçi bulunmaktadır."))
                 .check(new RetailerRegisterCommand())
                     .withError("",  "Bilinmeyen bir hatadan dolayı kullanıcı oluşturulamadı.")

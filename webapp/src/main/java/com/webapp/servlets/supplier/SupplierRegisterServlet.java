@@ -2,7 +2,7 @@ package com.webapp.servlets.supplier;
 
 import com.webapp.models.RegisterModel;
 import com.webapp.servlets.BaseServlet;
-import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.RequestBuilder;
 import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,9 @@ public class SupplierRegisterServlet extends BaseServlet {
         model.setPassword(request.getParameter("password"));
         model.setPasswordVerification(request.getParameter("passwordVerification"));
 
-        Result result = HttpRequestUtils.post("suppliers/register", model);
+        Result result = RequestBuilder.create()
+                .withURL("suppliers/register")
+                .post(model);
         
         processResult(result, request, response);
     }

@@ -37,8 +37,8 @@
     </head>
 
     <body>
-        
-            
+
+
         <header>
             <!-- Sidebar -->
             <nav
@@ -56,14 +56,14 @@
                             ><span>Ana Sayfa</span>
                         </a>
                         <c:choose>
-                            <c:when test="${isRetailer}">
+                            <c:when test="${role == 'retailer'}">
                                 <t:retailerSidebar>
-                                    
+
                                 </t:retailerSidebar>
                             </c:when>
                             <c:otherwise>
                                 <t:supplierSidebar>
-                                    
+
                                 </t:supplierSidebar>
                             </c:otherwise>
                         </c:choose>
@@ -94,7 +94,7 @@
 
                     <!-- Brand -->
                     <a class="navbar-brand" href="#">
-                        
+
                     </a>
                     <!-- Search form -->
                     <form id="searchForm" class="d-none d-md-flex input-group w-auto my-auto">
@@ -123,26 +123,26 @@
         <main style="margin-top: 58px">
             <div id="intro" class="bg-image shadow-2-strong">
                 <div class="mask d-flex align-items-center" style="background-color: rgba(0, 0, 0, 0.8);">
-            <div class="container pt-4">
-                <style>
-                #intro {
-                    background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
-                    height: 100vh;
-                }
+                    <div class="container pt-4">
+                        <style>
+                            #intro {
+                                background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+                                height: 100vh;
+                            }
 
-                .navbar .nav-link {
-                    color: #fff !important;
-                }
-            </style> 
-            <!-- Background image -->
-                <section class="mb-4" id="content">
-                    <jsp:invoke fragment="content"></jsp:invoke>
-                </section>
-            </div>
+                            .navbar .nav-link {
+                                color: #fff !important;
+                            }
+                        </style> 
+                        <!-- Background image -->
+                        <section class="mb-4" id="content">
+                            <jsp:invoke fragment="content"></jsp:invoke>
+                        </section>
+                    </div>
                 </div>
             </div>
         </main>
-                
+
         <!-- MDB -->
         <script
             type="text/javascript"
@@ -174,14 +174,14 @@
                             $('#content').html(responseText);
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            if(xhr.status === 401)
+                            if (xhr.status === 401)
                                 window.location.href = "/giris";
                         }
                     });
-                    
+
                     var urlParams = new URLSearchParams(data).toString();
                     window.history.pushState({href: href, data: data}, '', href + "?" + urlParams);
-                    
+
                     return false;
                 }
                 function getProduct(el) {
@@ -198,7 +198,7 @@
                             $('#content').html(responseText);
                         },
                         error: function (xhr, textStatus, errorThrown) {
-                            if(xhr.status === 401)
+                            if (xhr.status === 401)
                                 window.location.href = "/giris";
                         }
                     });
@@ -223,7 +223,7 @@
                     if (e.state)
                         ajaxChangeHistory(e.state.href, e.state.data, false);
                 });
-                function updateURLParameter(url, param, paramVal){
+                function updateURLParameter(url, param, paramVal) {
                     var newAdditionalURL = "";
                     var tempArray = url.split("?");
                     var baseURL = tempArray[0];
@@ -231,8 +231,8 @@
                     var temp = "";
                     if (additionalURL) {
                         tempArray = additionalURL.split("&");
-                        for (var i=0; i<tempArray.length; i++){
-                            if(tempArray[i].split('=')[0] != param){
+                        for (var i = 0; i < tempArray.length; i++) {
+                            if (tempArray[i].split('=')[0] != param) {
                                 newAdditionalURL += temp + tempArray[i];
                                 temp = "&";
                             }
@@ -242,6 +242,16 @@
                     var rows_txt = temp + "" + param + "=" + paramVal;
                     return baseURL + "?" + newAdditionalURL + rows_txt;
                 }
+                function setHeights() {
+                    var heights = [];
+                    $('.carousel-item').each(function () {
+                        heights.push($(this).height());
+                    });
+
+                    $('.carousel-item img').height(Math.min(...heights));
+                }
+
+                setHeights();
         </script>
     </body>
 

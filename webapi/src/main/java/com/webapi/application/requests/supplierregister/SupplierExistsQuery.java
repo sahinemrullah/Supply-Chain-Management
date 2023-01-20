@@ -21,9 +21,7 @@ public class SupplierExistsQuery implements ISQLOperation<String, Boolean> {
         statement.setString(emailIndex, email);
         if (statement.execute()) {
             ResultSet result = statement.getResultSet();
-            if (result.next()) {
-                return StringUtils.isEqual(email, result.getString(emailIndex));
-            }
+            return result.next();
         }
         return false;
     }

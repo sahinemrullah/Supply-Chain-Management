@@ -11,7 +11,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 
 @Provider
 @Role
@@ -23,7 +22,6 @@ public class RoleFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         SecurityContext securityContext = requestContext.getSecurityContext();
-        Annotation[] a = resourceInfo.getResourceClass().getAnnotations();
         Role methodRoleAnnotatiton = resourceInfo.getResourceMethod().getAnnotation(Role.class);
         Role classRoleAnnotatiton = resourceInfo.getResourceClass().getAnnotation(Role.class);
         Role roleAnnotation = methodRoleAnnotatiton == null ? classRoleAnnotatiton : methodRoleAnnotatiton;

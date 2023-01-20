@@ -22,5 +22,8 @@
           <span><span class="screen-reader-text">0</span></span>
           <span>0</span>
         </section>
+        <p class="zoom-area">
+            ${message}
+        </p>
     </body>
 </html>

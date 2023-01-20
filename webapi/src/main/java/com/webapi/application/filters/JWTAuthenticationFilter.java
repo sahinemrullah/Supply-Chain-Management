@@ -46,7 +46,10 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
 
             @Override
             public Principal getUserPrincipal() {
-                return () -> (String) claims.get("userId");
+                // https://github.com/jwtk/jjwt/issues/616
+                double id = (Double) claims.get("userId");
+                int userId = (int) id;
+                return () -> String.valueOf(userId);
             }
 
             @Override

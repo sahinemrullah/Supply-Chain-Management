@@ -2,7 +2,7 @@ package com.webapp.servlets.supplier;
 
 import com.webapp.models.LoginModel;
 import com.webapp.servlets.BaseServlet;
-import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.RequestBuilder;
 import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -31,16 +31,19 @@ public class SupplierLoginServlet extends BaseServlet {
         model.setEmail(request.getParameter("email"));
         model.setPassword(request.getParameter("password"));
 
-        Result result = HttpRequestUtils.post("suppliers/login", model);
+        Result result = RequestBuilder.create()
+                .withURL("suppliers/login")
+                .post(model);
 
         processResult(result, request, response);
     }
 
     @Override
     protected void onSuccessfullResponse(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(parseAccessToken(request, result))
+        if (parseAccessToken(request, result)) {
             response.sendRedirect("/satici/");
-        else
+        } else {
             request.getRequestDispatcher(PAGE_500).forward(request, response);
+        }
     }
 }

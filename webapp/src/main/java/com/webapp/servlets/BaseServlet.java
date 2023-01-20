@@ -59,6 +59,7 @@ public abstract class BaseServlet extends HttpServlet {
                 request.getRequestDispatcher(PAGE_404).forward(request, response);
                 break;
             default:
+                request.setAttribute("message", result.getResponseMessage());
                 request.getRequestDispatcher(PAGE_500).forward(request, response);
                 break;
         }
@@ -91,5 +92,9 @@ public abstract class BaseServlet extends HttpServlet {
     
     protected String getRole(HttpSession session) {
         return (String) session.getAttribute(ROLE);
+    }
+    
+    protected <T> void setModel(T model, HttpServletRequest request) {
+        request.setAttribute("model", model);
     }
 }

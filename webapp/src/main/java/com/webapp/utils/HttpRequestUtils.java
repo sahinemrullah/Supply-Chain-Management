@@ -62,7 +62,7 @@ public final class HttpRequestUtils {
     }
     
     public static Result get(String link, Map<String, String> params, String token) throws IOException {
-        URL url = new URL(String.format("%s%s?%s", BASE_URL,link, getParamsString(params)));
+        URL url = new URL(String.format("%s/%s?%s", BASE_URL,link, getParamsString(params)));
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod(METHOD_GET);
         con.setConnectTimeout(5000);
