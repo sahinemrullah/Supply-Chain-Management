@@ -18,7 +18,7 @@ public class EditStockCommand implements ISQLOperation<EditStockRequest, Boolean
         int rowAffected;
         try (Connection con = DatabaseConnection.getConntection(); PreparedStatement statement = con.prepareStatement(QUERY)) {
 
-            statement.setDouble(STOCK_INDEX, params.getStock() / 100.d);
+            statement.setInt(STOCK_INDEX, params.getStock());
             statement.setInt(PRODUCT_ID_INDEX, params.getId());
 
             rowAffected = statement.executeUpdate();

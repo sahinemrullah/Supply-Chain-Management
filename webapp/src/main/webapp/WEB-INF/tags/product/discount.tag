@@ -9,7 +9,7 @@
                 <h5 class="modal-title" id="discountEditModalLabel">İndirim Ayarla</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/product/editDiscount" onsubmit="editDiscount()">
+            <form method="post" action="/product/edit-discount" onsubmit="editDiscount()">
                 <div class="modal-body">
                     <div class="form-outline mb-4">
                         <input type="hidden" name="id" value="0" id="discountProductId" />

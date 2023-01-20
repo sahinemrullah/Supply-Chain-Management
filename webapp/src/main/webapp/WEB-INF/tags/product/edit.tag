@@ -9,7 +9,7 @@
                 <h5 class="modal-title" id="stockEditModalLabel">Stok Düzenle</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/product/editStock" onsubmit="editStock()">
+            <form method="post" action="/product/edit-stock" onsubmit="editStock()">
                 <div class="modal-body">
                     <div class="form-outline mb-4">
                         <input type="hidden" name="id" value="0" id="productId" />
