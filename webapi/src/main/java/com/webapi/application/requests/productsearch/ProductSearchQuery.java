@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProductSearchQuery extends PaginatedSQLQuery<ProductSearchRequest, ProductSearchModel> {
-    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.supplier_id, MIN(pi.path) AS path, r.name AS supplier_name FROM product AS p " +
+    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS p.product_id, p.name, p.price, p.stock, LEFT(p.description, 300) AS description, p.supplier_id, MIN(pi.path) AS path, p.discount, r.name AS supplier_name FROM product AS p " +
                                             "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id " +
                                             "LEFT JOIN supplier as r ON r.supplier_id = p.supplier_id " +
                                             "WHERE MATCH(p.name) AGAINST(?) " +
