@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class ProductDetailsQuery implements ISQLOperation<ProductDetailsRequest, ProductDetailsModel> {
 
-    private static final String QUERY = "SELECT * FROM product AS p "
+    private static final String QUERY = "SELECT p.product_id, p.name, p.description, p.stock, p.price, p.discount, pi.path, p.supplier_id, s.name as suppplier_name FROM product AS p "
                                         + "LEFT JOIN productimage AS pi ON pi.product_id = p.product_id "
                                         + "LEFT JOIN supplier as s ON s.supplier_id = p.supplier_id "
                                         + "WHERE p.product_id = ?";
@@ -34,6 +34,8 @@ public class ProductDetailsQuery implements ISQLOperation<ProductDetailsRequest,
                     product.setPrice(result.getDouble("price"));
                     product.setDiscount(result.getDouble("discount"));
                     product.addImage(result.getString("path"));
+                    product.setSupplierId(result.getInt("supplier_id"));
+                    product.setSupplierName(result.getString("suppplier_name"));
                     
                     while (result.next()) {
                         product.addImage(result.getString("path"));

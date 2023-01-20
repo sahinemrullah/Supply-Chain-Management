@@ -13,9 +13,18 @@ public class ProductDetailsModel {
     private double discount;
     private List<String> productImages;
     private int supplierId;
+    private String supplierName;
 
     public ProductDetailsModel() {
         productImages = new ArrayList<>();
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public int getId() {

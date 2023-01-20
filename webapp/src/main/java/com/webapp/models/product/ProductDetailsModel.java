@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.webapp.models.product;
 
 import java.util.ArrayList;
@@ -11,10 +7,12 @@ public class ProductDetailsModel {
     private String name;
     private String description;
     private double price;
+    private double discount;
     private int stock;
-    private int retailerName;
+    private int supplierId;
+    private String supplierName;
     private ArrayList<String> productImages;
-
+    
     public int getId() {
         return id;
     }
@@ -22,13 +20,29 @@ public class ProductDetailsModel {
     public void setId(int id) {
         this.id = id;
     }
-    
-    public int getRetailerName() {
-        return retailerName;
+
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setRetailerName(int retailerName) {
-        this.retailerName = retailerName;
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+    
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
     
     public ProductDetailsModel() {
