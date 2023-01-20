@@ -4,22 +4,22 @@
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags/" %>
 
-<%@ taglib prefix="r" tagdir="/WEB-INF/tags/retailer/" %>
+<%@ taglib prefix="s" tagdir="/WEB-INF/tags/supplier/" %>
 
 <c:choose>
 
     <c:when test="${isAJAXRequest}">
-        <r:myProducts>
+        <s:myProducts>
 
-        </r:myProducts>
+        </s:myProducts>
     </c:when>
 
     <c:otherwise>
         <t:template title="Ürünlerim">
             <jsp:attribute name="content">
-                <r:myProducts>
+                <s:myProducts>
 
-                </r:myProducts>
+                </s:myProducts>
             </jsp:attribute>
         </t:template>
     </c:otherwise>
