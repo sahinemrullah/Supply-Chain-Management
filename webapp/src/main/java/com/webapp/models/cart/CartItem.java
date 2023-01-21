@@ -1,13 +1,18 @@
 package com.webapp.models.cart;
 
+import java.util.List;
+
 public class CartItem {
     private int id;
     private String name;
+    private String description;
+    private int stock;
     private double price;
+    private double discount;
+    private List<String> productImages;
+    private int supplierId;
+    private String supplierName;
     private int quantity;
-    private String imagePath;
-    private String retailerName;
-    private int retailerId;
 
     public int getId() {
         return id;
@@ -25,6 +30,22 @@ public class CartItem {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -33,28 +54,36 @@ public class CartItem {
         this.price = price;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
-    public String getRetailerName() {
-        return retailerName;
+    public List<String> getProductImages() {
+        return productImages;
     }
 
-    public void setRetailerName(String retailerName) {
-        this.retailerName = retailerName;
+    public void setProductImages(List<String> productImages) {
+        this.productImages = productImages;
     }
 
-    public int getRetailerId() {
-        return retailerId;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setRetailerId(int retailerId) {
-        this.retailerId = retailerId;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public int getQuantity() {
@@ -64,5 +93,7 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    
+    
     
 }

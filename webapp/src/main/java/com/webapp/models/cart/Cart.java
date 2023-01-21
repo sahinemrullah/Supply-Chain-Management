@@ -16,4 +16,8 @@ public class Cart {
     public boolean addItem(CartItem item) {
         return items.add(item);
     }
+
+    public boolean removeItem(CartItem item) {
+        return items.remove(item);
+    }
 }

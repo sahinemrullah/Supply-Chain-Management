@@ -79,10 +79,11 @@
 
                 <p>${model.description}</p>
 
-                <form class="d-flex justify-content-left">
+                <form class="d-flex justify-content-left" action="/cart/add" method="post">
                     <!-- Default input -->
                     <div class="form-outline me-1" style="width: 100px;">
-                        <input type="number" value="1" class="form-control" />
+                        <input type="hidden" name="id" value="${model.id}" />
+                        <input type="number" name="quantity" value="1" class="form-control" />
                     </div>
                     <button class="btn btn-primary ms-1" type="submit">
                         Sepete Ekle

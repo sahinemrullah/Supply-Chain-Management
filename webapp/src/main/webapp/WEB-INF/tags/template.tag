@@ -33,71 +33,54 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
             rel="stylesheet"
             />
-        <link id="pagestyle" href="${pageContext.request.contextPath}/assets/css/product.css" rel="stylesheet" />
     </head>
 
     <body>
 
 
         <header>
-            <!-- Sidebar -->
-            <nav
-                id="sidebarMenu"
-                class="collapse d-lg-block sidebar collapse bg-white"
-                >
-                <div class="position-sticky">
-                    <div class="list-group list-group-flush mx-3 mt-4">
-                        <a
-                            href="/"
-                            class="list-group-item list-group-item-action py-2 ripple active"
-                            aria-current="true"
-                            >
-                            <i class="fas fa-tachometer-alt fa-fw me-3"></i
-                            ><span>Ana Sayfa</span>
-                        </a>
-                        <c:choose>
-                            <c:when test="${role == 'retailer'}">
-                                <t:retailerSidebar>
-
-                                </t:retailerSidebar>
-                            </c:when>
-                            <c:otherwise>
-                                <t:supplierSidebar>
-
-                                </t:supplierSidebar>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </div>
-            </nav>
-            <!-- Sidebar -->
-
             <!-- Navbar -->
-            <nav
-                id="main-navbar"
-                class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
-                >
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary">
                 <!-- Container wrapper -->
-                <div class="container-fluid">
+                <div class="container">    
                     <!-- Toggle button -->
                     <button
                         class="navbar-toggler"
                         type="button"
                         data-mdb-toggle="collapse"
-                        data-mdb-target="#sidebarMenu"
-                        aria-controls="sidebarMenu"
+                        data-mdb-target="#navbarSupportedContent1"
+                        aria-controls="navbarSupportedContent1"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                         >
                         <i class="fas fa-bars"></i>
                     </button>
 
-                    <!-- Brand -->
-                    <a class="navbar-brand" href="#">
+                    <!-- Collapsible wrapper -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent1">    
+                        <!-- Left links -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <c:choose>
+                                <c:when test="${role == 'retailer'}">
+                                    <t:retailerSidebar>
 
-                    </a>
-                    <!-- Search form -->
-                    <form id="searchForm" class="d-none d-md-flex input-group w-auto my-auto">
+                                    </t:retailerSidebar>
+                                </c:when>
+                                <c:otherwise>
+                                    <t:supplierSidebar>
+
+                                    </t:supplierSidebar>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                        <!-- Left links -->      
+                    </div>
+                    <!-- Collapsible wrapper -->
+
+                </div>
+                <!-- Container wrapper -->
+                <div class="d-flex align-items-center">
+                    <form id="searchForm">
                         <input
                             autocomplete="off"
                             type="search"
@@ -108,12 +91,8 @@
                             value="${param.query}"
                             />
                         <input type="hidden" id="pageNumber" value="${param.pageNumber == null ? 1 : param.pageNumber}" />
-                        <span class="input-group-text border-0"
-                              ><i class="fas fa-search"></i
-                            ></span>
                     </form>
                 </div>
-                <!-- Container wrapper -->
             </nav>
             <!-- Navbar -->
         </header>
@@ -121,28 +100,32 @@
 
         <!--Main layout-->
         <main style="margin-top: 58px">
-            <div id="intro" class="bg-image shadow-2-strong">
-                <div class="mask d-flex align-items-center" style="background-color: rgba(0, 0, 0, 0.8);">
+            <div class="bg-image shadow-2-strong">
+                <div class="d-flex align-items-center">
                     <div class="container pt-4">
-                        <style>
-                            #intro {
-                                background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
-                                height: 100vh;
-                            }
-
-                            .navbar .nav-link {
-                                color: #fff !important;
-                            }
-                        </style> 
                         <!-- Background image -->
                         <section class="mb-4" id="content">
+
+                            <c:if test="${error != null}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>${error}</strong>
+                                    <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </c:if>
                             <jsp:invoke fragment="content"></jsp:invoke>
                         </section>
                     </div>
                 </div>
             </div>
         </main>
-
+        <footer class="fixed-bottom text-center text-white mt-4 bg-primary">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); text-color: #E0E0E0">
+                © 2022 Copyright:
+                <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
         <!-- MDB -->
         <script
             type="text/javascript"
