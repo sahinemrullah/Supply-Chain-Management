@@ -1,43 +1,44 @@
 package com.webapp.servlets.order;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webapp.models.cart.Cart;
 import com.webapp.models.order.CreateOrderModel;
-import com.webapp.utils.HttpRequestUtils;
+import com.webapp.servlets.BaseServlet;
+import com.webapp.utils.RequestBuilder;
 import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "CreateOrderServlet", urlPatterns = {"/order/create"})
-public class CreateOrderServlet extends HttpServlet {
-    
-    private static final Gson GSON = new GsonBuilder().create();
+public class CreateOrderServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        boolean isRetailer = (boolean) session.getAttribute("isRetailer");
-        if(!isRetailer) {
-            Cart cart = (Cart)session.getAttribute("cart");
-            if(cart == null || cart.getItems().isEmpty())
-                response.sendRedirect("/sepet");
-            else {
-                String token = (String) session.getAttribute("token");
-                Result result = HttpRequestUtils.post("http://localhost:9080/order/create", new CreateOrderModel(cart), token);
-                if(result.getStatusCode() == 200) {
-                    response.sendRedirect("/satici/");
-                } else {
-                    response.getWriter().write(result.getResponseMessage());
-                }
-            }
+        Cart cart = getCart(request);
+        if (cart == null || cart.getItems().isEmpty()) {
+            response.sendRedirect("/sepet");
         } else {
-            response.setStatus(403);
+            
+            Result result = RequestBuilder.create()
+                    .withURL("orders")
+                    .withToken(getToken(session))
+                    .post(new CreateOrderModel(cart, getUserId(session)));
+            
+            processResult(result, request, response);
         }
+    }
+
+    @Override
+    protected void onSuccessfullResponse(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        response.sendRedirect("/tedarikci/");
+    }
+    
+    @Override
+    protected String getJSPPage() {
+        return "";
     }
 }

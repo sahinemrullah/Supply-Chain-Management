@@ -19,7 +19,7 @@ public class GetProductsByProductIdsQuery implements ISQLOperation<Set<Integer>,
         
         try (Connection con = DatabaseConnection.getConntection()) {
             
-            String sql = "SELECT product_id, retailer_id, discount FROM product";
+            String sql = "SELECT product_id, supplier_id, discount FROM product";
             
             if(ids != null && !ids.isEmpty()) {
                 StringBuilder builder = new StringBuilder();
@@ -44,7 +44,7 @@ public class GetProductsByProductIdsQuery implements ISQLOperation<Set<Integer>,
                     CreateOrderProductModel product = new CreateOrderProductModel();
                     
                     product.setId(result.getInt("product_id"));
-                    product.setSupplierId(result.getInt("retailer_id"));
+                    product.setSupplierId(result.getInt("supplier_id"));
                     product.setDiscount(result.getDouble("discount"));
                     products.add(product);
                 }

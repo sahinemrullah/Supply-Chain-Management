@@ -23,7 +23,7 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
         try (Connection con = DatabaseConnection.getConntection()) {
             con.setAutoCommit(false);
             
-            PreparedStatement statement = con.prepareStatement("INSERT INTO order_m(supplier_id, created_date) VALUES(?,CURRENT_TIMESTAMP)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = con.prepareStatement("INSERT INTO order_m(retailer_id, created_date) VALUES(?,CURRENT_TIMESTAMP)", Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, params.getRetailerId());
             int rowCount = statement.executeUpdate();
             
@@ -69,7 +69,7 @@ public class CreateOrderCommand implements ISQLOperation<CreateOrderRequest, Int
             statement.setInt(1, id);
             statement.setInt(2, product.getId());
             statement.setInt(3, quantities.get(product.getId()));
-            statement.setDouble(4, 0);
+            statement.setDouble(4, product.getDiscount());
             statement.addBatch();
         }
         
