@@ -6,12 +6,17 @@ import com.webapi.application.filters.AuthorizeJWTToken;
 import com.webapi.application.filters.Role;
 import com.webapi.application.models.AccessToken;
 import com.webapi.application.models.PaginatedListModel;
+import com.webapi.application.requests.confirmorder.ConfirmOrderRequest;
+import com.webapi.application.requests.confirmorder.ConfirmOrderRequestHandler;
 import com.webapi.application.requests.createproduct.CreateProductRequest;
 import com.webapi.application.requests.createproduct.CreateProductRequestHandler;
 import com.webapi.application.requests.editdiscount.EditDiscountRequest;
 import com.webapi.application.requests.editdiscount.EditDiscountRequestHandler;
 import com.webapi.application.requests.editstock.EditStockRequest;
 import com.webapi.application.requests.editstock.EditStockRequestHandler;
+import com.webapi.application.requests.invoicelist.InvoiceListModel;
+import com.webapi.application.requests.invoicelist.InvoiceListRequest;
+import com.webapi.application.requests.invoicelist.InvoiceListRequestHandler;
 import com.webapi.application.requests.outofstockproducts.OutOfStockProductsRequest;
 import com.webapi.application.requests.outofstockproducts.OutOfStockProductsRequestHandler;
 import com.webapi.application.requests.pendingorders.PendingOrderListModel;
@@ -28,7 +33,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -147,7 +151,7 @@ public class SupplierService {
     @AuthorizeJWTToken
     @Role(role = "supplier")
     public Response getProducts(@PathParam("supplierId") int supplierId,
-            @DefaultValue("10") @QueryParam("pageSize") int pageSize,
+            @DefaultValue("1") @QueryParam("pageSize") int pageSize,
             @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
         Principal principal = userContext.getUserPrincipal();
         String userId = principal.getName();
@@ -208,6 +212,55 @@ public class SupplierService {
             result.throwIfNotSucceeded();
 
             return Response.ok().build();
+        }
+    }
+
+    @Path("/{supplierId}/orders/{orderId}")
+    @POST
+    @AuthorizeJWTToken
+    @Role(role = "supplier")
+    public Response confirmOrder(@PathParam("supplierId") int supplierId, @PathParam("orderId") int orderId) throws SQLException {
+        Principal principal = userContext.getUserPrincipal();
+        String userId = principal.getName();
+        if (!(Integer.parseInt(userId) == supplierId)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            ConfirmOrderRequest confirmOrderRequest = new ConfirmOrderRequest();
+            confirmOrderRequest.setId(orderId);
+            confirmOrderRequest.setUserId(supplierId);
+
+            IRequestHandler<ConfirmOrderRequest, Void> confirmOrderRequestHandler = new ConfirmOrderRequestHandler();
+
+            IResult<Void> result = confirmOrderRequestHandler.handle(confirmOrderRequest);
+
+            result.throwIfNotSucceeded();
+            
+            return Response.ok().build();
+        }
+    }
+
+    @Path("/{supplierId}/invoices")
+    @GET
+    @AuthorizeJWTToken
+    @Role(role = "supplier")
+    public Response getInvoices(@PathParam("supplierId") int supplierId,
+            @DefaultValue("10") @QueryParam("pageSize") int pageSize,
+            @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
+        Principal principal = userContext.getUserPrincipal();
+        String userId = principal.getName();
+        if (!(Integer.parseInt(userId) == supplierId)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            InvoiceListRequest request = new InvoiceListRequest();
+            request.setUserId(supplierId);
+            request.setPageNumber(pageNumber);
+            request.setPageSize(pageSize);
+
+            IRequestHandler<InvoiceListRequest, PaginatedListModel<InvoiceListModel>> invoiceListRequestHandler = new InvoiceListRequestHandler();
+
+            IResult<PaginatedListModel<InvoiceListModel>> result = invoiceListRequestHandler.handle(request);
+
+            return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
         }
     }
 }
