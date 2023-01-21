@@ -17,7 +17,7 @@ public class ConfirmOrderRequestHandler implements IRequestHandler<ConfirmOrderR
         return ResultBuilder
                 .create(request, Void.class)
                 .check(errorMessage == null)
-                    .withError("product", errorMessage)
+                    .withError("", errorMessage)
                 .build();
     }
 
