@@ -2,7 +2,7 @@ package com.webapp.servlets.retailer;
 
 import com.webapp.models.LoginModel;
 import com.webapp.servlets.BaseServlet;
-import com.webapp.utils.HttpRequestUtils;
+import com.webapp.utils.RequestBuilder;
 import com.webapp.utils.Result;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -31,15 +31,18 @@ public class RetailerLoginServlet extends BaseServlet {
         model.setEmail(request.getParameter("email"));
         model.setPassword(request.getParameter("password"));
 
-        Result result = HttpRequestUtils.post("retailers/login", model);
+        Result result = RequestBuilder.create()
+                                        .withURL("retailers/login")
+                                        .post(model);
 
         processResult(result, request, response);
     }
 
     @Override
     protected void onSuccessfullResponse(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(parseAccessToken(request, result))
+        if(parseAccessToken(request, result)) {
             response.sendRedirect("/tedarikci/");
+        }
         else
             request.getRequestDispatcher(PAGE_500).forward(request, response);
     }
