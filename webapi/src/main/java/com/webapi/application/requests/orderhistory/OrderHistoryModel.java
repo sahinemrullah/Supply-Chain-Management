@@ -1,10 +1,13 @@
 package com.webapi.application.requests.orderhistory;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class OrderHistoryModel {
+
     private int id;
     private String supplierName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date createdDate;
     private double total;
     private boolean isPending;

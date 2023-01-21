@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class OrderHistoryQuery extends PaginatedSQLQuery<OrderHistoryRequest, OrderHistoryModel> {
-    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS od.order_m_id, s.name, SUM(p.price) AS price, om.created_date, i.invoice_id IS NULL AS is_pending " +
+    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS od.order_m_id, s.name, SUM(p.price * (1 - odd.discount) * odd.quantity) AS price, om.created_date, i.invoice_id IS NULL AS is_pending " +
                                                             "FROM order_m_d AS od " +
                                                             "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
-                                                            "JOIN supplier AS s ON r.supplier_id = od.supplier_id " +
+                                                            "JOIN supplier AS s ON s.supplier_id = od.supplier_id " +
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
                                                             "LEFT JOIN invoiceitem as i ON i.order_m_d_d_id = odd.order_m_d_d_id " +

@@ -1,12 +1,15 @@
 package com.webapi.application.requests.pendingorders;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class PendingOrderListModel {
     private int orderId;
     private double price;
     private double discount;
-    private String retailerName;
+    private String supplierName;
+    @JsonFormat
+      (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date createdDate;
 
     public int getOrderId() {
@@ -33,12 +36,12 @@ public class PendingOrderListModel {
         this.discount = discount;
     }
 
-    public String getRetailerName() {
-        return retailerName;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setRetailerName(String retailerName) {
-        this.retailerName = retailerName;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public Date getCreatedDate() {

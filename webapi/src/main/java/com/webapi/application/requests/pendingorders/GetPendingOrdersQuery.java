@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class GetPendingOrdersQuery extends PaginatedSQLQuery<PendingOrderRequest, PendingOrderListModel> {
     
-    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price) AS price, r.name, om.created_date, odd.order_m_d_id " +
+    private static final String QUERY = "SELECT SQL_CALC_FOUND_ROWS od.order_m_id, SUM(p.price * odd.quantity) AS price, r.name, om.created_date, odd.order_m_d_id " +
                                         "FROM order_m_d AS od " +
                                         "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
                                         "JOIN retailer AS r ON r.retailer_id = om.retailer_id " +
@@ -39,7 +39,7 @@ public class GetPendingOrdersQuery extends PaginatedSQLQuery<PendingOrderRequest
                 while(result.next()) {
                     PendingOrderListModel order = new PendingOrderListModel();
                     order.setOrderId(result.getInt("order_m_id"));
-                    order.setRetailerName(result.getString("name"));
+                    order.setSupplierName(result.getString("name"));
                     order.setPrice(result.getDouble("price"));
                     Timestamp ts1 = result.getTimestamp("created_date");
                     order.setCreatedDate(new Date(ts1.getTime()));
