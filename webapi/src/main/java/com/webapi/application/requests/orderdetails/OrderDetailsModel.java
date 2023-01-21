@@ -1,14 +1,16 @@
 package com.webapi.application.requests.orderdetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ViewOrderModel {
+public class OrderDetailsModel {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private Date createdDate;
-    private List<ViewOrderListModel> products;
+    private List<OrderDetailsListModel> products;
 
-    public ViewOrderModel() {
+    public OrderDetailsModel() {
         products = new ArrayList<>();
     }
     
@@ -20,15 +22,15 @@ public class ViewOrderModel {
         this.createdDate = createdDate;
     }
 
-    public List<ViewOrderListModel> getProducts() {
+    public List<OrderDetailsListModel> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ViewOrderListModel> products) {
+    public void setProducts(List<OrderDetailsListModel> products) {
         this.products = products;
     }
     
-    public boolean addProduct(ViewOrderListModel product) {
+    public boolean addProduct(OrderDetailsListModel product) {
         return products.add(product);
     }
 }

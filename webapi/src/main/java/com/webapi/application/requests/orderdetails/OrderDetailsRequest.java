@@ -3,7 +3,7 @@ package com.webapi.application.requests.orderdetails;
 
 import com.webapi.application.abstractions.IRequest;
 
-public class ViewOrderRequest implements IRequest {
+public class OrderDetailsRequest implements IRequest {
     private int id;
     private int userId;
     private String role;

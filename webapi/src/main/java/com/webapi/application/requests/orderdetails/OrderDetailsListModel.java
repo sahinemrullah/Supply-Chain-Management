@@ -1,6 +1,6 @@
 package com.webapi.application.requests.orderdetails;
 
-public class ViewOrderListModel {
+public class OrderDetailsListModel {
     private int id;
     private int stock;
     private int quantity;

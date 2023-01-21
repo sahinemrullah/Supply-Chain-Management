@@ -10,11 +10,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrderModel> {
+public class GetOrderDetailsQuery implements ISQLOperation<OrderDetailsRequest, OrderDetailsModel> {
 
     @Override
-    public ViewOrderModel execute(ViewOrderRequest params) throws SQLException {
-        ViewOrderModel model;
+    public OrderDetailsModel execute(OrderDetailsRequest params) throws SQLException {
+        OrderDetailsModel model;
         try (Connection con = DatabaseConnection.getConntection()) {
             PreparedStatement statement;
             if(params.getRole().equalsIgnoreCase("retailer"))
@@ -24,7 +24,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
             ResultSet result = statement.executeQuery();
             model = null;
             if(result.next()) {
-                model = new ViewOrderModel();
+                model = new OrderDetailsModel();
                 
                 Timestamp ts1 = result.getTimestamp("created_date");
                 model.setCreatedDate(new Date(ts1.getTime()));
@@ -41,8 +41,8 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
     }
     
     
-    private static ViewOrderListModel getViewOrderProduct(ResultSet result) throws SQLException {
-        ViewOrderListModel product = new ViewOrderListModel();
+    private static OrderDetailsListModel getViewOrderProduct(ResultSet result) throws SQLException {
+        OrderDetailsListModel product = new OrderDetailsListModel();
         
         product.setId(result.getInt("product_id"));
         product.setName(result.getString("name"));
@@ -61,7 +61,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
                                                             "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
-                                                            "JOIN supplier AS s ON s.supplier_id = om.supplier_id " +
+                                                            "JOIN supplier AS s ON s.supplier_id = od.supplier_id " +
                                                             "WHERE om.order_m_id = ? AND om.retailer_id = ?");
         
         statement.setInt(1, id);
@@ -76,7 +76,7 @@ public class ViewOrderQuery implements ISQLOperation<ViewOrderRequest, ViewOrder
                                                             "JOIN order_m AS om ON om.order_m_id = od.order_m_id " +
                                                             "JOIN order_m_d_d AS odd ON od.order_m_d_id = odd.order_m_d_id " +
                                                             "JOIN product AS p ON odd.product_id = p.product_id " +
-                                                            "JOIN retailer AS r ON r.retailer_id = od.retailer_id " +
+                                                            "JOIN retailer AS r ON r.retailer_id = om.retailer_id " +
                                                             "WHERE om.order_m_id = ? AND od.supplier_id = ?");
         
         statement.setInt(1, id);

@@ -6,13 +6,13 @@ import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.ResultBuilder;
 import java.sql.SQLException;
 
-public class ViewOrderRequestHandler implements IRequestHandler<ViewOrderRequest, ViewOrderModel> {
+public class OrderDetailsRequestHandler implements IRequestHandler<OrderDetailsRequest, OrderDetailsModel> {
 
     @Override
-    public IResult<ViewOrderModel> handle(ViewOrderRequest request) throws SQLException {
+    public IResult<OrderDetailsModel> handle(OrderDetailsRequest request) throws SQLException {
         return ResultBuilder
-                .create(request, ViewOrderModel.class)
-                .withQuery(new ViewOrderQuery())
+                .create(request, OrderDetailsModel.class)
+                .withQuery(new GetOrderDetailsQuery())
                 .build();
     }
 

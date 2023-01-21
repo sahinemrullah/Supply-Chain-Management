@@ -4,10 +4,12 @@
 
 <%@ taglib prefix="p" tagdir="/WEB-INF/tags/product/" %>
 
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>  
+
 <div class="card">
     <div class="card-header text-center py-3">
         <h5 class="mb-0 text-center">
-            <strong>${model.createdDate} Tarihli Sipariş Detayı</strong>
+            <strong><fmt:formatDate value="${model.createdDate}" type="both" /> Tarihli Sipariş Detayı</strong>
         </h5>
     </div>
     <div class="card-body">
@@ -17,11 +19,11 @@
                     <tr>
                         <th scope="col">
                             <c:choose>
-                                <c:when test="${isRetailer}">
-                                    Satıcı
+                                <c:when test="${role == 'supplier'}">
+                                    Tedarikçi
                                 </c:when>
                                 <c:otherwise>
-                                    Tedarikçi
+                                    Satıcı
                                 </c:otherwise>
                             </c:choose>
                         </th>
@@ -29,20 +31,20 @@
                         <th scope="col">Sipariş Adedi</th>
                         <th scope="col">Stok</th>
                         <th scope="col">Tutar(Birim / Toplam)</th>
-                            <c:if test="${isRetailer}">
+                            <c:if test="${role == 'supplier'}">
                             <th scope="col"></th>
                             </c:if>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${model.products}" var="product">
-                        <tr <c:if test="${product.stock < product.quantity}">class="table-danger" </c:if>>
+                        <tr <c:if test="${product.stock < product.quantity}">class="table-danger <c:if test="${error != null}">text-danger fw-bold</c:if>"</c:if> >
                             <td class="col-2">${product.userName}</td>
                             <td class="col-3">${product.name}</td>
                             <td class="col-2">${product.quantity}</td>
                             <td class="col-2">${product.stock}</td>
-                            <td class="col-2">${product.price}₺ / ${product.price * product.quantity}₺</td>
-                            <c:if test="${isRetailer}">
+                            <td class="col-2"><fmt:formatNumber value="${product.price}" type="currency" /> / <fmt:formatNumber value="${product.price * (1.0 - product.discount) * product.quantity}" type="currency" /></td>
+                            <c:if test="${role == 'supplier'}">
                                 <td class="col-1">
                                     <c:if test="${product.stock < product.quantity}">
                                         <a class="btn btn-danger" 
@@ -58,7 +60,7 @@
                             </c:if>
                         </tr>
                     </c:forEach>
-                    <c:if test="${isRetailer}">
+                    <c:if test="${role == 'supplier'}">
                         <tr>
                             <td colspan="6">
                     <form action="/order/confirm" method="post">
@@ -75,7 +77,7 @@
         </div>
     </div>
 </div>
-<c:if test="${isRetailer}">
+<c:if test="${role == 'supplier'}">
     <p:edit>
         
     </p:edit>
