@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"lenovo@tedarikci.com\",\r\n    \"password\": \"Lenovo123\",\r\n    \"passwordVerification\": \"Lenovo123\",\r\n    \"name\": \"Lenovo\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
+					"raw": "{\r\n    \"email\": \"test@tedarikci.com\",\r\n    \"password\": \"Test1234\",\r\n    \"passwordVerification\": \"Test1234\",\r\n    \"name\": \"Test\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,14 +20,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9080/retailer/register",
+					"raw": "http://localhost:9080/api/retailers/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"retailer",
+						"api",
+						"retailers",
 						"register"
 					]
 				}
@@ -36,12 +37,23 @@
 		},
 		{
 			"name": "Tedarikçi Giriş",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"lenovo@tedarikci.com\",\r\n    \"password\": \"Lenovo123\"\r\n}",
+					"raw": "{\r\n    \"email\": \"sahin@tedarikci.com\",\r\n    \"password\": \"Sahin123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,14 +61,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9080/retailer/login",
+					"raw": "http://localhost:9080/api/retailers/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"retailer",
+						"api",
+						"retailers",
 						"login"
 					]
 				}
@@ -64,21 +77,12 @@
 			"response": []
 		},
 		{
-			"name": "Ürün Ekleme",
+			"name": "Ürün Arama",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Lenovo Ideapad Gaming 3 Dizüstü Bilgisayar\",\r\n    \"description\": \"IdeaPad Gaming 3 dizüstü bilgisayar, hızlı refleksleri barındıran bir ekranla zaferi sunar. 15,6 FHD ekran, görselleri net ve yırtılmadan tutar, böylece birden fazla oyun içi hedefi edinebilir.\",\r\n    \"price\": 1000,\r\n    \"stock\": 3,\r\n    \"imagePaths\": []\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:9080/product/create",
+					"raw": "http://localhost:9080/product/search?query=Lenovo",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -86,65 +90,13 @@
 					"port": "9080",
 					"path": [
 						"product",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Ürün İndirim Ayarlama",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"1\",\r\n    \"discount\": \"99\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9080/product/editDiscount",
-					"protocol": "http",
-					"host": [
-						"localhost"
+						"search"
 					],
-					"port": "9080",
-					"path": [
-						"product",
-						"editDiscount"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Ürün Stok Ayarlama",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"1\",\r\n    \"stock\": \"99\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"query": [
+						{
+							"key": "query",
+							"value": "Lenovo"
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9080/product/editStock",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9080",
-					"path": [
-						"product",
-						"editStock"
 					]
 				}
 			},
@@ -156,61 +108,45 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9080/product/get?id=1",
+					"raw": "http://localhost:9080/api/products/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"product",
-						"get"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
+						"api",
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Oluşturma",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\" : {\r\n        \"21\": \"2\",\r\n        \"7\": \"3\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Stokta Tükenen Ürünler",
-			"request": {
-				"method": "GET",
-				"header": [],
+					}
+				},
 				"url": {
-					"raw": "http://localhost:9080/retailer/outOfStockProducts",
+					"raw": "http://localhost:9080/order/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"retailer",
-						"outOfStockProducts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Stokta Bulunan Ürünler",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9080/retailer/myProducts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9080",
-					"path": [
-						"retailer",
-						"myProducts"
+						"order",
+						"create"
 					]
 				}
 			},
@@ -242,50 +178,61 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9080/order/details?id=6",
+					"raw": "http://localhost:9080/api/orders/19",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"order",
-						"details"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "6"
-						}
+						"api",
+						"orders",
+						"19"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Sipariş Onaylama",
+			"name": "Faturaları Listele",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"6\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:9080/order/confirm",
+					"raw": "http://localhost:9080/api/retailers/1/invoices",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"order",
-						"confirm"
+						"api",
+						"retailers",
+						"1",
+						"invoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fatura Detay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/api/retailers/1/invoices/21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"retailers",
+						"1",
+						"invoices",
+						"21"
 					]
 				}
 			},
@@ -297,7 +244,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzIiwiaWF0IjoxNjczODA4MDI3LCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo4MDgwIiwiaXNSZXRhaWxlciI6dHJ1ZSwidXNlcklkIjoiMyJ9.AQDDPUK976BqNvRHy7ODwPYXomShLqCXcBt0-4tzXpY",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjc0NDEwODMzLCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo5MDgwIiwicm9sZSI6InJldGFpbGVyIiwidXNlcklkIjoxfQ.yOswRQVgRp0T04lyZgH39bnoD4IM7t_SuQKfpb23aFg",
 				"type": "string"
 			}
 		]

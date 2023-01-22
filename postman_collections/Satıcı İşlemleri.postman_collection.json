@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"sahin@satici.com\",\r\n    \"password\": \"Sahin123\",\r\n    \"passwordVerification\": \"Sahin123\",\r\n    \"name\": \"Sahin\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
+					"raw": "{\r\n    \"email\": \"asus@satici.com\",\r\n    \"password\": \"Asus1234\",\r\n    \"passwordVerification\": \"Asus1234\",\r\n    \"name\": \"Asus\",\r\n    \"phoneNumber\": \"1112223334\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,14 +20,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9080/supplier/register",
+					"raw": "http://localhost:9080/api/suppliers/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"supplier",
+						"api",
+						"suppliers",
 						"register"
 					]
 				}
@@ -41,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"sahin@satici.com\",\r\n    \"password\": \"Sahin123\"\r\n}",
+					"raw": "{\r\n    \"email\": \"lenovo@satici.com\",\r\n    \"password\": \"Lenovo123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,41 +50,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:9080/supplier/login",
+					"raw": "http://localhost:9080/api/suppliers/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"supplier",
+						"api",
+						"suppliers",
 						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Ürün Arama",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9080/product/search?query=Lenovo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9080",
-					"path": [
-						"product",
-						"search"
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "Lenovo"
-						}
 					]
 				}
 			},
@@ -95,70 +71,39 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9080/product/get?id=21",
+					"raw": "http://localhost:9080/api/products/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"product",
-						"get"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "21"
-						}
+						"api",
+						"products",
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Sipariş Oluşturma",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"products\" : {\r\n        \"21\": \"2\",\r\n        \"7\": \"3\"\r\n        }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:9080/order/create",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9080",
-					"path": [
-						"order",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Siparişler",
+			"name": "Bekleyen Siparişler",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9080/supplier/orders",
+					"raw": "http://localhost:9080/api/suppliers/1/orders/pending",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"supplier",
-						"orders"
+						"api",
+						"suppliers",
+						"1",
+						"orders",
+						"pending"
 					]
 				}
 			},
@@ -170,21 +115,242 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9080/order/details?id=8",
+					"raw": "http://localhost:9080/api/orders/18",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9080",
 					"path": [
-						"order",
-						"details"
+						"api",
+						"orders",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stokta Tükenen Ürünler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/products/out-of-stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"products",
+						"out-of-stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Ekleme",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Lenovo A2010\",\r\n    \"description\": \"En uygun koşullarda hem kaliteli hem şık ve prestijli hem de işlevsel bir akıllı cep telefonu sahibi olmak isteyenler için üretilen Lenovo A2010, estetik çizgiler ile teknolojik yenilikleri bir araya getiriyor. Avantajlı ve pratik kullanımı ile akıllı telefon kullanıcılarının dikkatini çekiyor.\",\r\n    \"price\": 1799,\r\n    \"stock\": 0,\r\n    \"productImages\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün İndirim Ayarlama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6\",\r\n    \"discount\": \"23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/products/6/edit-discount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"products",
+						"6",
+						"edit-discount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ürün Stok Ayarlama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6\",\r\n    \"stock\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/products/6/edit-stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"products",
+						"6",
+						"edit-stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stokta Bulunan Ürünler",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/products/in-stock?pageSize=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"products",
+						"in-stock"
 					],
 					"query": [
 						{
-							"key": "id",
-							"value": "8"
+							"key": "pageSize",
+							"value": "2"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sipariş Onaylama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"18\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/orders/18",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"orders",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faturaları Listele",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/invoices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"invoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fatura Detay",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9080/api/suppliers/1/invoices/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"suppliers",
+						"1",
+						"invoices",
+						"19"
 					]
 				}
 			},
@@ -196,7 +362,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2IiwiaWF0IjoxNjczODA5ODQ2LCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo4MDgwIiwiaXNSZXRhaWxlciI6ZmFsc2UsInVzZXJJZCI6IjYifQ.cmUIK5vq91IO2VypD0mwa10qoxggkAvBDth8j9zxbXc",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjc0NDEwOTkyLCJzdWIiOiJsb2NhbGhvc3Q6ODA4MCIsImlzcyI6ImxvY2FsaG9zdDo5MDgwIiwicm9sZSI6InN1cHBsaWVyIiwidXNlcklkIjoxfQ.a0MAMbgPAzwOjdupJs5kwN-a83WUE5EgD6j-Xf0AmW0",
 				"type": "string"
 			}
 		]

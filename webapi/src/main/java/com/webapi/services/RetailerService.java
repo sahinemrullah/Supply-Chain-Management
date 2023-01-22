@@ -46,41 +46,48 @@ public class RetailerService {
     @POST
     public void register(RetailerRegisterRequest request) throws SQLException {
         IRequestHandler<RetailerRegisterRequest, Void> retailerRegisterRequestHandler = new RetailerRegisterRequestHandler();
-        
+
         IResult<Void> result = retailerRegisterRequestHandler.handle(request);
-        
+
         result.throwIfNotSucceeded();
     }
-    
+
     @Path("/login")
     @POST
     public AccessToken login(RetailerLoginRequest request) throws SQLException {
         IRequestHandler<RetailerLoginRequest, AccessToken> retailerLoginRequestHandler = new RetailerLoginRequestHandler();
-        
+
         IResult<AccessToken> result = retailerLoginRequestHandler.handle(request);
-        
+
         result.throwIfNotSucceeded();
-        
+
         return result.getItem();
     }
-    
+
     @Path("/{retailerId}/orders")
     @GET
     @AuthorizeJWTToken
     @Role(role = "retailer")
-    public PaginatedListModel<OrderHistoryModel> getOrderHistory(@PathParam("retailerId") int retailerId,
-                                                                @DefaultValue("10") @QueryParam("pageSize") int pageSize,
-                                                                @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
-        OrderHistoryRequest request = new OrderHistoryRequest();
-        request.setRetailerId(retailerId);
-        request.setPageNumber(pageNumber);
-        request.setPageSize(pageSize);
-        
-        IRequestHandler<OrderHistoryRequest, PaginatedListModel<OrderHistoryModel>> orderHistoryRequestHandler = new OrderHistoryRequestHandler();
-        
-        IResult<PaginatedListModel<OrderHistoryModel>> result = orderHistoryRequestHandler.handle(request);
-        
-        return result.getItem();
+    public Response getOrderHistory(@PathParam("retailerId") int retailerId,
+            @DefaultValue("10") @QueryParam("pageSize") int pageSize,
+            @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
+
+        Principal principal = userContext.getUserPrincipal();
+        String userId = principal.getName();
+        if (!(Integer.parseInt(userId) == retailerId)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            OrderHistoryRequest request = new OrderHistoryRequest();
+            request.setRetailerId(retailerId);
+            request.setPageNumber(pageNumber);
+            request.setPageSize(pageSize);
+
+            IRequestHandler<OrderHistoryRequest, PaginatedListModel<OrderHistoryModel>> orderHistoryRequestHandler = new OrderHistoryRequestHandler();
+
+            IResult<PaginatedListModel<OrderHistoryModel>> result = orderHistoryRequestHandler.handle(request);
+
+            return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
+        }
     }
 
     @Path("/{retailerId}/invoices")
@@ -113,17 +120,17 @@ public class RetailerService {
     @GET
     @AuthorizeJWTToken
     @Role(role = "retailer")
-    public Response getInvoice(@PathParam("retailerId") int  retailerId, @PathParam("invoiceId") int invoiceId) throws SQLException {
+    public Response getInvoice(@PathParam("retailerId") int retailerId, @PathParam("invoiceId") int invoiceId) throws SQLException {
         Principal principal = userContext.getUserPrincipal();
         String userId = principal.getName();
-        if (!(Integer.parseInt(userId) ==  retailerId)) {
+        if (!(Integer.parseInt(userId) == retailerId)) {
             return Response.status(Response.Status.FORBIDDEN).build();
         } else {
             InvoiceDetailsRequest request = new InvoiceDetailsRequest();
-            request.setUserId( retailerId);
+            request.setUserId(retailerId);
             request.setId(invoiceId);
             request.setRole("retailer");
-            
+
             IRequestHandler<InvoiceDetailsRequest, InvoiceDetailsModel> invoiceDetailsRequestHandler = new InvoiceDetailsRequestHandler();
 
             IResult<InvoiceDetailsModel> result = invoiceDetailsRequestHandler.handle(request);
