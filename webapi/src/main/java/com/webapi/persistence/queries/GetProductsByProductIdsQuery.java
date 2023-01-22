@@ -1,6 +1,7 @@
 
-package com.webapi.application.requests.createorder;
+package com.webapi.persistence.queries;
 
+import com.webapi.application.requests.createorder.CreateOrderProductModel;
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;

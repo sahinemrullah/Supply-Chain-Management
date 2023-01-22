@@ -1,25 +1,26 @@
-package com.webapi.application.requests.supplierlogin;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.models.AccessTokenFactory;
+import com.webapi.application.requests.retailerlogin.RetailerLoginRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class SupplierLoginCommand implements ISQLOperation<SupplierLoginRequest, AccessTokenFactory> {
+public class RetailerLoginQuery implements ISQLOperation<RetailerLoginRequest, AccessTokenFactory> {
     @Override
-    public AccessTokenFactory execute(SupplierLoginRequest params) throws SQLException {
+    public AccessTokenFactory execute(RetailerLoginRequest params) throws SQLException {
         AccessTokenFactory accessTokenFactory = new AccessTokenFactory();
         try (Connection con = DatabaseConnection.getConntection()) {
-            PreparedStatement statement = con.prepareStatement("SELECT supplier_id, password_hash FROM SUPPLIER WHERE email = ?");
+            PreparedStatement statement = con.prepareStatement("SELECT retailer_id, password_hash FROM RETAILER WHERE email = ?");
             statement.setString(1, params.getEmail());
             if (statement.execute()) {
                 ResultSet result = statement.getResultSet();
                 if (result.next()) {
-                    accessTokenFactory.setRole("supplier");
-                    accessTokenFactory.setUserId(result.getInt("supplier_id"));
+                    accessTokenFactory.setRole("retailer");
+                    accessTokenFactory.setUserId(result.getInt("retailer_id"));
                     accessTokenFactory.setPasswordHash(result.getString("password_hash"));
                     accessTokenFactory.setPassword(params.getPassword());
                 }

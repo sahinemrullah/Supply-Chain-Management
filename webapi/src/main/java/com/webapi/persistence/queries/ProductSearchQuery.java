@@ -1,8 +1,10 @@
 
-package com.webapi.application.requests.productsearch;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.concretes.PaginatedSQLQuery;
 import com.webapi.application.models.PaginatedListModel;
+import com.webapi.application.requests.productsearch.ProductSearchModel;
+import com.webapi.application.requests.productsearch.ProductSearchRequest;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

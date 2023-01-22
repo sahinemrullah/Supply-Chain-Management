@@ -1,5 +1,6 @@
 package com.webapi.application.requests.retailerlogin;
 
+import com.webapi.persistence.queries.RetailerLoginQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.persistence.abstractions.ISQLOperation;
@@ -17,7 +18,7 @@ public class RetailerLoginRequestHandler implements IRequestHandler<RetailerLogi
     @Override
     public IResult<AccessToken> handle(RetailerLoginRequest request) throws SQLException {
 
-        ISQLOperation<RetailerLoginRequest, AccessTokenFactory> command = new RetailerLoginCommand();
+        ISQLOperation<RetailerLoginRequest, AccessTokenFactory> command = new RetailerLoginQuery();
 
         AccessTokenFactory factory = command.execute(request);
         AccessToken accessToken = factory.build();

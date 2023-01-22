@@ -1,5 +1,7 @@
 package com.webapi.application.requests.createorder;
 
+import com.webapi.persistence.queries.GetProductsByProductIdsQuery;
+import com.webapi.persistence.commands.CreateOrderCommand;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.persistence.abstractions.ISQLOperation;

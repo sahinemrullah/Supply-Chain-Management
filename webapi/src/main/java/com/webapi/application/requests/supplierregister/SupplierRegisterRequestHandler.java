@@ -1,5 +1,7 @@
 package com.webapi.application.requests.supplierregister;
 
+import com.webapi.persistence.commands.SupplierRegisterCommand;
+import com.webapi.persistence.queries.SupplierExistsQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.persistence.abstractions.ISQLOperation;

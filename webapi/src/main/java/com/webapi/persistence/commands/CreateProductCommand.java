@@ -1,5 +1,6 @@
-package com.webapi.application.requests.createproduct;
+package com.webapi.persistence.commands;
 
+import com.webapi.application.requests.createproduct.CreateProductRequest;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;

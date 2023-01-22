@@ -1,6 +1,7 @@
 
-package com.webapi.application.requests.supplierregister;
+package com.webapi.persistence.commands;
 
+import com.webapi.application.requests.supplierregister.SupplierRegisterRequest;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;

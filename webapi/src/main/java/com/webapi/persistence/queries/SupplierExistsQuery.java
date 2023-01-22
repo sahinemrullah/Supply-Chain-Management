@@ -1,4 +1,4 @@
-package com.webapi.application.requests.retailerregister;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.utils.StringUtils;
@@ -8,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RetailerExistsQuery implements ISQLOperation<String, Boolean> {
+public class SupplierExistsQuery implements ISQLOperation<String, Boolean> {
 
-    private final String query = "SELECT email FROM RETAILER WHERE email = ?";
+    private final String query = "SELECT email FROM supplier WHERE email = ?";
     private final int emailIndex = 1;
 
     @Override

@@ -1,10 +1,11 @@
 package com.webapi.application.requests.editstock;
 
+import com.webapi.persistence.commands.EditStockCommand;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.ResultBuilder;
 import com.webapi.application.exceptions.NotFoundException;
-import com.webapi.application.requests.editdiscount.ProductExistsQuery;
+import com.webapi.persistence.queries.ProductExistsQuery;
 import java.sql.SQLException;
 
 public class EditStockRequestHandler implements IRequestHandler<EditStockRequest, Void> {

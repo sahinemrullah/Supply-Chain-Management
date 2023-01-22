@@ -1,7 +1,10 @@
-package com.webapi.application.requests.invoicedetails;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.exceptions.NotFoundException;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsModel;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsRequest;
+import com.webapi.application.requests.invoicedetails.InvoiceItemModel;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

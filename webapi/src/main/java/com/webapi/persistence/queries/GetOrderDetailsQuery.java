@@ -1,6 +1,9 @@
 
-package com.webapi.application.requests.orderdetails;
+package com.webapi.persistence.queries;
 
+import com.webapi.application.requests.orderdetails.OrderDetailsListModel;
+import com.webapi.application.requests.orderdetails.OrderDetailsModel;
+import com.webapi.application.requests.orderdetails.OrderDetailsRequest;
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;

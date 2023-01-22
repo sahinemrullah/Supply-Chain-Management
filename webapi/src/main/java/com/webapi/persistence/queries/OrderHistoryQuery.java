@@ -1,8 +1,10 @@
 
-package com.webapi.application.requests.orderhistory;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.concretes.PaginatedSQLQuery;
 import com.webapi.application.models.PaginatedListModel;
+import com.webapi.application.requests.orderhistory.OrderHistoryModel;
+import com.webapi.application.requests.orderhistory.OrderHistoryRequest;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

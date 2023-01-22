@@ -1,5 +1,6 @@
 package com.webapi.application.requests.createproduct;
 
+import com.webapi.persistence.commands.CreateProductCommand;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import java.sql.SQLException;

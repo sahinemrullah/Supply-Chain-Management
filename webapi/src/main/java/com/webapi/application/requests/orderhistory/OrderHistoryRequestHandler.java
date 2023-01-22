@@ -1,5 +1,6 @@
 package com.webapi.application.requests.orderhistory;
 
+import com.webapi.persistence.queries.OrderHistoryQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.ResultBuilder;

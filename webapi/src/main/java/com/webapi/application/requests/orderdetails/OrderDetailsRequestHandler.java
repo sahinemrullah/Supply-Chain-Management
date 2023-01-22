@@ -1,6 +1,7 @@
 
 package com.webapi.application.requests.orderdetails;
 
+import com.webapi.persistence.queries.GetOrderDetailsQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.ResultBuilder;

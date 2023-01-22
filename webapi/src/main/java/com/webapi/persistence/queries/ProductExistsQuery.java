@@ -1,5 +1,5 @@
 
-package com.webapi.application.requests.editdiscount;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.persistence.DatabaseConnection;

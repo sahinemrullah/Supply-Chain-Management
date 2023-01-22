@@ -1,6 +1,7 @@
 
 package com.webapi.application.requests.outofstockproducts;
 
+import com.webapi.persistence.queries.OutOfStockProductsQuery;
 import com.webapi.application.requests.supplierproducts.SupplierProductsListModel;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;

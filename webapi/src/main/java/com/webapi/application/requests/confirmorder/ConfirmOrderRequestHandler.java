@@ -1,5 +1,6 @@
 package com.webapi.application.requests.confirmorder;
 
+import com.webapi.persistence.commands.ConfirmOrderRequestCommand;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import java.sql.SQLException;

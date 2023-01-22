@@ -1,5 +1,7 @@
 package com.webapi.application.requests.retailerregister;
 
+import com.webapi.persistence.commands.RetailerRegisterCommand;
+import com.webapi.persistence.queries.RetailerExistsQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.persistence.abstractions.ISQLOperation;

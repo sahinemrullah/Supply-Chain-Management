@@ -1,8 +1,9 @@
 
-package com.webapi.application.requests.outofstockproducts;
+package com.webapi.persistence.queries;
 
 import com.webapi.persistence.concretes.PaginatedSQLQuery;
 import com.webapi.application.models.PaginatedListModel;
+import com.webapi.application.requests.outofstockproducts.OutOfStockProductsRequest;
 import com.webapi.application.requests.supplierproducts.SupplierProductsListModel;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;

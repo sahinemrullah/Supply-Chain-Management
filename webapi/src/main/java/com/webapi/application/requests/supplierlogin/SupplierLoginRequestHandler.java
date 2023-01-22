@@ -1,5 +1,6 @@
 package com.webapi.application.requests.supplierlogin;
 
+import com.webapi.persistence.queries.SupplierLoginQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.persistence.abstractions.ISQLOperation;
@@ -16,7 +17,7 @@ public class SupplierLoginRequestHandler implements IRequestHandler<SupplierLogi
 
     @Override
     public IResult<AccessToken> handle(SupplierLoginRequest request) throws SQLException {
-        ISQLOperation<SupplierLoginRequest, AccessTokenFactory> command = new SupplierLoginCommand();
+        ISQLOperation<SupplierLoginRequest, AccessTokenFactory> command = new SupplierLoginQuery();
         
         AccessTokenFactory factory = command.execute(request);
         AccessToken accessToken = factory.build();

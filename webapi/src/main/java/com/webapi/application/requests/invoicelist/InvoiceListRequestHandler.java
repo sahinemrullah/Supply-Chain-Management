@@ -1,6 +1,7 @@
 
 package com.webapi.application.requests.invoicelist;
 
+import com.webapi.persistence.queries.GetInvoiceListQuery;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import com.webapi.application.concretes.ResultBuilder;

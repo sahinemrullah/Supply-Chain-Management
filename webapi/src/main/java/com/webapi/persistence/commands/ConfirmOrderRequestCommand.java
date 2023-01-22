@@ -1,6 +1,7 @@
 
-package com.webapi.application.requests.confirmorder;
+package com.webapi.persistence.commands;
 
+import com.webapi.application.requests.confirmorder.ConfirmOrderRequest;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.CallableStatement;
 import java.sql.Connection;
