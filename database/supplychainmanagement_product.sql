@@ -28,14 +28,12 @@ CREATE TABLE `product` (
   `price` decimal(8,2) NOT NULL,
   `stock` int NOT NULL,
   `description` varchar(1000) NOT NULL,
-  `retailer_id` int NOT NULL,
+  `supplier_id` int NOT NULL,
   `discount` decimal(3,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`product_id`),
-  KEY `FK_Retailer_Retailer_Id_idx` (`retailer_id`),
   FULLTEXT KEY `IDX_Product_Name` (`name`),
-  CONSTRAINT `FK_Retailer_Retailer_Id` FOREIGN KEY (`retailer_id`) REFERENCES `retailer` (`retailer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ChkStock` CHECK ((`stock` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +42,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (23,'Lenovo Ideapad Gaming 3 DizÃ¼stÃ¼ Bilgisayar',19978.99,10,'IdeaPad Gaming 3 dizÃ¼stÃ¼ bilgisayar, hÄ±zlÄ± refleksleri barÄ±ndÄ±ran bir ekranla zaferi sunar. 15,6\" FHD ekran, gÃ¶rselleri net ve yÄ±rtÄ±lmadan tutar, bÃ¶ylece birden fazla oyun iÃ§i hedefi edinebilir.\r\nIdeaPad Gaming 3\'Ã¼n geniÅŸ klavyesi ve her tÃ¼rlÃ¼ aydÄ±nlatma durumunda Ã¶nemli gÃ¶rÃ¼nÃ¼rlÃ¼ÄŸe yardÄ±mcÄ± olmak iÃ§in arka aydÄ±nlatma ile oyuncular iÃ§in tasarlanmÄ±ÅŸtÄ±r.',4,0.00),(24,'Lenovo IdeaPad Gaming M100 RGB Mouse',78.92,100,'800 ila 3200 DPI arasÄ±nda ayarlanabilir Ã§Ã¶zÃ¼nÃ¼rlÃ¼ÄŸe sahip hassas optik sensÃ¶r.\r\nSaÄŸ elle kullanÄ±m iÃ§in 2 yan dÃ¼ÄŸmeli ergonomik tasarÄ±m',4,0.00),(25,'Asus Vivobook 15 Bilgisayar',10499.00,25,'Ä°ÅŸlemci Modeli : AMD Ryzen 5 4600H, Ä°ÅŸlemci HÄ±zÄ± : 3.00 GHz, Ä°ÅŸlemci : AMD Ryzen 5, Ä°ÅŸletim Sistemi : FreeDOS, Ekran Ã–zelliÄŸi : 15.6\", Ekran KartÄ± : AMD Radeon Graphics, Ekran KartÄ± HafÄ±zasÄ± : PaylaÅŸÄ±mlÄ±, Ekran Ã‡Ã¶zÃ¼nÃ¼rlÃ¼ÄŸÃ¼ : 1920 x 1080, Sistem BelleÄŸi : 8 GB, Kapasite : 256 GB SSD, Optik SÃ¼rÃ¼cÃ¼ : Yok, Klavye : SayÄ±sal TuÅŸ TakÄ±mlÄ±, Kablosuz HaberleÅŸme : Var, Bluetooth Ã–zelliÄŸi : Var, HDMI : Var , Garanti : 24 Ay Asus TÃ¼rkiye Garantili, VGA : Yok, Ethernet (LAN) : Yok, Ekran : Full HD, AÄŸÄ±rlÄ±k : 1.70 kg, SSD : 256 GB, SSD Slotu : M.2 NVMe PCIe 3.0, Ã‡ekirdek SayÄ±sÄ± : AltÄ± Ã‡ekirdekli Ä°ÅŸlemci, Ekran KartÄ± Bellek Tipi : DDR4, USB Port : 1x USB 2.0 Type-A / 2x USB 2.0 Type-A / 2x USB 3.2 Gen 1 Type-C, Model Kodu : M1502IA-EJ132, Marka : Asus',5,0.00),(26,'ASUS ROG STRIX G15 Bilgisayar',40619.00,1,'ASUS ROG STRIX G15 AMD RYZEN 7-6800H 16GB DDR5 1TB SSD 8GB RTX3070TI 15.6\" FHD 300Hz FREEDOS',5,0.00);
+INSERT INTO `product` VALUES (1,'Lenovo Ideapad 3 Dizüstü Bilgisayar',8999.00,3,'Hafif ve taşıması kolay IdeaPad 3 dizüstü bilgisayarın muhteşem 15,6\" FHD ekranını, sahip olduğu geniş görüntüleme oranı sayesinde, birden fazla kişiye neredeyse her açıdan gösterebilirsiniz. AMD Ryzen Mobil İşlemci, nereye giderseniz gidin iş istasyonu benzeri bir kapasiteyi de yanınızda götürmenizi mümkün kılar.\r\nKristal netliğinde 720p HD web kamerası ve diğer cihazlarla sorunsuz entegrasyon sağlayan tam işlevli bir USB-C bağlantı noktası dahil birçok özelliğe sahip IdeaPad 3 dizüstü bilgisayarınızı istediğiniz yere götürebilirsiniz.',1,0.12),(2,'Lenovo Ideapad Gaming 3 Dizüstü Bilgisayar',18980.00,11,'IdeaPad Gaming 3 dizüstü bilgisayar, hızlı refleksleri barındıran bir ekranla zaferi sunar. 15,6\" FHD ekran, görselleri net ve yırtılmadan tutar, böylece birden fazla oyun içi hedefi edinebilir.\r\nIdeaPad Gaming 3\'ün geniş klavyesi ve her türlü aydınlatma durumunda önemli görünürlüğe yardımcı olmak için arka aydınlatma ile oyuncular için tasarlanmıştır.',1,0.00),(3,'Logitech K380 Çoklu Cihaz Bluetooth Klavye',648.35,80,'Bilgisayarda, telefonda, tablette ve diğer cihazlarda yazı yazmak için ideal, kolayca bluetooth ile bağlanabilen, ultra ince tasarımlı Çoklu Cihaz klavyesidir.\r\nPembe, Beyaz ve Siyah renk seçenekleriyle, minimalist ve modern tasarımıyla, tarzınıza ve masa düzeninize uyum sağlar. Ayrıca hafif ve kompakt olduğu için kolayca taşınabilir.\r\nHarici klavye desteği olan tüm Bluetooth kablosuz aygıtlara bağlanma özelliğiyle Windows, macOS, iPadOS, Chrome OS, Android, iOS ve hatta Apple TV üzerinden kolaylıkla çalışmanıza olanak tanır.',2,0.00),(4,'Lenovo Tab P11 Tablet',7991.00,0,'İşlemci: Qualcomm Snapdragon 662, 2 GHz\r\nİşletim Sistemi: Android 11\r\nRAM: 4 GB\r\nEkran Boyutu: 11\'\' 2K\r\nÜrün ile ilgili diğer tüm özelliklere Ürün kılavuzları ve Belgeleri alanındaki ekli ürün belgesi üzerinden ulaşabilirsiniz',1,0.00),(5,'MSI KATANA GF76 11UC-638TR Dizüstü Bilgisayar',36899.00,0,'Ekran Boyutu: 17.3\" inç FHD\r\nİşletim Sistemi: Intel Core i7-11800H\r\nÇözünürlük: 1920 x 1080 pixel',3,0.00);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:50
+-- Dump completed on 2023-01-22 20:57:40

@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `order_m`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_m` (
   `order_m_id` int NOT NULL AUTO_INCREMENT,
-  `supplier_id` int NOT NULL,
+  `retailer_id` int NOT NULL,
   `created_date` datetime NOT NULL,
   PRIMARY KEY (`order_m_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `order_m` (
 
 LOCK TABLES `order_m` WRITE;
 /*!40000 ALTER TABLE `order_m` DISABLE KEYS */;
-INSERT INTO `order_m` VALUES (9,7,'2023-01-15 23:23:27');
+INSERT INTO `order_m` VALUES (16,1,'2023-01-21 19:53:18'),(17,1,'2023-01-21 23:19:13'),(18,1,'2023-01-22 15:48:46'),(19,1,'2023-01-22 20:37:02');
 /*!40000 ALTER TABLE `order_m` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:38

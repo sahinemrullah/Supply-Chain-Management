@@ -28,12 +28,8 @@ CREATE TABLE `order_m_d_d` (
   `product_id` int NOT NULL,
   `quantity` varchar(45) NOT NULL,
   `discount` decimal(3,2) NOT NULL,
-  PRIMARY KEY (`order_m_d_d_id`),
-  KEY `FK_Order_Order_Id_idx` (`order_m_d_id`),
-  KEY `FK_Product_Product_Id_idx` (`product_id`),
-  CONSTRAINT `FK_Order_Order_Id` FOREIGN KEY (`order_m_d_id`) REFERENCES `order_m_d` (`order_m_d_id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_Product_Product_Id` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`order_m_d_d_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +38,7 @@ CREATE TABLE `order_m_d_d` (
 
 LOCK TABLES `order_m_d_d` WRITE;
 /*!40000 ALTER TABLE `order_m_d_d` DISABLE KEYS */;
-INSERT INTO `order_m_d_d` VALUES (13,12,23,'1',0.00),(14,13,26,'1',0.00);
+INSERT INTO `order_m_d_d` VALUES (1,7,1,'11',0.12),(2,7,2,'3',0.00),(3,8,1,'1',0.12),(4,9,3,'3',0.00),(5,10,4,'1',0.00),(6,11,5,'1',0.00);
 /*!40000 ALTER TABLE `order_m_d_d` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:39

@@ -29,7 +29,7 @@ CREATE TABLE `supplier` (
   `phone_number` varchar(10) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   PRIMARY KEY (`supplier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (7,'Sahin','sahin@satici.com','1234567890','7debe360da89221425b452c802a76580efcb1ec937cb98bc73ac02792b987176');
+INSERT INTO `supplier` VALUES (1,'Lenovo','lenovo@satici.com','1234567890','b0e68cc37cbfffdfdeb2a7096d3befbc10583f761eb5d5d4b4f022c84df64fa7'),(2,'Logitech','logitech@satici.com','1234567890','2b49adeff5ef5c5c5535e920aa185a685c0bd5b75b3428646945019c89381090'),(3,'MSI','micro123@satici.com','1234567890','dfbcb85429d68b39b49b48fa45c3a4d725a185561c26307f447dbb625910faca');
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:39

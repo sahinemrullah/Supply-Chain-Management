@@ -26,10 +26,8 @@ CREATE TABLE `invoiceitem` (
   `invoice_item_id` int NOT NULL AUTO_INCREMENT,
   `invoice_id` int NOT NULL,
   `order_m_d_d_id` int NOT NULL,
-  PRIMARY KEY (`invoice_item_id`),
-  KEY `FK_Order_Detail_Detail_Id_idx` (`order_m_d_d_id`),
-  CONSTRAINT `FK_Order_Detail_Detail_Id` FOREIGN KEY (`order_m_d_d_id`) REFERENCES `order_m_d_d` (`order_m_d_d_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`invoice_item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +36,7 @@ CREATE TABLE `invoiceitem` (
 
 LOCK TABLES `invoiceitem` WRITE;
 /*!40000 ALTER TABLE `invoiceitem` DISABLE KEYS */;
+INSERT INTO `invoiceitem` VALUES (55,19,1),(56,19,2),(58,20,4),(59,21,3),(60,22,6);
 /*!40000 ALTER TABLE `invoiceitem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:38

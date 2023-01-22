@@ -25,13 +25,10 @@ DROP TABLE IF EXISTS `order_m_d`;
 CREATE TABLE `order_m_d` (
   `order_m_d_id` int NOT NULL AUTO_INCREMENT,
   `order_m_id` int NOT NULL,
-  `retailer_id` int NOT NULL,
+  `supplier_id` int NOT NULL,
   PRIMARY KEY (`order_m_d_id`),
-  KEY `FK_Retailer_Id_idx` (`retailer_id`),
-  KEY `FK_Order_Master_Id_idx` (`order_m_id`),
-  CONSTRAINT `FK_Order_Master_Id` FOREIGN KEY (`order_m_id`) REFERENCES `order_m` (`order_m_id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_Retailer_Id` FOREIGN KEY (`retailer_id`) REFERENCES `retailer` (`retailer_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FK_Supplier_Id_idx` (`supplier_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +37,7 @@ CREATE TABLE `order_m_d` (
 
 LOCK TABLES `order_m_d` WRITE;
 /*!40000 ALTER TABLE `order_m_d` DISABLE KEYS */;
-INSERT INTO `order_m_d` VALUES (12,9,4),(13,9,5);
+INSERT INTO `order_m_d` VALUES (7,16,1),(8,17,1),(9,17,2),(10,18,1),(11,19,3);
 /*!40000 ALTER TABLE `order_m_d` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:39

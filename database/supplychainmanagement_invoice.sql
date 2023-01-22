@@ -27,12 +27,8 @@ CREATE TABLE `invoice` (
   `retailer_id` int NOT NULL,
   `supplier_id` int NOT NULL,
   `created_date` datetime NOT NULL,
-  PRIMARY KEY (`invoice_id`),
-  KEY `FK_Retailers_Retailer_Id_idx` (`retailer_id`),
-  KEY `FK_Suppliers_Supplier_Id_idx` (`supplier_id`),
-  CONSTRAINT `FK_Retailers_Retailer_Id` FOREIGN KEY (`retailer_id`) REFERENCES `retailer` (`retailer_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_Suppliers_Supplier_Id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`invoice_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +37,7 @@ CREATE TABLE `invoice` (
 
 LOCK TABLES `invoice` WRITE;
 /*!40000 ALTER TABLE `invoice` DISABLE KEYS */;
+INSERT INTO `invoice` VALUES (19,1,1,'2023-01-21 23:14:56'),(20,1,2,'2023-01-21 23:19:45'),(21,1,1,'2023-01-22 00:28:29'),(22,1,3,'2023-01-22 20:37:33');
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:40

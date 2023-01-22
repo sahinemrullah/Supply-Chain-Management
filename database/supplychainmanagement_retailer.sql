@@ -29,7 +29,7 @@ CREATE TABLE `retailer` (
   `phone_number` varchar(10) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   PRIMARY KEY (`retailer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `retailer` (
 
 LOCK TABLES `retailer` WRITE;
 /*!40000 ALTER TABLE `retailer` DISABLE KEYS */;
-INSERT INTO `retailer` VALUES (4,'Lenovo','lenovo@tedarikci.com','1234567890','b0e68cc37cbfffdfdeb2a7096d3befbc10583f761eb5d5d4b4f022c84df64fa7'),(5,'Asus','asus@tedarikci.com','1234567890','8a51708a44c48bbbf5088698d9410196208abb5c9be90c0d11e4cf080fa5dac5');
+INSERT INTO `retailer` VALUES (1,'Emrullah','sahin@tedarikci.com','1234567890','7debe360da89221425b452c802a76580efcb1ec937cb98bc73ac02792b987176');
 /*!40000 ALTER TABLE `retailer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-15 23:32:49
+-- Dump completed on 2023-01-22 20:57:39
