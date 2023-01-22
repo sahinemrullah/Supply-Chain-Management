@@ -1,4 +1,4 @@
-package com.webapi.application.abstractions;
+package com.webapi.persistence.abstractions;
 
 import java.sql.SQLException;
 

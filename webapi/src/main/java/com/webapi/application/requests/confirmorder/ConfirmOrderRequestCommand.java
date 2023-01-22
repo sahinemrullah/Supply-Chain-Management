@@ -6,7 +6,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 
 public class ConfirmOrderRequestCommand implements ISQLOperation<ConfirmOrderRequest, String> {
     private final String query = "{CALL sp_create_invoice(?, ?, ?, ?)}";

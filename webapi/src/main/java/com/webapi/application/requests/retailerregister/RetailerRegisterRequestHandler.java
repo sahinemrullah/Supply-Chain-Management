@@ -2,7 +2,7 @@ package com.webapi.application.requests.retailerregister;
 
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import java.sql.SQLException;
 import com.webapi.application.concretes.ResultBuilder;
 import com.webapi.application.exceptions.ModelValidationException;

@@ -1,6 +1,6 @@
 package com.webapi.application.requests.editdiscount;
 
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

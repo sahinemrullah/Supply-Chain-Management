@@ -1,6 +1,6 @@
 package com.webapi.application.requests.supplierproducts;
 
-import com.webapi.application.concretes.PaginatedSQLQuery;
+import com.webapi.persistence.concretes.PaginatedSQLQuery;
 import com.webapi.application.models.PaginatedListModel;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;

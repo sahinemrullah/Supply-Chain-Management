@@ -3,7 +3,7 @@ package com.webapi.application.requests.confirmorder;
 import com.webapi.application.abstractions.IRequestHandler;
 import com.webapi.application.abstractions.IResult;
 import java.sql.SQLException;
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.concretes.ResultBuilder;
 
 public class ConfirmOrderRequestHandler implements IRequestHandler<ConfirmOrderRequest, Void> {

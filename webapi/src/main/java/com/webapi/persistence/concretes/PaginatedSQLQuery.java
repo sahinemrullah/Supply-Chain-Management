@@ -1,7 +1,7 @@
 
-package com.webapi.application.concretes;
+package com.webapi.persistence.concretes;
 
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.models.PaginatedListModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

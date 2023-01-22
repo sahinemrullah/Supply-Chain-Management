@@ -1,6 +1,6 @@
 package com.webapi.application.requests.invoicedetails;
 
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.exceptions.NotFoundException;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;

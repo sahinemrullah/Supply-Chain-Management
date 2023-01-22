@@ -2,7 +2,7 @@ package com.webapi.application.concretes;
 
 import com.webapi.application.abstractions.IRequest;
 import com.webapi.application.abstractions.IResult;
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.abstractions.IValidator;
 import com.webapi.application.models.PaginatedListModel;
 import java.sql.SQLException;

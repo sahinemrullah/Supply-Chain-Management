@@ -4,7 +4,7 @@ package com.webapi.application.requests.retailerregister;
 import com.webapi.persistence.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
-import com.webapi.application.abstractions.ISQLOperation;
+import com.webapi.persistence.abstractions.ISQLOperation;
 import com.webapi.application.utils.EncryptionUtils;
 import java.sql.PreparedStatement;
 
