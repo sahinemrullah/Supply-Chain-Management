@@ -14,18 +14,16 @@ import java.util.List;
 
 public class GetInvoiceListQuery extends PaginatedSQLQuery<InvoiceListRequest, InvoiceListModel> {
 
-    private static final String QUERY = "SELECT i.created_date, i.invoice_id FROM invoice AS i WHERE (i.supplier_id = ? OR i.retailer_id = ?)";
-    private static final int SUPPLIER_INDEX = 1;
-    private static final int RETAILER_INDEX = 2;
+    private static final String QUERY = "SELECT i.created_date, i.invoice_id FROM invoice AS i WHERE (i.%s_id = ?)";
+    private static final int USER_INDEX = 1;
 
     @Override
     public PaginatedListModel<InvoiceListModel> execute(InvoiceListRequest params) throws SQLException {
         PaginatedListModel<InvoiceListModel> model = new PaginatedListModel<>();
 
-        try (Connection con = DatabaseConnection.getConntection(); PreparedStatement statement = con.prepareStatement(QUERY)) {
+        try (Connection con = DatabaseConnection.getConntection(); PreparedStatement statement = con.prepareStatement(String.format(QUERY, params.getRole()))) {
 
-            statement.setInt(SUPPLIER_INDEX, params.getUserId());
-            statement.setInt(RETAILER_INDEX, params.getUserId());
+            statement.setInt(USER_INDEX, params.getUserId());
 
             ResultSet result = statement.executeQuery();
 
@@ -37,7 +35,7 @@ public class GetInvoiceListQuery extends PaginatedSQLQuery<InvoiceListRequest, I
                 listModel.setId(result.getInt("invoice_id"));
                 Timestamp ts1 = result.getTimestamp("created_date");
                 listModel.setCreatedDate(new Date(ts1.getTime()));
-
+                items.add(listModel);
             }
 
             model.setItems(items);
