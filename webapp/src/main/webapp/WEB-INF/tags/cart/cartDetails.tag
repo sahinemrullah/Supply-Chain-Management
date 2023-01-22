@@ -26,9 +26,18 @@
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img
-                                        src="${pageContext.request.contextPath}/uploads/${product.productImages[0]}"
-                                        class="img-fluid rounded-3">
+                                    <c:choose>
+                                        <c:when test="${not empty product.productImages[0]}">
+                                            <img
+                                                src="${pageContext.request.contextPath}/uploads/${product.productImages[0]}"
+                                                class="img-fluid rounded-3">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img
+                                                src="${pageContext.request.contextPath}/uploads/default.jpg"
+                                                class="img-fluid rounded-3">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                     <p class="lead fw-normal mb-2">${product.name}</p>

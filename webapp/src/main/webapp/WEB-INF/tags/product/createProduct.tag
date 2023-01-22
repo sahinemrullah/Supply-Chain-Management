@@ -30,7 +30,7 @@
                     <small class="text-danger">${stockError}</small>
                 </div>
                 <div class="form-floating mb-4 ${stock == null ? "" : "is-filled"}">
-                    <input type="file" multiple="true" class="form-control" name="images" accept="image/png, image/jpeg" required="true">
+                    <input type="file" multiple="true" class="form-control" name="images" accept="image/png, image/jpeg">
                     <label class="form-label">Ürün Resimleri</label>
                     <small class="text-danger">${imageError}</small>
                 </div>

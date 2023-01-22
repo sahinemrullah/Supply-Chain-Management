@@ -9,24 +9,35 @@
         <!--Grid column-->
         <div class="col-md-4 mb-4">
             <!-- Carousel wrapper -->
-            <div id="carouselExampleIndicators" class="carousel slide" data-mdb-ride="carousel">
+            <div id="productImageCarouselIndicators" class="carousel slide" data-mdb-ride="carousel">
                 <!-- Slides -->
                 <div class="text-center carousel-inner rounded-5 shadow-4-strong mb-5">
-                    <c:forEach items="${model.productImages}" var="imagePath" varStatus="loop">
-                        <div class="carousel-item ${loop.index == 0 ? "active" : ""}">
-                            <img src="${pageContext.request.contextPath}/uploads/${imagePath}" class="img-fluid" alt="" />
-                        </div>
-                    </c:forEach>
+
+                    <c:choose>
+                        <c:when test="${not empty model.productImages[0]}">
+                            <c:forEach items="${model.productImages}" var="imagePath" varStatus="loop">
+                                <div class="carousel-item ${loop.index == 0 ? "active" : ""}">
+                                    <img src="${pageContext.request.contextPath}/uploads/${imagePath}" class="img-fluid" alt="" />
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="carousel-item active">
+                                <img src="${pageContext.request.contextPath}/uploads/default.jpg"
+                                     class="img-fluid" />
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <!-- Slides -->
 
                 <!-- Controls -->
-                <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleIndicators"
+                <button class="carousel-control-prev" type="button" data-mdb-target="#productImageCarouselIndicators"
                         data-mdb-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Önceki</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleIndicators"
+                <button class="carousel-control-next" type="button" data-mdb-target="#productImageCarouselIndicators"
                         data-mdb-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Sonraki</span>
@@ -35,12 +46,24 @@
 
                 <!-- Thumbnails -->
                 <div class="carousel-indicators d-flex align-items-stretch" style="margin-bottom: -20px;">
-                    <c:forEach items="${model.productImages}" var="imagePath" varStatus="loop">
-                        <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="${loop.index}" <c:if test="${loop.index == 0}">class="active"</c:if> aria-current="true" aria-label="Fotoğraf ${loop.index}">
-                                <img class="d-block img-thumbnail"
-                                     src="${pageContext.request.contextPath}/uploads/${imagePath}" />
-                        </button>
-                    </c:forEach>
+
+
+                    <c:choose>
+                        <c:when test="${not empty model.productImages[0]}">
+                            <c:forEach items="${model.productImages}" var="imagePath" varStatus="loop">
+                                <button type="button" data-mdb-target="#productImageCarouselIndicators" data-mdb-slide-to="${loop.index}" <c:if test="${loop.index == 0}">class="active"</c:if> aria-current="true" aria-label="Fotoğraf ${loop.index}">
+                                        <img class="d-block img-thumbnail"
+                                             src="${pageContext.request.contextPath}/uploads/${imagePath}" />
+                                </button>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" data-mdb-target="#productImageCarouselIndicators" data-mdb-slide-to="${loop.index}" <c:if test="${loop.index == 0}">class="active"</c:if> aria-current="true" aria-label="Fotoğraf ${loop.index}">
+                                    <img class="d-block img-thumbnail"
+                                         src="${pageContext.request.contextPath}/uploads/default.jpg" />
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
 
                 </div>
                 <!-- Thumbnails -->

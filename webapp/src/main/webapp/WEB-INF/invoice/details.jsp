@@ -69,8 +69,19 @@
                                          overflow-hidden
                                          d-block
                                          " data-ripple-color="light">
-                                        <img src="${pageContext.request.contextPath}/uploads/${product.imagePath}"
-                                             class="img-fluid"/>
+
+                                        <c:choose>
+                                            <c:when test="${not empty product.imagePath}">
+                                                <img
+                                                    src="${pageContext.request.contextPath}/uploads/${product.imagePath}"
+                                                    class="img-fluid">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img
+                                                    src="${pageContext.request.contextPath}/uploads/default.jpg"
+                                                    class="img-fluid">
+                                            </c:otherwise>
+                                        </c:choose>
                                         <a href="javascript:void(0)">
                                             <div class="hover-overlay">
                                                 <div class="mask" style="background-color: hsla(0, 0%, 98.4%, 0.2)"></div>

@@ -4,6 +4,8 @@
 
 <%@ taglib prefix="p" tagdir="/WEB-INF/tags/product/" %>
 
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>  
+
 <div class="card">
     <div class="card-header text-center py-3">
         <h5 class="mb-0 text-center">
@@ -33,11 +35,22 @@
                     </tr>
                     <c:forEach items="${model.items}" var="product">
                         <tr>
-                            <td class="col-3"><img class="img-thumbnail" src="${pageContext.request.contextPath}/uploads/${product.imagePath}" /></td>
+                            <td class="col-3">
+                                <c:choose>
+                                    <c:when test="${not empty product.imagePath}">
+                                        <img src="${pageContext.request.contextPath}/uploads/${product.imagePath}"
+                                             class="img-thumbnail" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/uploads/default.jpg"
+                                             class="img-thumbnail" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                             <td class="col-3">${product.name}</td>
-                            <td class="col-2">${product.price}₺</td>
+                            <td class="col-2"><fmt:formatNumber value="${product.price}" type="currency" /></td>
                             <td class="col-2">${product.stock}</td>
-                            <td class="col-2">${product.discount * 100}%</td>
+                            <td class="col-2"><fmt:formatNumber value="${product.discount}" type="percent" /></td>
                             <td class="col-1">
                                 <a class="btn btn-primary" 
                                    data-id="${product.id}" 

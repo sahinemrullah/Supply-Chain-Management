@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>  
 
 <div class="card">
     <div class="card-header text-center py-3">
@@ -11,7 +12,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover text-nowrap table-striped">
+            <table class="table table-hover text-nowrap table-striped text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -26,8 +27,8 @@
                         <tr>
                             <td class="col-2">${order.orderId}</td>
                             <td class="col-3">${order.supplierName}</td>
-                            <td class="col-3">${order.createdDate}</td>
-                            <td class="col-2">${order.price}₺</td>
+                            <td class="col-3"><fmt:formatDate type="both" value="${order.createdDate}" /></td>
+                            <td class="col-2"><fmt:formatNumber value="${order.price}" type="currency" /></td>
                             <td class="col-2"><a href="/siparis/goruntule?id=${order.orderId}" class="btn btn-primary">Görüntüle</a></td>
                         </tr>
                     </c:forEach>

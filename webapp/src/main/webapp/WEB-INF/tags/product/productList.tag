@@ -32,8 +32,17 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                                     <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                                        <img src="${pageContext.request.contextPath}/uploads/${product.imagePath}"
+                                        <c:choose>
+                                            <c:when test="${not empty product.imagePath}">
+                                                <img src="${pageContext.request.contextPath}/uploads/${product.imagePath}"
                                              class="w-100" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${pageContext.request.contextPath}/uploads/default.jpg"
+                                             class="w-100" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                        
                                         <a href="#!">
                                             <div class="hover-overlay">
                                                 <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>

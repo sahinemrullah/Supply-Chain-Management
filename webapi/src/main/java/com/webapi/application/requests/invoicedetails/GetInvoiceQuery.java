@@ -22,7 +22,8 @@ public class GetInvoiceQuery implements ISQLOperation<InvoiceDetailsRequest, Inv
             + "JOIN order_m_d_d AS odd ON it.order_m_d_d_id = odd.order_m_d_d_id "
             + "JOIN (SELECT p.product_id, p.name, p.price, MIN(pi.path) AS path  " +
             "		FROM product as p " +
-            "		JOIN productimage AS pi on p.product_id = pi.product_id group by pi.product_id " +
+            "		LEFT JOIN productimage AS pi on p.product_id = pi.product_id "
+            + "         GROUP BY pi.product_id, p.product_id " +
             "        ) AS p ON p.product_id = odd.product_id "
             + "WHERE i.%s_id = ? AND i.invoice_id = ?";
     private static final int USER_INDEX = 1;
