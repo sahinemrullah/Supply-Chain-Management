@@ -14,6 +14,9 @@ import com.webapi.application.requests.editdiscount.EditDiscountRequest;
 import com.webapi.application.requests.editdiscount.EditDiscountRequestHandler;
 import com.webapi.application.requests.editstock.EditStockRequest;
 import com.webapi.application.requests.editstock.EditStockRequestHandler;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsModel;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsRequest;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsRequestHandler;
 import com.webapi.application.requests.invoicelist.InvoiceListModel;
 import com.webapi.application.requests.invoicelist.InvoiceListRequest;
 import com.webapi.application.requests.invoicelist.InvoiceListRequestHandler;
@@ -255,10 +258,34 @@ public class SupplierService {
             request.setUserId(supplierId);
             request.setPageNumber(pageNumber);
             request.setPageSize(pageSize);
-
+            request.setRole("supplier");
+            
             IRequestHandler<InvoiceListRequest, PaginatedListModel<InvoiceListModel>> invoiceListRequestHandler = new InvoiceListRequestHandler();
 
             IResult<PaginatedListModel<InvoiceListModel>> result = invoiceListRequestHandler.handle(request);
+
+            return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
+        }
+    }
+
+    @Path("/{supplierId}/invoices/{invoiceId}")
+    @GET
+    @AuthorizeJWTToken
+    @Role(role = "supplier")
+    public Response getInvoice(@PathParam("supplierId") int supplierId, @PathParam("invoiceId") int invoiceId) throws SQLException {
+        Principal principal = userContext.getUserPrincipal();
+        String userId = principal.getName();
+        if (!(Integer.parseInt(userId) == supplierId)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            InvoiceDetailsRequest request = new InvoiceDetailsRequest();
+            request.setUserId(supplierId);
+            request.setId(invoiceId);
+            request.setRole("supplier");
+            
+            IRequestHandler<InvoiceDetailsRequest, InvoiceDetailsModel> invoiceDetailsRequestHandler = new InvoiceDetailsRequestHandler();
+
+            IResult<InvoiceDetailsModel> result = invoiceDetailsRequestHandler.handle(request);
 
             return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
         }

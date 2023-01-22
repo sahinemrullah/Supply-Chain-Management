@@ -20,6 +20,9 @@ import jakarta.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import com.webapi.application.filters.AuthorizeJWTToken;
 import com.webapi.application.filters.Role;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsModel;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsRequest;
+import com.webapi.application.requests.invoicedetails.InvoiceDetailsRequestHandler;
 import com.webapi.application.requests.invoicelist.InvoiceListModel;
 import com.webapi.application.requests.invoicelist.InvoiceListRequest;
 import com.webapi.application.requests.invoicelist.InvoiceListRequestHandler;
@@ -96,10 +99,34 @@ public class RetailerService {
             request.setUserId(retailerId);
             request.setPageNumber(pageNumber);
             request.setPageSize(pageSize);
+            request.setRole("retailer");
 
             IRequestHandler<InvoiceListRequest, PaginatedListModel<InvoiceListModel>> invoiceListRequestHandler = new InvoiceListRequestHandler();
 
             IResult<PaginatedListModel<InvoiceListModel>> result = invoiceListRequestHandler.handle(request);
+
+            return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
+        }
+    }
+
+    @Path("/{retailerId}/invoices/{invoiceId}")
+    @GET
+    @AuthorizeJWTToken
+    @Role(role = "retailer")
+    public Response getInvoice(@PathParam("retailerId") int  retailerId, @PathParam("invoiceId") int invoiceId) throws SQLException {
+        Principal principal = userContext.getUserPrincipal();
+        String userId = principal.getName();
+        if (!(Integer.parseInt(userId) ==  retailerId)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } else {
+            InvoiceDetailsRequest request = new InvoiceDetailsRequest();
+            request.setUserId( retailerId);
+            request.setId(invoiceId);
+            request.setRole("retailer");
+            
+            IRequestHandler<InvoiceDetailsRequest, InvoiceDetailsModel> invoiceDetailsRequestHandler = new InvoiceDetailsRequestHandler();
+
+            IResult<InvoiceDetailsModel> result = invoiceDetailsRequestHandler.handle(request);
 
             return Response.ok(result.getItem(), MediaType.APPLICATION_JSON).build();
         }
