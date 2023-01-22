@@ -45,7 +45,7 @@ public class ProductService {
     @Path("/search")
     @GET
     @AuthorizeJWTToken
-    @Role(role = "supplier")
+    @Role(role = "retailer")
     public PaginatedListModel<ProductSearchModel> searchProducts(@QueryParam("query") String query,
                                                                 @DefaultValue("10") @QueryParam("pageSize") int pageSize,
                                                                 @DefaultValue("1") @QueryParam("pageNumber") int pageNumber) throws SQLException {
