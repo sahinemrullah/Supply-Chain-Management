@@ -2,6 +2,6 @@
     pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags/" %>
 
-<t:login>
+<t:login link="/satici/kayitol">
     
 </t:login>

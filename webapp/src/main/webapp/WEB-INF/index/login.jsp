@@ -1,73 +1,34 @@
-<%@ page language="java" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" isELIgnored="false" %>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<!DOCTYPE html>
-<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags/" %>
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>
-            Giriş
-        </title>
-        <!-- Font Awesome -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-            />
-        <!-- Google Fonts -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-            />
-        <!-- MDB -->
-        <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
-            rel="stylesheet"
-            />
-    </head>
+<t:template title="Anasayfa">
+    <jsp:attribute name="content">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-5">
+            <h2>Hoş Geldiniz</h2>
 
-    <body>
-        <main>
-            <style>
-                #intro {
-                    background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
-                    height: 100vh;
-                }
-
-                .navbar .nav-link {
-                    color: #fff !important;
-                }
-            </style> 
-            <!-- Background image -->
-            <div id="intro" class="bg-image shadow-2-strong">
-                <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                            <ul class="list-group list-group-light text-center">
-                                                <li class="list-group-item"><a href="/tedarikci/giris" class="btn btn-primary">Tedarikçi Giriş</a></li>
-                                                <li class="list-group-item"><a href="/tedarikci/kayitol" class="btn btn-primary">Tedarikçi Kayıt</a></li>
-                                                <li class="list-group-item"><a href="/satici/giris" class="btn btn-primary">Satıcı Giriş</a></li>
-                                                <li class="list-group-item"><a href="/satici/kayitol" class="btn btn-primary">Satıcı Kayıt</a></li>
-                                            </ul>
-                                    </div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec erat purus, porta quis porttitor sit amet, feugiat et nibh. Suspendisse a nulla vitae eros vehicula maximus. Vivamus tincidunt, nisi id facilisis fringilla, tortor arcu vehicula enim, et efficitur odio urna ut augue. Sed sed rutrum ante, nec ornare ante. Nulla vel felis facilisis, ullamcorper mauris vitae, tincidunt purus. Phasellus id mi sed ipsum maximus egestas at non diam. Nulla sed efficitur ante, vel facilisis ex.
+            </p>
+          </div>
+          <div class="col-md-5">
+            <div class="card">
+                            <div class="card-body">
+                                <div class="row justify-content-center">
+                                    <ul class="list-group list-group-light text-center">
+                                        <li class="list-group-item"><a href="/tedarikci/giris" class="btn btn-primary">Tedarikçi Giriş</a></li>
+                                        <li class="list-group-item"><a href="/tedarikci/kayitol" class="btn btn-primary">Tedarikçi Kayıt</a></li>
+                                        <li class="list-group-item"><a href="/satici/giris" class="btn btn-primary">Satıcı Giriş</a></li>
+                                        <li class="list-group-item"><a href="/satici/kayitol" class="btn btn-primary">Satıcı Kayıt</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Background image -->
-        </main>
-        <!--Main Navigation-->
-
-        <!-- MDB -->
-        <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
-        ></script>
-    </body>
-</html>
+          </div>
+        </div>
+        </jsp:attribute>
+    </t:template>

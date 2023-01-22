@@ -11,5 +11,5 @@
 </li>
 
 <li class="nav-item active">
-    <a class="nav-link text-white" href="/faturalar"><i class="fas fa-receipt fa-fw"></i><span>Faturalar</span></a>
+    <a class="nav-link text-white" href="/faturalarim"><i class="fas fa-receipt fa-fw"></i><span>Faturalar</span></a>
 </li>

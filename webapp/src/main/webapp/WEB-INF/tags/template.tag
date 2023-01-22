@@ -6,6 +6,7 @@
 
 <%@ attribute name="title" required="true" rtexprvalue="true" %>
 <%@ attribute name="content" fragment="true" %>
+<%@ attribute name="extraScripts" fragment="true" %>
 
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
@@ -61,15 +62,29 @@
                         <!-- Left links -->
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <c:choose>
-                                <c:when test="${role == 'retailer'}">
-                                    <t:retailerSidebar>
+                                <c:when test="${not empty role}">
+                                    <c:choose>
+                                        <c:when test="${role == 'retailer'}">
+                                            <t:retailerSidebar>
 
-                                    </t:retailerSidebar>
+                                            </t:retailerSidebar>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <t:supplierSidebar>
+
+                                            </t:supplierSidebar>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <li class="nav-item active">
+                                        <a class="nav-link text-white" href="/cikis"><i class="fas fa-sign-out-alt"></i>
+                                            <span>Çıkış Yap</span></a>
+                                    </li>
                                 </c:when>
                                 <c:otherwise>
-                                    <t:supplierSidebar>
-
-                                    </t:supplierSidebar>
+                                    <li class="nav-item active">
+                                        <a class="nav-link text-white" href="/giris"><i class="fas fa-home"></i>
+                                            <span>Ana Sayfa</span></a>
+                                    </li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
@@ -78,21 +93,23 @@
                     <!-- Collapsible wrapper -->
 
                 </div>
-                <!-- Container wrapper -->
-                <div class="d-flex align-items-center">
-                    <form id="searchForm">
-                        <input
-                            autocomplete="off"
-                            type="search"
-                            class="form-control rounded"
-                            placeholder='Urun Ara'
-                            style="min-width: 225px"
-                            id="query"
-                            value="${param.query}"
-                            />
-                        <input type="hidden" id="pageNumber" value="${param.pageNumber == null ? 1 : param.pageNumber}" />
-                    </form>
-                </div>
+                <c:if test="${role == 'retailer'}">
+                    <!-- Container wrapper -->
+                    <div class="d-flex align-items-center">
+                        <form id="searchForm">
+                            <input
+                                autocomplete="off"
+                                type="search"
+                                class="form-control rounded"
+                                placeholder='Urun Ara'
+                                style="min-width: 225px"
+                                id="query"
+                                value="${param.query}"
+                                />
+                            <input type="hidden" id="pageNumber" value="${param.pageNumber == null ? 1 : param.pageNumber}" />
+                        </form>
+                    </div>
+                </c:if>
             </nav>
             <!-- Navbar -->
         </header>
@@ -113,28 +130,28 @@
                                 </div>
                             </c:if>
                             <jsp:invoke fragment="content"></jsp:invoke>
-                        </section>
+                            </section>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
-        <footer class="fixed-bottom text-center text-white mt-4 bg-primary">
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); text-color: #E0E0E0">
-                © 2022 Copyright:
-                <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
-        <!-- MDB -->
-        <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
-        ></script>
-        <script
-            src="https://code.jquery.com/jquery-3.6.3.min.js"
-            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-        crossorigin="anonymous"></script>
+            </main>
+            <footer class="fixed-bottom text-center text-white mt-4 bg-primary">
+                <!-- Copyright -->
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); text-color: #E0E0E0">
+                    ©
+                </div>
+                <!-- Copyright -->
+            </footer>
+            <!-- MDB -->
+            <script
+                type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
+            ></script>
+            <script
+                src="https://code.jquery.com/jquery-3.6.3.min.js"
+                integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+            crossorigin="anonymous"></script>
+        <jsp:invoke fragment="extraScripts"></jsp:invoke>
         <script
             type="text/javascript"
             >
