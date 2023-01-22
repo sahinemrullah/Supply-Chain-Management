@@ -8,7 +8,8 @@ public class OrderHistoryModel {
     private Date createdDate;
     private double total;
     private boolean isPending;
-
+    private int invoiceId;
+    
     public int getId() {
         return id;
     }
@@ -47,4 +48,13 @@ public class OrderHistoryModel {
     public void setIsPending(boolean isPending) {
         this.isPending = isPending;
     }
+
+    public int getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
 }

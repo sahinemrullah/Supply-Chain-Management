@@ -29,17 +29,21 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${model.items}" var="order">
-                                <tr>
+                                <tr class="${order.isPending ? "" : "table-primary"}">
                                     <td class="col-2">${order.id}</td>
                                     <td class="col-3">${order.supplierName}</td>
                                     <td class="col-3"><fmt:formatDate value="${order.createdDate}" type="both" /></td>
                                     <td class="col-2"><fmt:formatNumber value="${order.total}" type="currency" /></td>
                                     <td class="col-2">
                                         <div class="btn-group">
+                                            <c:choose>
+                                                <c:when test="${order.isPending}">
                                             <a href="/siparis/goruntule?id=${order.id}" class="btn btn-primary">Görüntüle</a>
-                                            <c:if test="${!order.isPending}">
-                                                <a href="/fatura/goruntule?id=${order.id}" class="btn btn-secondary">Fatura Görüntüle</a>
-                                            </c:if>
+                                                </c:when>
+                                                <c:otherwise>
+                                                <a href="/faturalarim/goruntule?id=${order.invoiceId}" class="btn btn-secondary">Fatura Görüntüle</a>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </td>
                                 </tr>
